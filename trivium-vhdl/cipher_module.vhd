@@ -27,7 +27,7 @@ begin
       z1 <= t1 xor t2 xor t3;
       
       t1 := t1 xor (internal_state(90) and internal_state(91)) xor internal_state(170);
-      t2 := t2 xor (internal_state(174) and internal_state(175)) xor internal_state(264);
+      t2 := t2 xor (internal_state(174) and internal_state(175)) xor internal_state(263);
       t3 := t3 xor (internal_state(285) and internal_state(286)) xor internal_state(68);
       internal_state(92 downto 1) := internal_state(91 downto 0);
       internal_state(0) := t3;
@@ -36,7 +36,7 @@ begin
       internal_state(287 downto 178) := internal_state(286 downto 177);
       internal_state(177) := t2;
     end if;
-    out_bit <= internal_state(285);  
+    out_bit <= z1;  
   end process;
 end architecture bhv;
 

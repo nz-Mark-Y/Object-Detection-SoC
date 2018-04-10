@@ -54,3 +54,6 @@ dkms.conf
 # ModelSim Files
 trivium-vhdl/work/
 *.mpf
+*.bak
+*.mti
+*.wlf

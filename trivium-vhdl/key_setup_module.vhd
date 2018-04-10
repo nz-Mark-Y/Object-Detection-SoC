@@ -23,8 +23,8 @@ begin
           internal_state(92 downto 80) := (others => '0');
           internal_state(172 downto 93) := vector(79 downto 0);
           internal_state(176 downto 173) := (others => '0');
-          internal_state(283 downto 177) := (others => '0');
-          internal_state(287 downto 284) := (others => '1');
+          internal_state(284 downto 177) := (others => '0');
+          internal_state(287 downto 285) := (others => '1');
           for i in 1 to 1152 loop
             t1 := internal_state(65) xor (internal_state(90) and internal_state(91)) xor internal_state(92) xor internal_state(170);
             t2 := internal_state(161) xor (internal_state(174) and internal_state(175)) xor internal_state(176) xor internal_state(263);
