@@ -11,7 +11,7 @@ end entity cipher_module;
 architecture bhv of cipher_module is
   signal started, z1 : std_logic := '0';
 begin
-  process(clk)
+  process(clk, z1)
     variable internal_state : std_logic_vector(287 downto 0) := (others => '0');
     variable t1, t2, t3 : std_logic := '0';
   begin

@@ -28,7 +28,7 @@ architecture bhv of trivium_module is
   end component;
  
 begin
-  key_setup_module_1 : key_setup_module port map (clk_div, start, K, IV, internal_state, done);
+  key_setup_module_1 : key_setup_module port map (clk, start, K, IV, internal_state, done);
   cipher_module_1 : cipher_module port map (clk, done, internal_state, stream);
   process(clk)
     variable v_count : integer range 0 to 11 := 0;
@@ -36,13 +36,13 @@ begin
   begin
     if (rising_edge(clk)) then
       
-      v_count := v_count + 1;
-      if (v_count > 10) then
-        clk_div <= '1';
-        v_count := 0;
-      else
-        clk_div <= '0';
-      end if;
+      --v_count := v_count + 1;
+      --if (v_count > 10) then
+        --clk_div <= '1';
+        --v_count := 0;
+      --else
+        --clk_div <= '0';
+      --end if;
       
       if (done =  '1' and v_out < 2) then
         v_out := v_out + 1;
