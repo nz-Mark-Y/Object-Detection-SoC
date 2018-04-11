@@ -15,7 +15,7 @@ begin
     variable internal_state : std_logic_vector(287 downto 0) := (others => '0');
     variable t1, t2, t3 : std_logic := '0';
   begin
-    if (rising_edge(clk)) then
+    if (falling_edge(clk)) then
       if (started = '0' and start = '1') then
         started <= '1';
         internal_state(287 downto 0) := input_state(287 downto 0);
@@ -35,8 +35,8 @@ begin
       internal_state(93) := t1;
       internal_state(287 downto 178) := internal_state(286 downto 177);
       internal_state(177) := t2;
-    end if;
-    out_bit <= z1;  
+    end if; 
+    out_bit <= z1; 
   end process;
 end architecture bhv;
 
