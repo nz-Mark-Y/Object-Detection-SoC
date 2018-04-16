@@ -15,18 +15,18 @@
 
 #include <time.h>
 
-#include <unistd.h>
-#include <sys/mman.h>
-
 #define soc_cv_av
 #include "socal/socal.h"
 #include "socal/hps.h"
 #include "socal/alt_gpio.h"
 #include "arm_a9_hps_0.h"
+#include "hwlib.h"
 
 #define HW_REGS_BASE ( ALT_STM_OFST )
 #define HW_REGS_SPAN ( 0x04000000 )
 #define HW_REGS_MASK ( HW_REGS_SPAN - 1 )
+
+#define USE_FPGA 1
 
 // Optionally reverse the byte order for displaying the key and iv
 // Since the processor will reverse the order displaying it this way makes it
@@ -39,7 +39,6 @@
 		int fd;
 		if (( fd = open( "/dev/mem", ( O_RDWR | O_SYNC ) ) ) == -1 ) {
 			printf( "ERROR: could not open \"/dev/mem\"...\n" );
-			return( 1 );
 		}
 
 		// Map hardware registers into memory
@@ -48,15 +47,8 @@
 		if(virtual_base == MAP_FAILED) {
 			printf("ERROR: mmap() failed...\n");
 			close(fd);
-			return(1);
 		}
-	} 
-
-	void ECRYPT_keysetup(
-	  ECRYPT_ctx* ctx,
-	  const u8* key,
-	  u32 keysize,
-	  u32 ivsize) { 	
+		
 		// Note that if you did not call your peripheral pio_led (case insensitive)
 		//	then you may need to change the macros below
 		#ifdef LEDS_COMPONENT_NAME
@@ -72,16 +64,20 @@
 			// You will need to modify the code below in order to perform the test demonstration
 			
 			// Set the output
-			*(uint32_t *)h2p_lw_led_addr = 0xffff & led_mask;
-			
-			// Delay by 1 second
-			usleep (1000 * 1000);
+			*(uint32_t *)h2p_lw_led_addr = 0xff55 & led_mask;
 			
 			// Finish
 		#else
 			printf("These aren't the LEDs you're looking for\n");
 		#endif
-	}
+		
+		if (munmap(virtual_base, HW_REGS_SPAN) != 0) {
+			printf("ERROR: munmap() failed...\n");
+			close(fd);
+		}
+
+		close(fd);
+	} 
 
 	void ECRYPT_ivsetup(
 	  ECRYPT_ctx* ctx,
@@ -93,16 +89,6 @@
 	  const u8* input,
 	  u8* output,
 	  u32 msglen) { }
-
-	void ECRYPT_clean(void) {
-		if (munmap(virtual_base, HW_REGS_SPAN) != 0) {
-			printf("ERROR: munmap() failed...\n");
-			close(fd);
-			return(1);
-		}
-
-		close(fd);
-	}
 #else /* Software trivium */
 	#include "trivium.c"
 #endif /* USE_FPGA */
@@ -150,7 +136,6 @@ int test_trivium(void) {
 
     // Initialise
 	ECRYPT_init();
-	ECRYPT_keysetup(&ctx, key, ECRYPT_MAXKEYSIZE, ECRYPT_MAXIVSIZE);
 
     // Encrypt
 	ECRYPT_ivsetup(&ctx, iv);
@@ -159,9 +144,6 @@ int test_trivium(void) {
     // Decrypt
 	ECRYPT_ivsetup(&ctx, iv);
 	ECRYPT_encrypt_blocks(&ctx, output, second, (LEN/ECRYPT_BLOCKLENGTH));
-
-	// Clean up
-	ECRYPT_clean();
 
     // Output results of encryption/decryption and test
 	printf("Testing...\n");
@@ -201,7 +183,6 @@ int trivium_file(char *encrypted, char *decrypted, const u8 key[], const u8 iv[]
 
     // Initialise cipher
     ECRYPT_init();
-    ECRYPT_keysetup(&ctx, key, ECRYPT_MAXKEYSIZE, ECRYPT_MAXIVSIZE);
     ECRYPT_ivsetup(&ctx, iv);
 
     #define CHUNK 1024
