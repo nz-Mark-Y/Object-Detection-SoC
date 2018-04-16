@@ -22,13 +22,53 @@
 
 #if USE_FPGA
 	// You will need to fill these out in order to communicate with your FPGA implementation
-	void ECRYPT_init(void) { } 
+	void ECRYPT_init(void) {
+		int fd;
+		if (( fd = open( "/dev/mem", ( O_RDWR | O_SYNC ) ) ) == -1 ) {
+			printf( "ERROR: could not open \"/dev/mem\"...\n" );
+			return( 1 );
+		}
+
+		// Map hardware registers into memory
+		void *virtual_base = mmap( NULL, HW_REGS_SPAN, ( PROT_READ | PROT_WRITE ), MAP_SHARED, fd, HW_REGS_BASE );
+
+		if(virtual_base == MAP_FAILED) {
+			printf("ERROR: mmap() failed...\n");
+			close(fd);
+			return(1);
+		}
+	} 
 
 	void ECRYPT_keysetup(
 	  ECRYPT_ctx* ctx,
 	  const u8* key,
 	  u32 keysize,
-	  u32 ivsize) { }
+	  u32 ivsize) { 	
+		// Note that if you did not call your peripheral pio_led (case insensitive)
+		//	then you may need to change the macros below
+		#ifdef PIO_LED_COMPONENT_NAME
+			printf("Found an LED component!\n");
+		
+			// Point to the LED control register
+			void *h2p_lw_led_addr = virtual_base + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_LED_BASE) & (unsigned long)(HW_REGS_MASK));
+			
+			// Set the led mask to all bits
+			//	e.g. if 4 bit width the mask is 0b10000 - 1 = 0b1111
+			const int led_mask = (1 << (PIO_LED_DATA_WIDTH)) - 1; // e.g. 
+			
+			// You will need to modify the code below in order to perform the test demonstration
+			
+			// Set the output
+			*(uint32_t *)h2p_lw_led_addr = 0xffff & led_mask;
+			
+			// Delay by 1 second
+			usleep (1000 * 1000);
+			
+			// Finish
+		#else
+			printf("These aren't the LEDs you're looking for\n");
+		#endif
+	}
 
 	void ECRYPT_ivsetup(
 	  ECRYPT_ctx* ctx,
@@ -40,6 +80,16 @@
 	  const u8* input,
 	  u8* output,
 	  u32 msglen) { }
+
+	void ECRYPT_clean(void) {
+		if (munmap(virtual_base, HW_REGS_SPAN) != 0) {
+			printf("ERROR: munmap() failed...\n");
+			close(fd);
+			return(1);
+		}
+
+		close(fd);
+	}
 #else /* Software trivium */
 	#include "trivium.c"
 #endif /* USE_FPGA */
@@ -96,6 +146,9 @@ int test_trivium(void) {
     // Decrypt
 	ECRYPT_ivsetup(&ctx, iv);
 	ECRYPT_encrypt_blocks(&ctx, output, second, (LEN/ECRYPT_BLOCKLENGTH));
+
+	// Clean up
+	ECRYPT_clean();
 
     // Output results of encryption/decryption and test
 	printf("Testing...\n");
