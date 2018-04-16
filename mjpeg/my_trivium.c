@@ -15,6 +15,20 @@
 
 #include <time.h>
 
+#include <unistd.h>
+#include <sys/mman.h>
+
+#define soc_cv_av
+#include "hwlib.h"
+#include "socal/socal.h"
+#include "socal/hps.h"
+#include "socal/alt_gpio.h"
+#include "hps_0.h"
+
+#define HW_REGS_BASE ( ALT_STM_OFST )
+#define HW_REGS_SPAN ( 0x04000000 )
+#define HW_REGS_MASK ( HW_REGS_SPAN - 1 )
+
 // Optionally reverse the byte order for displaying the key and iv
 // Since the processor will reverse the order displaying it this way makes it
 //	easier to copy and paste into vhdl with bit order 80 DOWNTO 1
