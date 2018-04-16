@@ -19,11 +19,10 @@
 #include <sys/mman.h>
 
 #define soc_cv_av
-#include "hwlib.h"
 #include "socal/socal.h"
 #include "socal/hps.h"
 #include "socal/alt_gpio.h"
-#include "hps_0.h"
+#include "arm_a9_hps_0.h"
 
 #define HW_REGS_BASE ( ALT_STM_OFST )
 #define HW_REGS_SPAN ( 0x04000000 )
@@ -60,15 +59,15 @@
 	  u32 ivsize) { 	
 		// Note that if you did not call your peripheral pio_led (case insensitive)
 		//	then you may need to change the macros below
-		#ifdef PIO_LED_COMPONENT_NAME
+		#ifdef LEDS_COMPONENT_NAME
 			printf("Found an LED component!\n");
 		
 			// Point to the LED control register
-			void *h2p_lw_led_addr = virtual_base + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_LED_BASE) & (unsigned long)(HW_REGS_MASK));
+			void *h2p_lw_led_addr = virtual_base + ((unsigned long)(ALT_LWFPGASLVS_OFST + LEDS_BASE) & (unsigned long)(HW_REGS_MASK));
 			
 			// Set the led mask to all bits
 			//	e.g. if 4 bit width the mask is 0b10000 - 1 = 0b1111
-			const int led_mask = (1 << (PIO_LED_DATA_WIDTH)) - 1; // e.g. 
+			const int led_mask = (1 << (LEDS_DATA_WIDTH)) - 1; // e.g. 
 			
 			// You will need to modify the code below in order to perform the test demonstration
 			

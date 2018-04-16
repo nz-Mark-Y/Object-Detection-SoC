@@ -6,6 +6,7 @@
 #include "my_trivium.h"
 
 int main(int argc, char *argv[]) {
+	printf("Sakayan says hi");
 	if (argc != 4 && argc != 3 && argc != 1) {
 		fprintf(stderr, "USAGE: %s input output [keyfile]\n", argv[0]);
 		return 1;
