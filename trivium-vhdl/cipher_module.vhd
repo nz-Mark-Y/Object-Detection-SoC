@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity cipher_module is
-  port (clk, start : in std_logic;
+  port (clk, start, hold : in std_logic;
     input_state : in std_logic_vector(287 downto 0);
     out_bit : out std_logic);
 end entity cipher_module;
@@ -15,7 +15,7 @@ begin
     variable internal_state : std_logic_vector(287 downto 0) := (others => '0');
     variable t1, t2, t3 : std_logic := '0';
   begin
-    if (rising_edge(clk)) then
+    if (rising_edge(clk) and hold = '0') then
       if (started = '0' and start = '1') then
         started <= '1';
         internal_state(287 downto 0) := input_state(287 downto 0);

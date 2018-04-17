@@ -6,8 +6,8 @@ entity trivium_testbench is
 end trivium_testbench;
 
 architecture beh of trivium_testbench is
-  signal t_clk, t_ready, t_cipher, t_decipher : std_logic;
-  signal t_start, t_input : std_logic := '1';
+  signal t_clk, t_ready, t_cipher, t_decipher, t_start : std_logic;
+  signal t_input : std_logic := '1';
   signal t_K  : std_logic_vector(79 downto 0) := x"00000000000000000000"; 
   signal t_IV : std_logic_vector(79 downto 0) := x"00000000000000000000";  
   
@@ -30,6 +30,7 @@ begin
     wait for 1 ns;
   end process clk_gen;
   
+  t_start <= '1', '0' after 90 ns; 
   t_input <= '0';
 
 end beh;

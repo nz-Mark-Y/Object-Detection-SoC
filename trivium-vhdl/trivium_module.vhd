@@ -22,14 +22,14 @@ architecture bhv of trivium_module is
   end component;
   
   component cipher_module is
-    port (clk, start : in std_logic;
+    port (clk, start, hold : in std_logic;
       input_state : in std_logic_vector(287 downto 0);
       out_bit : out std_logic);
   end component;
  
 begin
   key_setup_module_1 : key_setup_module port map (clk, start, K, IV, internal_state, done);
-  cipher_module_1 : cipher_module port map (clk, done, internal_state, stream);
+  cipher_module_1 : cipher_module port map (clk, done, start, internal_state, stream);
   process(clk)
     variable v_count : integer range 0 to 11 := 0;
     variable v_out : integer range 0 to 3 := 0;
