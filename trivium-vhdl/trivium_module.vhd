@@ -6,7 +6,7 @@ entity trivium_module is
   port (clk, start : in std_logic;
     K, IV : in std_logic_vector(79 downto 0);
     input : in std_logic;
-    ready, output, stream_out : out std_logic);
+    ready, output : out std_logic);
 end entity trivium_module;
 
 architecture bhv of trivium_module is
@@ -35,25 +35,14 @@ begin
     variable v_out : integer range 0 to 3 := 0;
   begin
     if (rising_edge(clk)) then
-      
-      --v_count := v_count + 1;
-      --if (v_count > 10) then
-        --clk_div <= '1';
-        --v_count := 0;
-      --else
-        --clk_div <= '0';
-      --end if;
-      
       if (done =  '1' and v_out < 2) then
         v_out := v_out + 1;
       end if;
-      
     end if;
     out_count <= v_out;
   end process;
   ready <= done;
   output <= input xor stream when done = '1' and out_count > 0;
-  stream_out <= stream when done = '1' and out_count > 0;
 end architecture bhv;
 
 
