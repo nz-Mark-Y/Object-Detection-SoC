@@ -33,6 +33,18 @@
 //	easier to copy and paste into vhdl with bit order 80 DOWNTO 1
 #define REVERSE 1
 
+void send_to_FPGA(u32 data, void *virtual_base) {
+	#ifdef FPGA_BRIDGE_COMPONENT_NAME
+		void *h2p_lw_fpga_bridge_addr = virtual_base + ((unsigned long)(ALT_LWFPGASLVS_OFST + FPGA_BRIDGE_BASE) & (unsigned long)(HW_REGS_MASK));
+
+		const int fpga_bridge_mask = (1 << (FPGA_BRIDGE_DATA_WIDTH)) - 1;
+
+		*(uint32_t *)h2p_lw_fpga_bridge_addr = data & fpga_bridge_mask;
+	#else
+			printf("FPGA Bridge not found\n");
+	#endif
+}
+
 void print_key(const u8 key[]) {
 	printf("Key: ");
 	#if !REVERSE
@@ -113,18 +125,6 @@ int test_trivium(void) {
 				}
 			}
 		}
-		
-		#ifdef LEDS_COMPONENT_NAME
-			printf("Found an LED component!\n");
-
-			void *h2p_lw_led_addr = virtual_base + ((unsigned long)(ALT_LWFPGASLVS_OFST + LEDS_BASE) & (unsigned long)(HW_REGS_MASK));
-
-			const int led_mask = (1 << (LEDS_DATA_WIDTH)) - 1; // e.g. 
-
-			*(uint32_t *)h2p_lw_led_addr = 0xff55 & led_mask;
-		#else
-			printf("These aren't the LEDs you're looking for\n");
-		#endif
 		
 		if (munmap(virtual_base, HW_REGS_SPAN) != 0) {
 			printf("ERROR: munmap() failed...\n");
