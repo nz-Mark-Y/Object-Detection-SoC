@@ -86,22 +86,32 @@ int test_trivium(void) {
 			close(fd);
 		}
 
-		// Send Key A
-		// Send Key B
-		// ...
+		u8 temp[20];
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 20; j++) { // Copy corresponding 20 bits
+				temp[j] = key[j+i*20];
+			}
+			// Control signal = 8+i, data value = temp
+		}
 		
-		// Send IV A
-		// Send IV B 
-		// ... 
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 20; j++) { // Copy corresponding 20 bits
+				temp[j] = iv[j+i*20];
+			}
+			// Control signal = 12+i, data value = temp
+		}
 
-		// Wait for ready
-
-		// Control signal 1111
+		// Control signal = 0001, data value = 0000 0000 0000 0000 0000
+		// Wait 1 s
+		
 		for (int i = 0; i < 32; i++ ) { // Each character of input
 			for (int j = 0; j < 8; j++) { // Each bit of character
-				// Send data value
+				if (input[i] & (1UL << j) == 0x01) {
+					// Control signal = 0011, data value = 0000 0000 0000 0000 0001
+				} else {
+					// Control signal = 0011, data value = 0000 0000 0000 0000 0000
+				}
 			}
-			
 		}
 		
 		#ifdef LEDS_COMPONENT_NAME
