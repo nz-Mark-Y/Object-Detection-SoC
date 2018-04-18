@@ -86,31 +86,85 @@ int test_trivium(void) {
 			close(fd);
 		}
 
-		u8 temp[20];
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 20; j++) { // Copy corresponding 20 bits
-				temp[j] = key[j+i*20];
-			}
-			// Control signal = 8+i, data value = temp
-		}
-		
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 20; j++) { // Copy corresponding 20 bits
-				temp[j] = iv[j+i*20];
-			}
-			// Control signal = 12+i, data value = temp
-		}
+		u32 temp;
 
-		// Control signal = 0001, data value = 0000 0000 0000 0000 0000
-		// Wait 1 s
-		
-		for (int i = 0; i < 32; i++ ) { // Each character of input
-			for (int j = 0; j < 8; j++) { // Each bit of character
-				if (input[i] & (1UL << j) == 0x01) {
-					// Control signal = 0011, data value = 0000 0000 0000 0000 0001
-				} else {
-					// Control signal = 0011, data value = 0000 0000 0000 0000 0000
-				}
+		// send reset signal
+		send_to_FPGA(0x00000000);
+
+		// send Key A
+		temp = key[0];
+		temp += (((u32)key[1]) << 8);
+		temp += (((u32)key[2]) << 16);
+		temp &= ~(0xFFC00000);
+		temp |= 0x00800000;
+		send_to_FPGA(temp);
+
+		// send Key B
+		temp = (((u32)key[2]) >> 4);
+		temp += (((u32)key[3]) << 4);
+		temp += (((u32)key[4]) << 12);
+		temp |= 0x00900000;
+		send_to_FPGA(temp);
+
+		// send Key C
+		temp = key[5];
+		temp += (((u32)key[6]) << 8);
+		temp += (((u32)key[7]) << 16);
+		temp &= ~(0xFFC00000);
+		temp |= 0x00A00000;
+		send_to_FPGA(temp);
+
+		// send Key D
+		temp = (((u32)key[7]) >> 4);
+		temp += (((u32)key[8]) << 4);
+		temp += (((u32)key[9]) << 12);
+		temp |= 0x00B00000;
+		send_to_FPGA(temp);
+
+		// send IV A
+		temp = iv[0];
+		temp += (((u32)iv[1]) << 8);
+		temp += (((u32)iv[2]) << 16);
+		temp &= ~(0xFFC00000);
+		temp |= 0x00C00000;
+		send_to_FPGA(temp);
+
+		// send IV B
+		temp = (((u32)iv[2]) >> 4);
+		temp += (((u32)iv[3]) << 4);
+		temp += (((u32)iv[4]) << 12);
+		temp |= 0x00D00000;
+		send_to_FPGA(temp);
+
+		// send IV C
+		temp = iv[5];
+		temp += (((u32)iv[6]) << 8);
+		temp += (((u32)iv[7]) << 16);
+		temp &= ~(0xFFC00000);
+		temp |= 0x00E00000;
+		send_to_FPGA(temp);
+
+		// send IV D
+		temp = (((u32)iv[7]) >> 4);
+		temp += (((u32)iv[8]) << 4);
+		temp += (((u32)iv[9]) << 12);
+		temp |= 0x00F00000;
+		send_to_FPGA(temp);
+
+		// send Start signal
+		send_to_FPGA(0x00100000);
+
+		//wait 1 second
+		usleep(1000);
+
+		int i, j;
+
+		// send data
+		for (i = 0; i < LEN; i++) {
+			for (j = 0; j < 8; j++) {
+				temp = (((u32)input[i]) << j);
+				temp |= 0x00700000;
+				send_to_FPGA(temp);
 			}
 		}
 		
