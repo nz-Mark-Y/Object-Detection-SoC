@@ -34,5 +34,6 @@ begin
     end process test;
     
     t_reset <= '0', '1' after 180 ns, '0' after 200 ns;
+    t_start <= '1', '0' after 90 ns, '1' after 200 ns, '0' after 290 ns; 
 
 end beh;

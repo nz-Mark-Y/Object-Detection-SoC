@@ -12,7 +12,7 @@ end entity trivium_module;
 architecture bhv of trivium_module is
   signal clk_div, done, stream, s_output, s_reset : std_logic := '0';
   signal internal_state : std_logic_vector(287 downto 0) := (others => '0');
-  signal out_count : integer range 0 to 3  := 0;
+  signal out_count : integer range 0 to 3 := 0;
   
   component key_setup_module is
     port (clk, start, reset : in std_logic;
@@ -34,10 +34,9 @@ begin
     variable v_count : integer range 0 to 11 := 0;
     variable v_out : integer range 0 to 3 := 0;
   begin
-    if(reset = '1') then
+    if (reset = '1') then
       v_count := 0;
       v_out := 0;
-      s_reset <= '1';
     else
       if (rising_edge(clk)) then
         if (done =  '1' and v_out < 2) then
@@ -47,6 +46,7 @@ begin
       out_count <= v_out;
     end if;
   end process;
+  s_reset <= reset;
   ready <= done;
   output <= input xor stream when done = '1' and out_count > 0;
 end architecture bhv;
