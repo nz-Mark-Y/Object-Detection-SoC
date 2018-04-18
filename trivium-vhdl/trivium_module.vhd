@@ -37,7 +37,7 @@ begin
     if(reset = '1') then
       v_count := 0;
       v_out := 0;
-      s_reset <= '0';
+      s_reset <= '1';
     else
       if (rising_edge(clk)) then
         if (done =  '1' and v_out < 2) then
@@ -45,10 +45,8 @@ begin
         end if;
       end if;
       out_count <= v_out;
+    end if;
   end process;
   ready <= done;
   output <= input xor stream when done = '1' and out_count > 0;
 end architecture bhv;
-
-
-

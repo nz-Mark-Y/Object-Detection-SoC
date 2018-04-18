@@ -16,12 +16,11 @@ begin
     variable t1, t2, t3 : std_logic := '0';
   begin
     if(reset = '1') then
-      internal_state := (others => '0');
       t1 := '0';
       t2 := '0';
       t3 := '0';
-      started <= '0';
       z1 <= '0';
+      out_bit <= '0';
     else
       if (rising_edge(clk) and hold = '0') then
         if (started = '0' and start = '1') then
