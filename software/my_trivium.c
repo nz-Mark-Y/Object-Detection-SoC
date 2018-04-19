@@ -101,7 +101,7 @@ int test_trivium(void) {
 		u32 temp;
 
 		// send reset signal
-		send_to_FPGA(0x00000000);
+		send_to_FPGA(0x00000000, virtual_base);
 
 		// send Key A
 		temp = key[0];
@@ -109,14 +109,14 @@ int test_trivium(void) {
 		temp += (((u32)key[2]) << 16);
 		temp &= ~(0xFFC00000);
 		temp |= 0x00800000;
-		send_to_FPGA(temp);
+		send_to_FPGA(temp, virtual_base);
 
 		// send Key B
 		temp = (((u32)key[2]) >> 4);
 		temp += (((u32)key[3]) << 4);
 		temp += (((u32)key[4]) << 12);
 		temp |= 0x00900000;
-		send_to_FPGA(temp);
+		send_to_FPGA(temp, virtual_base);
 
 		// send Key C
 		temp = key[5];
@@ -124,14 +124,14 @@ int test_trivium(void) {
 		temp += (((u32)key[7]) << 16);
 		temp &= ~(0xFFC00000);
 		temp |= 0x00A00000;
-		send_to_FPGA(temp);
+		send_to_FPGA(temp, virtual_base);
 
 		// send Key D
 		temp = (((u32)key[7]) >> 4);
 		temp += (((u32)key[8]) << 4);
 		temp += (((u32)key[9]) << 12);
 		temp |= 0x00B00000;
-		send_to_FPGA(temp);
+		send_to_FPGA(temp, virtual_base);
 
 		// send IV A
 		temp = iv[0];
@@ -139,14 +139,14 @@ int test_trivium(void) {
 		temp += (((u32)iv[2]) << 16);
 		temp &= ~(0xFFC00000);
 		temp |= 0x00C00000;
-		send_to_FPGA(temp);
+		send_to_FPGA(temp, virtual_base);
 
 		// send IV B
 		temp = (((u32)iv[2]) >> 4);
 		temp += (((u32)iv[3]) << 4);
 		temp += (((u32)iv[4]) << 12);
 		temp |= 0x00D00000;
-		send_to_FPGA(temp);
+		send_to_FPGA(temp, virtual_base);
 
 		// send IV C
 		temp = iv[5];
@@ -154,17 +154,17 @@ int test_trivium(void) {
 		temp += (((u32)iv[7]) << 16);
 		temp &= ~(0xFFC00000);
 		temp |= 0x00E00000;
-		send_to_FPGA(temp);
+		send_to_FPGA(temp, virtual_base);
 
 		// send IV D
 		temp = (((u32)iv[7]) >> 4);
 		temp += (((u32)iv[8]) << 4);
 		temp += (((u32)iv[9]) << 12);
 		temp |= 0x00F00000;
-		send_to_FPGA(temp);
+		send_to_FPGA(temp, virtual_base);
 
 		// send Start signal
-		send_to_FPGA(0x00100000);
+		send_to_FPGA(0x00100000, virtual_base);
 
 		//wait 1 second
 		usleep(1000);
@@ -176,7 +176,7 @@ int test_trivium(void) {
 			for (j = 0; j < 8; j++) {
 				temp = (((u32)input[i]) << j);
 				temp |= 0x00700000;
-				send_to_FPGA(temp);
+				send_to_FPGA(temp, virtual_base);
 			}
 		}
 		
