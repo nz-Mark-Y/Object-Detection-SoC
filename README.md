@@ -12,17 +12,16 @@ Hardware/software co-designed system to compute MJPEG frame processing and objec
 * VGA Monitor
 
 ## Setup ##
-### System Setup ###
-1. Download and unzip project files from Canvas.
-2. Download and unzip project amendment files from Canvas.
-3. Follow project amendment README to complete project amendment.
+### Hardware Setup ###
+1. Open the project file in Quartus Prime from the hardware folder.
+2. Start Qsys and generate VHDL for the Computer System component.
+3. Compile project into .sof file
 ### Software Setup ###
-1. Clone this repository into project folder.
-2. Open SoC EDS Command Shell and browse to the repository folder.
+2. Open SoC EDS Command Shell and browse to the software folder.
 3. Build the solution using "make".
 4. Copy the solution binary file to a USB 2.0 device.
 ### DE1-SoC Setup ###
-1. Use Quartus Prime Programmer to program the DE1-SoC with the project .sof file.
+1. Use Quartus Prime Programmer to program the DE1-SoC with the compiled .sof file.
 2. Login to the Linux system on the ARM core with user root
 3. Copy the solution binary file from the USB 2.0 device to the root directory of the Linux system on the DE1-SoC board. 
 
