@@ -107,7 +107,7 @@ int test_trivium(void) {
 		temp = key[0];
 		temp += (((u32)key[1]) << 8);
 		temp += (((u32)key[2]) << 16);
-		temp &= ~(0xFFC00000);
+		temp &= ~(0xFFF00000);
 		temp |= 0x00800000;
 		send_to_FPGA(temp, virtual_base);
 
@@ -122,7 +122,7 @@ int test_trivium(void) {
 		temp = key[5];
 		temp += (((u32)key[6]) << 8);
 		temp += (((u32)key[7]) << 16);
-		temp &= ~(0xFFC00000);
+		temp &= ~(0xFFF00000);
 		temp |= 0x00A00000;
 		send_to_FPGA(temp, virtual_base);
 
@@ -137,7 +137,7 @@ int test_trivium(void) {
 		temp = iv[0];
 		temp += (((u32)iv[1]) << 8);
 		temp += (((u32)iv[2]) << 16);
-		temp &= ~(0xFFC00000);
+		temp &= ~(0xFFF00000);
 		temp |= 0x00C00000;
 		send_to_FPGA(temp, virtual_base);
 
@@ -152,7 +152,7 @@ int test_trivium(void) {
 		temp = iv[5];
 		temp += (((u32)iv[6]) << 8);
 		temp += (((u32)iv[7]) << 16);
-		temp &= ~(0xFFC00000);
+		temp &= ~(0xFFF00000);
 		temp |= 0x00E00000;
 		send_to_FPGA(temp, virtual_base);
 
