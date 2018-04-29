@@ -52,7 +52,7 @@ Mkfile.old
 dkms.conf
 
 # ModelSim Files
-trivium-vhdl/work/
+work/
 *.mpf
 *.bak
 *.mti
