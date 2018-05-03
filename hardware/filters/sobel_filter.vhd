@@ -19,7 +19,7 @@ architecture bhv of sobel_filter is
     variable Rest: unsigned(AMSB+1 downto 0); 
   begin 
     Root := (others => '0'); 
-    Rest := '0' & Arg; 
+    Rest := '0' & unsigned(Arg); 
     for i in RMSB downto 0 loop 
       Test := Root(RMSB-1 downto 0 ) & "01";   
       if Test(RMSB-i+1 downto 0) > Rest(AMSB+1 downto 2*i) then 
@@ -35,32 +35,32 @@ architecture bhv of sobel_filter is
 begin
   process(clk)
     variable v_pixels: unsigned(71 downto 0);
-    variable sum_x : unsigned(15 downto 0) := "0000000000000000";
-    variable sum_y : unsigned(15 downto 0) := "0000000000000000";
+    variable sum_x : signed(17 downto 0) := "000000000000000000";
+    variable sum_y : signed(17 downto 0) := "000000000000000000";
   begin
     if (rising_edge(clk)) then
       v_pixels := input_pixels;
       
-      sum_x := sum_x + "00000001" * v_pixels(7 downto 0);
-      sum_y := sum_y + "00000001" * v_pixels(7 downto 0);
-      sum_x := sum_x + "00000000" * v_pixels(15 downto 8);
-      sum_y := sum_y + "00000010" * v_pixels(15 downto 8);
-      sum_x := sum_x - "00000001" * v_pixels(23 downto 16);
-      sum_y := sum_y + "00000001" * v_pixels(23 downto 16);
-      sum_x := sum_x + "00000010" * v_pixels(31 downto 24);
-      sum_y := sum_y + "00000000" * v_pixels(31 downto 24);
-      sum_x := sum_x + "00000000" * v_pixels(39 downto 32);
-      sum_y := sum_y + "00000000" * v_pixels(39 downto 32);
-      sum_x := sum_x - "00000010" * v_pixels(47 downto 40);
-      sum_y := sum_y + "00000000" * v_pixels(47 downto 40);
-      sum_x := sum_x + "00000001" * v_pixels(55 downto 48);
-      sum_y := sum_y - "00000001" * v_pixels(55 downto 48);
-      sum_x := sum_x + "00000000" * v_pixels(63 downto 56);
-      sum_y := sum_y - "00000010" * v_pixels(63 downto 56);
-      sum_x := sum_x - "00000001" * v_pixels(71 downto 64);
-      sum_y := sum_y - "00000001" * v_pixels(71 downto 64);
-      
-      s_output <= sqrt(sum_x*sum_x + sum_y*sum_y);
+      sum_x := sum_x + to_signed(1, 3) * signed(v_pixels(7 downto 0));
+      sum_y := sum_y + to_signed(1, 3) * signed(v_pixels(7 downto 0));
+      sum_x := sum_x + to_signed(0, 3) * signed(v_pixels(15 downto 8));
+      sum_y := sum_y + to_signed(2, 3) * signed(v_pixels(15 downto 8));
+      sum_x := sum_x - to_signed(1, 3) * signed(v_pixels(23 downto 16));
+      sum_y := sum_y + to_signed(1, 3) * signed(v_pixels(23 downto 16));
+      sum_x := sum_x + to_signed(2, 3) * signed(v_pixels(31 downto 24));
+      sum_y := sum_y + to_signed(0, 3) * signed(v_pixels(31 downto 24));
+      sum_x := sum_x + to_signed(0, 3) * signed(v_pixels(39 downto 32));
+      sum_y := sum_y + to_signed(0, 3) * signed(v_pixels(39 downto 32));
+      sum_x := sum_x - to_signed(2, 3) * signed(v_pixels(47 downto 40));
+      sum_y := sum_y + to_signed(0, 3) * signed(v_pixels(47 downto 40));
+      sum_x := sum_x + to_signed(1, 3) * signed(v_pixels(55 downto 48));
+      sum_y := sum_y - to_signed(1, 3) * signed(v_pixels(55 downto 48));
+      sum_x := sum_x + to_signed(0, 3) * signed(v_pixels(63 downto 56));
+      sum_y := sum_y - to_signed(2, 3) * signed(v_pixels(63 downto 56));
+      sum_x := sum_x - to_signed(1, 3) * signed(v_pixels(71 downto 64));
+      sum_y := sum_y - to_signed(1, 3) * signed(v_pixels(71 downto 64));
+       
+      s_output <= sqrt(unsigned(sum_x*sum_x + sum_y*sum_y));
     end if;
   end process;
   output_pixel <= s_output;
