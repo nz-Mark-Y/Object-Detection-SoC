@@ -981,5 +981,4 @@ set_global_assignment -name VHDL_FILE Computer_System/synthesis/computer_system_
 set_global_assignment -name VHDL_FILE Computer_System/synthesis/computer_system_f2h_mem_window_00000000.vhd
 set_global_assignment -name VHDL_FILE Computer_System/synthesis/Computer_System.vhd
 set_global_assignment -name QSYS_FILE Computer_System.qsys
-set_global_assignment -name VERILOG_FILE hex_decoder.v
 set_global_assignment -name SDC_FILE DE1_SoC_Computer.sdc
