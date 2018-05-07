@@ -29,8 +29,13 @@
    {
       datum _sortIndex
       {
-         value = "29";
+         value = "30";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element AV_Config.avalon_av_config_slave
@@ -45,8 +50,13 @@
    {
       datum _sortIndex
       {
-         value = "32";
+         value = "33";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element Audio_Subsystem.audio_slave
@@ -61,8 +71,13 @@
    {
       datum _sortIndex
       {
-         value = "15";
+         value = "16";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element Expansion_JP1.s1
@@ -77,8 +92,13 @@
    {
       datum _sortIndex
       {
-         value = "16";
+         value = "17";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element Expansion_JP2.s1
@@ -93,83 +113,16 @@
    {
       datum _sortIndex
       {
-         value = "10";
+         value = "15";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element F2H_Mem_Window_00000000.windowed_slave
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-   }
-   element F2H_Mem_Window_FF600000
-   {
-      datum _sortIndex
-      {
-         value = "35";
-         type = "int";
-      }
-   }
-   element F2H_Mem_Window_FF600000.windowed_slave
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-   }
-   element F2H_Mem_Window_FF800000
-   {
-      datum _sortIndex
-      {
-         value = "36";
-         type = "int";
-      }
-   }
-   element F2H_Mem_Window_FF800000.windowed_slave
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-   }
-   element FPGA_Bridge
-   {
-      datum _sortIndex
-      {
-         value = "37";
-         type = "int";
-      }
-   }
-   element HEX3_HEX0
-   {
-      datum _sortIndex
-      {
-         value = "11";
-         type = "int";
-      }
-   }
-   element HEX3_HEX0.s1
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-   }
-   element HEX5_HEX4
-   {
-      datum _sortIndex
-      {
-         value = "12";
-         type = "int";
-      }
-   }
-   element HEX5_HEX4.s1
    {
       datum _lockedAddress
       {
@@ -181,8 +134,13 @@
    {
       datum _sortIndex
       {
-         value = "24";
+         value = "25";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element Interval_Timer.s1
@@ -197,8 +155,13 @@
    {
       datum _sortIndex
       {
-         value = "25";
+         value = "26";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element Interval_Timer_2.s1
@@ -213,8 +176,13 @@
    {
       datum _sortIndex
       {
-         value = "26";
+         value = "27";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element Interval_Timer_2nd_Core.s1
@@ -229,8 +197,13 @@
    {
       datum _sortIndex
       {
-         value = "27";
+         value = "28";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element Interval_Timer_2nd_Core_2.s1
@@ -245,8 +218,13 @@
    {
       datum _sortIndex
       {
-         value = "23";
+         value = "24";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element IrDA.avalon_irda_slave
@@ -261,8 +239,13 @@
    {
       datum _sortIndex
       {
-         value = "19";
+         value = "20";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element JTAG_UART.avalon_jtag_slave
@@ -277,8 +260,13 @@
    {
       datum _sortIndex
       {
-         value = "20";
+         value = "21";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element JTAG_UART_2nd_Core.avalon_jtag_slave
@@ -293,8 +281,13 @@
    {
       datum _sortIndex
       {
-         value = "21";
+         value = "22";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element JTAG_UART_for_ARM_0.avalon_jtag_slave
@@ -309,8 +302,13 @@
    {
       datum _sortIndex
       {
-         value = "22";
+         value = "23";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element JTAG_UART_for_ARM_1.avalon_jtag_slave
@@ -325,16 +323,26 @@
    {
       datum _sortIndex
       {
-         value = "7";
+         value = "12";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element JTAG_to_HPS_Bridge
    {
       datum _sortIndex
       {
-         value = "6";
+         value = "11";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element Nios2
@@ -343,6 +351,11 @@
       {
          value = "2";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element Nios2.debug_mem_slave
@@ -360,6 +373,11 @@
          value = "4";
          type = "int";
       }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
+      }
    }
    element Nios2_2nd_Core.debug_mem_slave
    {
@@ -376,21 +394,36 @@
          value = "3";
          type = "int";
       }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
+      }
    }
    element Nios2_Floating_Point_2nd_Core
    {
       datum _sortIndex
       {
-         value = "5";
+         value = "10";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element Onchip_SRAM
    {
       datum _sortIndex
       {
-         value = "9";
+         value = "14";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element Onchip_SRAM.s1
@@ -413,8 +446,13 @@
    {
       datum _sortIndex
       {
-         value = "17";
+         value = "18";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element PS2_Port.avalon_ps2_slave
@@ -429,8 +467,13 @@
    {
       datum _sortIndex
       {
-         value = "18";
+         value = "19";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element PS2_Port_Dual.avalon_ps2_slave
@@ -445,27 +488,16 @@
    {
       datum _sortIndex
       {
-         value = "30";
+         value = "31";
          type = "int";
       }
-   }
-   element Pixel_DMA_Addr_Translation.slave
-   {
-      datum _lockedAddress
+      datum sopceditor_expanded
       {
-         value = "1";
+         value = "0";
          type = "boolean";
       }
    }
-   element Pushbuttons
-   {
-      datum _sortIndex
-      {
-         value = "14";
-         type = "int";
-      }
-   }
-   element Pushbuttons.s1
+   element Pixel_DMA_Addr_Translation.slave
    {
       datum _lockedAddress
       {
@@ -477,27 +509,16 @@
    {
       datum _sortIndex
       {
-         value = "8";
-         type = "int";
-      }
-   }
-   element SDRAM.s1
-   {
-      datum _lockedAddress
-      {
-         value = "1";
-         type = "boolean";
-      }
-   }
-   element Slider_Switches
-   {
-      datum _sortIndex
-      {
          value = "13";
          type = "int";
       }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
+      }
    }
-   element Slider_Switches.s1
+   element SDRAM.s1
    {
       datum _lockedAddress
       {
@@ -509,8 +530,13 @@
    {
       datum _sortIndex
       {
-         value = "28";
+         value = "29";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element SysID.control_slave
@@ -528,13 +554,23 @@
          value = "0";
          type = "int";
       }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
    }
    element VGA_Subsystem
    {
       datum _sortIndex
       {
-         value = "31";
+         value = "32";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element VGA_Subsystem.char_buffer_control_slave
@@ -565,8 +601,13 @@
    {
       datum _sortIndex
       {
-         value = "33";
+         value = "34";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element Video_In_DMA_Addr_Translation.slave
@@ -581,8 +622,13 @@
    {
       datum _sortIndex
       {
-         value = "34";
+         value = "35";
          type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "0";
+         type = "boolean";
       }
    }
    element Video_In_Subsystem.edge_detection_control_slave
@@ -599,6 +645,111 @@
       {
          value = "1";
          type = "boolean";
+      }
+   }
+   element pio_0
+   {
+      datum _sortIndex
+      {
+         value = "5";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element pio_0.s1
+   {
+      datum baseAddress
+      {
+         value = "67108864";
+         type = "String";
+      }
+   }
+   element pio_1
+   {
+      datum _sortIndex
+      {
+         value = "6";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element pio_1.s1
+   {
+      datum baseAddress
+      {
+         value = "67108880";
+         type = "String";
+      }
+   }
+   element pio_2
+   {
+      datum _sortIndex
+      {
+         value = "7";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element pio_2.s1
+   {
+      datum baseAddress
+      {
+         value = "67108896";
+         type = "String";
+      }
+   }
+   element pio_3
+   {
+      datum _sortIndex
+      {
+         value = "8";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element pio_3.s1
+   {
+      datum baseAddress
+      {
+         value = "67108912";
+         type = "String";
+      }
+   }
+   element pio_4
+   {
+      datum _sortIndex
+      {
+         value = "9";
+         type = "int";
+      }
+      datum sopceditor_expanded
+      {
+         value = "1";
+         type = "boolean";
+      }
+   }
+   element pio_4.s1
+   {
+      datum baseAddress
+      {
+         value = "67108928";
+         type = "String";
       }
    }
 }
@@ -649,38 +800,42 @@
    dir="end" />
  <interface name="expansion_jp1" internal="Expansion_JP1.external_connection" />
  <interface name="expansion_jp2" internal="Expansion_JP2.external_connection" />
- <interface
-   name="fpga_bridge_external_connection"
-   internal="FPGA_Bridge.external_connection"
-   type="conduit"
-   dir="end" />
- <interface
-   name="hex3_hex0"
-   internal="HEX3_HEX0.external_connection"
-   type="conduit"
-   dir="end" />
- <interface name="hex5_hex4" internal="HEX5_HEX4.external_connection" />
  <interface name="hps_io" internal="ARM_A9_HPS.hps_io" type="conduit" dir="end" />
  <interface name="irda" internal="IrDA.external_interface" />
  <interface name="memory" internal="ARM_A9_HPS.memory" type="conduit" dir="end" />
- <interface name="ps2_port" internal="PS2_Port.external_interface" />
- <interface name="ps2_port_dual" internal="PS2_Port_Dual.external_interface" />
  <interface
-   name="pushbuttons"
-   internal="Pushbuttons.external_connection"
+   name="pio_0"
+   internal="pio_0.external_connection"
    type="conduit"
    dir="end" />
+ <interface
+   name="pio_1"
+   internal="pio_1.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="pio_2"
+   internal="pio_2.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="pio_3"
+   internal="pio_3.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="pio_4"
+   internal="pio_4.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface name="ps2_port" internal="PS2_Port.external_interface" />
+ <interface name="ps2_port_dual" internal="PS2_Port_Dual.external_interface" />
  <interface name="sdram" internal="SDRAM.wire" type="conduit" dir="end" />
  <interface
    name="sdram_clk"
    internal="System_PLL.sdram_clk"
    type="clock"
    dir="start" />
- <interface
-   name="slider_switches"
-   internal="Slider_Switches.external_connection"
-   type="conduit"
-   dir="end" />
  <interface
    name="system_pll_ref_clk"
    internal="System_PLL.ref_clk"
@@ -816,7 +971,7 @@
   <parameter name="F2SDRAM_Type" value="" />
   <parameter name="F2SDRAM_Width" value="" />
   <parameter name="F2SINTERRUPT_Enable" value="true" />
-  <parameter name="F2S_Width" value="2" />
+  <parameter name="F2S_Width" value="3" />
   <parameter name="FIX_READ_LATENCY" value="8" />
   <parameter name="FORCED_NON_LDC_ADDR_CMD_MEM_CK_INVERT" value="false" />
   <parameter name="FORCED_NUM_WRITE_FR_CYCLE_SHIFTS" value="0" />
@@ -1321,80 +1476,6 @@
   <parameter name="MAX_PENDING_READS" value="1" />
   <parameter name="SLAVE_ADDRESS_WIDTH" value="28" />
   <parameter name="SUB_WINDOW_COUNT" value="1" />
- </module>
- <module
-   name="F2H_Mem_Window_FF600000"
-   kind="altera_address_span_extender"
-   version="16.1"
-   enabled="1">
-  <parameter name="BURSTCOUNT_WIDTH" value="1" />
-  <parameter name="DATA_WIDTH" value="32" />
-  <parameter name="ENABLE_SLAVE_PORT" value="false" />
-  <parameter name="MASTER_ADDRESS_DEF" value="4284481536" />
-  <parameter name="MASTER_ADDRESS_WIDTH" value="32" />
-  <parameter name="MAX_PENDING_READS" value="1" />
-  <parameter name="SLAVE_ADDRESS_WIDTH" value="19" />
-  <parameter name="SUB_WINDOW_COUNT" value="1" />
- </module>
- <module
-   name="F2H_Mem_Window_FF800000"
-   kind="altera_address_span_extender"
-   version="16.1"
-   enabled="1">
-  <parameter name="BURSTCOUNT_WIDTH" value="1" />
-  <parameter name="DATA_WIDTH" value="32" />
-  <parameter name="ENABLE_SLAVE_PORT" value="false" />
-  <parameter name="MASTER_ADDRESS_DEF" value="4286578688" />
-  <parameter name="MASTER_ADDRESS_WIDTH" value="32" />
-  <parameter name="MAX_PENDING_READS" value="1" />
-  <parameter name="SLAVE_ADDRESS_WIDTH" value="21" />
-  <parameter name="SUB_WINDOW_COUNT" value="1" />
- </module>
- <module
-   name="FPGA_Bridge"
-   kind="altera_avalon_pio"
-   version="16.1"
-   enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="false" />
-  <parameter name="clockRate" value="100000000" />
-  <parameter name="direction" value="Output" />
-  <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="false" />
-  <parameter name="irqType" value="LEVEL" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="24" />
- </module>
- <module name="HEX3_HEX0" kind="altera_avalon_pio" version="16.1" enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="false" />
-  <parameter name="clockRate" value="100000000" />
-  <parameter name="direction" value="Output" />
-  <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="false" />
-  <parameter name="irqType" value="LEVEL" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="16" />
- </module>
- <module name="HEX5_HEX4" kind="altera_avalon_pio" version="16.1" enabled="0">
-  <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="false" />
-  <parameter name="clockRate" value="100000000" />
-  <parameter name="direction" value="Output" />
-  <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="false" />
-  <parameter name="irqType" value="LEVEL" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="false" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="16" />
  </module>
  <module
    name="Interval_Timer"
@@ -2008,24 +2089,6 @@
   <parameter name="ADDRESS_TRANSLATION_MASK" value="3221225472" />
  </module>
  <module
-   name="Pushbuttons"
-   kind="altera_avalon_pio"
-   version="16.1"
-   enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="true" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="true" />
-  <parameter name="clockRate" value="100000000" />
-  <parameter name="direction" value="Input" />
-  <parameter name="edgeType" value="FALLING" />
-  <parameter name="generateIRQ" value="true" />
-  <parameter name="irqType" value="EDGE" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="true" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="4" />
- </module>
- <module
    name="SDRAM"
    kind="altera_avalon_new_sdram_controller"
    version="16.1"
@@ -2055,24 +2118,6 @@
   <parameter name="rowWidth" value="13" />
  </module>
  <module
-   name="Slider_Switches"
-   kind="altera_avalon_pio"
-   version="16.1"
-   enabled="1">
-  <parameter name="bitClearingEdgeCapReg" value="false" />
-  <parameter name="bitModifyingOutReg" value="false" />
-  <parameter name="captureEdge" value="false" />
-  <parameter name="clockRate" value="100000000" />
-  <parameter name="direction" value="Input" />
-  <parameter name="edgeType" value="RISING" />
-  <parameter name="generateIRQ" value="false" />
-  <parameter name="irqType" value="LEVEL" />
-  <parameter name="resetValue" value="0" />
-  <parameter name="simDoTestBenchWiring" value="true" />
-  <parameter name="simDrivenValue" value="0" />
-  <parameter name="width" value="10" />
- </module>
- <module
    name="SysID"
    kind="altera_avalon_sysid_qsys"
    version="16.1"
@@ -2089,7 +2134,6 @@
   <parameter name="CIII_boards" value="DE0" />
   <parameter name="CIV_boards" value="DE2-115" />
   <parameter name="CV_boards" value="DE1-SoC" />
-  <parameter name="MAX10_boards" value="DE10-Lite" />
   <parameter name="device_family" value="Cyclone V" />
   <parameter name="gui_outclk" value="100.0" />
   <parameter name="gui_refclk" value="50.0" />
@@ -2134,6 +2178,76 @@
   <parameter
      name="AUTO_VIDEO_IN_DMA_MASTER_ADDRESS_WIDTH"
      value="AddressWidth = -1" />
+ </module>
+ <module name="pio_0" kind="altera_avalon_pio" version="16.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="100000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="24" />
+ </module>
+ <module name="pio_1" kind="altera_avalon_pio" version="16.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="100000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="24" />
+ </module>
+ <module name="pio_2" kind="altera_avalon_pio" version="16.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="100000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="24" />
+ </module>
+ <module name="pio_3" kind="altera_avalon_pio" version="16.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="100000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="true" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="16" />
+ </module>
+ <module name="pio_4" kind="altera_avalon_pio" version="16.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="100000000" />
+  <parameter name="direction" value="Input" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="true" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="24" />
  </module>
  <connection
    kind="avalon"
@@ -2387,78 +2501,6 @@
    kind="avalon"
    version="16.1"
    start="Nios2.data_master"
-   end="HEX3_HEX0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff200020" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="Nios2_2nd_Core.data_master"
-   end="HEX3_HEX0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff200020" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="Nios2.data_master"
-   end="HEX5_HEX4.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff200030" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="Nios2_2nd_Core.data_master"
-   end="HEX5_HEX4.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff200030" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="Nios2.data_master"
-   end="Slider_Switches.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff200040" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="Nios2_2nd_Core.data_master"
-   end="Slider_Switches.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff200040" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="Nios2.data_master"
-   end="Pushbuttons.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff200050" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="Nios2_2nd_Core.data_master"
-   end="Pushbuttons.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff200050" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="Nios2.data_master"
    end="Expansion_JP1.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0xff200060" />
@@ -2566,61 +2608,7 @@
  <connection
    kind="avalon"
    version="16.1"
-   start="Nios2.data_master"
-   end="F2H_Mem_Window_FF600000.windowed_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff600000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="Nios2_2nd_Core.data_master"
-   end="F2H_Mem_Window_FF600000.windowed_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff600000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="Nios2.data_master"
-   end="F2H_Mem_Window_FF800000.windowed_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff800000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="Nios2_2nd_Core.data_master"
-   end="F2H_Mem_Window_FF800000.windowed_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff800000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
    start="F2H_Mem_Window_00000000.expanded_master"
-   end="ARM_A9_HPS.f2h_axi_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="F2H_Mem_Window_FF600000.expanded_master"
-   end="ARM_A9_HPS.f2h_axi_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="F2H_Mem_Window_FF800000.expanded_master"
    end="ARM_A9_HPS.f2h_axi_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0000" />
@@ -2651,6 +2639,51 @@
    end="Onchip_SRAM.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x08000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.1"
+   start="ARM_A9_HPS.h2f_axi_master"
+   end="pio_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x04000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.1"
+   start="ARM_A9_HPS.h2f_axi_master"
+   end="pio_1.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x04000010" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.1"
+   start="ARM_A9_HPS.h2f_axi_master"
+   end="pio_2.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x04000020" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.1"
+   start="ARM_A9_HPS.h2f_axi_master"
+   end="pio_3.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x04000030" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.1"
+   start="ARM_A9_HPS.h2f_axi_master"
+   end="pio_4.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x04000040" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -2747,42 +2780,6 @@
    kind="avalon"
    version="16.1"
    start="ARM_A9_HPS.h2f_lw_axi_master"
-   end="HEX3_HEX0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0020" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="ARM_A9_HPS.h2f_lw_axi_master"
-   end="HEX5_HEX4.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0030" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="ARM_A9_HPS.h2f_lw_axi_master"
-   end="Slider_Switches.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0040" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="ARM_A9_HPS.h2f_lw_axi_master"
-   end="Pushbuttons.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0050" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="ARM_A9_HPS.h2f_lw_axi_master"
    end="Expansion_JP1.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x0060" />
@@ -2813,15 +2810,6 @@
    end="Interval_Timer_2.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x2020" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="ARM_A9_HPS.h2f_lw_axi_master"
-   end="FPGA_Bridge.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -3035,42 +3023,6 @@
    kind="avalon"
    version="16.1"
    start="JTAG_to_FPGA_Bridge.master"
-   end="HEX3_HEX0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff200020" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="JTAG_to_FPGA_Bridge.master"
-   end="HEX5_HEX4.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff200030" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="JTAG_to_FPGA_Bridge.master"
-   end="Slider_Switches.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff200040" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="JTAG_to_FPGA_Bridge.master"
-   end="Pushbuttons.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff200050" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="JTAG_to_FPGA_Bridge.master"
    end="Expansion_JP1.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0xff200060" />
@@ -3128,24 +3080,6 @@
    end="F2H_Mem_Window_00000000.windowed_slave">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x40000000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="JTAG_to_FPGA_Bridge.master"
-   end="F2H_Mem_Window_FF600000.windowed_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff600000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
- <connection
-   kind="avalon"
-   version="16.1"
-   start="JTAG_to_FPGA_Bridge.master"
-   end="F2H_Mem_Window_FF800000.windowed_slave">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0xff800000" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -3209,26 +3143,6 @@
    version="16.1"
    start="System_PLL.sys_clk"
    end="SDRAM.clk" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="System_PLL.sys_clk"
-   end="HEX3_HEX0.clk" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="System_PLL.sys_clk"
-   end="HEX5_HEX4.clk" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="System_PLL.sys_clk"
-   end="Slider_Switches.clk" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="System_PLL.sys_clk"
-   end="Pushbuttons.clk" />
  <connection
    kind="clock"
    version="16.1"
@@ -3304,7 +3218,27 @@
    kind="clock"
    version="16.1"
    start="System_PLL.sys_clk"
-   end="FPGA_Bridge.clk" />
+   end="pio_0.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="System_PLL.sys_clk"
+   end="pio_1.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="System_PLL.sys_clk"
+   end="pio_2.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="System_PLL.sys_clk"
+   end="pio_3.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="System_PLL.sys_clk"
+   end="pio_4.clk" />
  <connection
    kind="clock"
    version="16.1"
@@ -3325,16 +3259,6 @@
    version="16.1"
    start="System_PLL.sys_clk"
    end="Video_In_DMA_Addr_Translation.clock" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="System_PLL.sys_clk"
-   end="F2H_Mem_Window_FF600000.clock" />
- <connection
-   kind="clock"
-   version="16.1"
-   start="System_PLL.sys_clk"
-   end="F2H_Mem_Window_FF800000.clock" />
  <connection
    kind="clock"
    version="16.1"
@@ -3392,13 +3316,6 @@
    start="ARM_A9_HPS.f2h_irq0"
    end="IrDA.interrupt">
   <parameter name="irqNumber" value="9" />
- </connection>
- <connection
-   kind="interrupt"
-   version="16.1"
-   start="ARM_A9_HPS.f2h_irq0"
-   end="Pushbuttons.irq">
-  <parameter name="irqNumber" value="1" />
  </connection>
  <connection
    kind="interrupt"
@@ -3497,20 +3414,6 @@
    start="Nios2_2nd_Core.irq"
    end="IrDA.interrupt">
   <parameter name="irqNumber" value="9" />
- </connection>
- <connection
-   kind="interrupt"
-   version="16.1"
-   start="Nios2.irq"
-   end="Pushbuttons.irq">
-  <parameter name="irqNumber" value="1" />
- </connection>
- <connection
-   kind="interrupt"
-   version="16.1"
-   start="Nios2_2nd_Core.irq"
-   end="Pushbuttons.irq">
-  <parameter name="irqNumber" value="1" />
  </connection>
  <connection
    kind="interrupt"
@@ -3630,26 +3533,6 @@
    kind="reset"
    version="16.1"
    start="ARM_A9_HPS.h2f_reset"
-   end="HEX3_HEX0.reset" />
- <connection
-   kind="reset"
-   version="16.1"
-   start="ARM_A9_HPS.h2f_reset"
-   end="HEX5_HEX4.reset" />
- <connection
-   kind="reset"
-   version="16.1"
-   start="ARM_A9_HPS.h2f_reset"
-   end="Slider_Switches.reset" />
- <connection
-   kind="reset"
-   version="16.1"
-   start="ARM_A9_HPS.h2f_reset"
-   end="Pushbuttons.reset" />
- <connection
-   kind="reset"
-   version="16.1"
-   start="ARM_A9_HPS.h2f_reset"
    end="Expansion_JP1.reset" />
  <connection
    kind="reset"
@@ -3725,17 +3608,27 @@
    kind="reset"
    version="16.1"
    start="ARM_A9_HPS.h2f_reset"
-   end="F2H_Mem_Window_FF600000.reset" />
+   end="pio_0.reset" />
  <connection
    kind="reset"
    version="16.1"
    start="ARM_A9_HPS.h2f_reset"
-   end="F2H_Mem_Window_FF800000.reset" />
+   end="pio_1.reset" />
  <connection
    kind="reset"
    version="16.1"
    start="ARM_A9_HPS.h2f_reset"
-   end="FPGA_Bridge.reset" />
+   end="pio_2.reset" />
+ <connection
+   kind="reset"
+   version="16.1"
+   start="ARM_A9_HPS.h2f_reset"
+   end="pio_3.reset" />
+ <connection
+   kind="reset"
+   version="16.1"
+   start="ARM_A9_HPS.h2f_reset"
+   end="pio_4.reset" />
  <connection
    kind="reset"
    version="16.1"
@@ -3786,26 +3679,6 @@
    version="16.1"
    start="System_PLL.reset_source"
    end="F2H_Mem_Window_00000000.reset" />
- <connection
-   kind="reset"
-   version="16.1"
-   start="System_PLL.reset_source"
-   end="HEX3_HEX0.reset" />
- <connection
-   kind="reset"
-   version="16.1"
-   start="System_PLL.reset_source"
-   end="HEX5_HEX4.reset" />
- <connection
-   kind="reset"
-   version="16.1"
-   start="System_PLL.reset_source"
-   end="Slider_Switches.reset" />
- <connection
-   kind="reset"
-   version="16.1"
-   start="System_PLL.reset_source"
-   end="Pushbuttons.reset" />
  <connection
    kind="reset"
    version="16.1"
@@ -3895,17 +3768,27 @@
    kind="reset"
    version="16.1"
    start="System_PLL.reset_source"
-   end="F2H_Mem_Window_FF600000.reset" />
+   end="pio_0.reset" />
  <connection
    kind="reset"
    version="16.1"
    start="System_PLL.reset_source"
-   end="F2H_Mem_Window_FF800000.reset" />
+   end="pio_1.reset" />
  <connection
    kind="reset"
    version="16.1"
    start="System_PLL.reset_source"
-   end="FPGA_Bridge.reset" />
+   end="pio_2.reset" />
+ <connection
+   kind="reset"
+   version="16.1"
+   start="System_PLL.reset_source"
+   end="pio_3.reset" />
+ <connection
+   kind="reset"
+   version="16.1"
+   start="System_PLL.reset_source"
+   end="pio_4.reset" />
  <connection
    kind="reset"
    version="16.1"
