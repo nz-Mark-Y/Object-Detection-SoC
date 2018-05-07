@@ -64,7 +64,7 @@
 
 #ifdef ENC
     #include "ecrypt-sync.h"
-    #include "my_trivium-sw_only.c"
+    #include "my_trivium.c"
 #endif /* ENC */
 
 #include <time.h>
@@ -114,6 +114,7 @@ u32 recieveFromFPGA(void) {
     return (u32)(*(uint32_t *)h2p_fpga_bridge_addr & fpga_bridge_mask);
 }
 
+int FPGAFilter(struct bmp_out_struct *bmp_out);
 int windowFilter(struct bmp_out_struct *bmp_out);
 int decodeMjpeg(unsigned char *mjpeg_buffer, unsigned long mjpeg_size);
 int decodeJpeg(struct jpeg_decompress_struct *cinfo, struct bmp_out_struct *bmp_out);
@@ -121,7 +122,7 @@ int outputBmp(struct bmp_out_struct *bmp_out);
 int outputVGA(struct bmp_out_struct *bmp_out);
 
 #define IM_DECODE decodeJpeg
-#define IM_PROCESS windowFilter
+#define IM_PROCESS FPGAFilter
 #define IM_OUTPUT outputVGA
 
 int medianFilter(unsigned char values[9]) {
@@ -277,7 +278,7 @@ int windowFilter(struct bmp_out_struct *bmp_out) {
     return 1;
 }
 
-int Tyrones_main (int argc, char *argv[]) {
+int main (int argc, char *argv[]) {
 	int rc, i;
     int fd;
 
@@ -322,7 +323,7 @@ int Tyrones_main (int argc, char *argv[]) {
 
         // === get VGA pixel addr ====================
         // get virtual addr that maps to physical
-        vga_pixel_virtual_base = mmap( NULL, FPGA_ONCHIP_SPAN, ( PROT_READ | PROT_WRITE ), MAP_SHARED, fd, FPGA_ONCHIP_BASE);
+        vga_pixel_virtual_base = mmap( NULL, ONCHIP_SRAM_SPAN, ( PROT_READ | PROT_WRITE ), MAP_SHARED, fd, ONCHIP_SRAM_BASE);
         if( vga_pixel_virtual_base == MAP_FAILED ) {
             printf( "ERROR: mmap3() failed...\n" );
             close( fd );
@@ -356,7 +357,9 @@ int Tyrones_main (int argc, char *argv[]) {
 
     #ifdef ENC
         // Unencrypt file
-        trivium_decrypt_file(encfile, infile);
+        const u8 key[MAXKEYSIZEB] = "Test key01";
+        const u8 iv[MAXIVSIZEB] = "So Random\0";
+        trivium_file(encfile, infile, key, iv);
     #endif
 
 	// Load the jpeg data from a file into a memory buffer for

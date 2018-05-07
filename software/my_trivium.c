@@ -72,61 +72,6 @@ void print_iv(const u8 iv[]) {
 	printf("\n");
 }
 
-int main(void) {
-    #define LEN 32
-    ECRYPT_ctx ctx;
-    const u8 key[MAXKEYSIZEB] = { 0 };
-    const u8 iv[MAXIVSIZEB] = { 0 };
-    //const u8 input[LEN] = "Test input 12345";
-    const u8 input[LEN] = { 0 };
-    //const u8 input[LEN] = "";
-    u8 output[LEN];
-    u8 second[LEN];
-    int passed = 1;
-    int i;
-
-    // Initialise
-	ECRYPT_init();
-	ECRYPT_keysetup(&ctx, key, ECRYPT_MAXKEYSIZE, ECRYPT_MAXIVSIZE);
-
-    // Encrypt
-	ECRYPT_ivsetup(&ctx, iv);
-	ECRYPT_encrypt_blocks(&ctx, input, output, (LEN/ECRYPT_BLOCKLENGTH));
-
-    // Decrypt
-	ECRYPT_ivsetup(&ctx, iv);
-	ECRYPT_encrypt_blocks(&ctx, output, second, (LEN/ECRYPT_BLOCKLENGTH));
-
-    // Output results of encryption/decryption and test
-	printf("Testing...\n");
-	print_key(key);
-	print_iv(iv);
-	printf("\n");
-
-	for (i=0; i<LEN; ++i) {
-		passed &= (second[i] == input[i]);
-		printf("%02x", input[i]);
-	}
-	printf("\n\t\t\tv v v v v v v v\n");
-	for (i=0; i<LEN; ++i) {
-		printf("%02x", output[i]);
-	}
-	printf("\n\t\t\tv v v v v v v v\n");
-	for (i=0; i<LEN; ++i) {
-		printf("%02x", second[i]);
-	}
-	printf("\n");
-
-    // Display test result
-	if (passed) {
-		printf("PASSED\n");
-	} else {
-		printf("FAILED\n");
-	}
-
-    return passed;
-}
-
 int trivium_file(char *encrypted, char *decrypted, const u8 key[], const u8 iv[]) {
     //Note that the cipher is reversible, so passing in a decrypted file as the first argument will
     //  result in an encrypted output
