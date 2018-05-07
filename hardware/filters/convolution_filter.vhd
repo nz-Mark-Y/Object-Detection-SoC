@@ -6,7 +6,7 @@ entity convolution_filter is
   port(clk, div_flag : in std_logic;
     input_pixels : in unsigned(71 downto 0);  
     kernel : in unsigned(35 downto 0); -- vector is unsigned but represents array of 9 4-bit signed numbers
-    output_pixel : out unsigned(15 downto 0));
+    output_pixel : out unsigned(7 downto 0));
 end entity convolution_filter;
 
 architecture bhv of convolution_filter is
@@ -35,5 +35,5 @@ begin
       
     end if;
   end process;
-  output_pixel <= s_output(15 downto 0);
+  output_pixel <= s_output(7 downto 0);
 end architecture bhv;
