@@ -183,6 +183,13 @@ ARCHITECTURE arch OF DE1_SoC_Computer IS
 	SIGNAL pio0, pio1, pio2, pio4 : STD_LOGIC_VECTOR(23 DOWNTO 0);
 	SIGNAL pio3 : STD_LOGIC_VECTOR(15 DOWNTO 0);
 
+	COMPONENT filter_interface IS
+		PORT(clk : IN STD_LOGIC;
+		inputA, inputB, inputC : IN STD_LOGIC_VECTOR(23 DOWNTO 0);
+		inputD : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+		outp  : OUT STD_LOGIC_VECTOR(23 DOWNTO 0));
+	END COMPONENT;
+
 	-- Component declarations for qip
      component Computer_System is
         port (
@@ -312,27 +319,7 @@ BEGIN
 	DRAM_LDQM <= DRAM_DQM(1);
    fpga_debounced_buttons <= NOT KEY;
 
-	interface : HPS_Interface port map (
-		clk => CLOCK_50,
-		ready => hps_ready,
-		dataANDcontrol => to_hps,
-		reset => hps_reset,
-		input => hps_input,
-		start => hps_start,
-		IV => hps_out_iv,
-		KEY => hps_out_key
-	);
-	
-	trivium : trivium_module port map (
-		clk => CLOCK_50,
-		start => hps_start,
-		reset => hps_reset,
-		K => hps_out_key,
-		IV => hps_out_iv,
-		input => hps_input,
-		ready => hps_ready,
-		output => LEDR(0)
-	);
+	interface : filter_interface PORT MAP ( CLOCK_50, pio0, pio1, pio2, pio3, pio4 );
 	 
    u0 : component Computer_System port map (
 		system_pll_ref_clk_clk                => CLOCK_50,              --                       clk.clk
@@ -456,9 +443,9 @@ BEGIN
 		sdram_we_n                            => DRAM_WE_N,             --                          .we_n
 
 		pio_0_export                   		 => pio0,
-        pio_1_export                   		 => pio1,
-        pio_2_export                   		 => pio2,
-        pio_3_export                   		 => pio3,
-        pio_4_export                   		 => pio4
+      pio_1_export                   		 => pio1,
+      pio_2_export                   		 => pio2,
+      pio_3_export                   		 => pio3,
+      pio_4_export                   		 => pio4
   );
 END ARCHITECTURE arch;
