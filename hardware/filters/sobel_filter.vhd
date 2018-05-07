@@ -40,7 +40,7 @@ begin
   begin
     if (rising_edge(clk)) then
       v_pixels := input_pixels;
-      
+        
       sum_x := sum_x + to_signed(1, 3) * signed(v_pixels(7 downto 0));
       sum_y := sum_y + to_signed(1, 3) * signed(v_pixels(7 downto 0));
       sum_x := sum_x + to_signed(0, 3) * signed(v_pixels(15 downto 8));
