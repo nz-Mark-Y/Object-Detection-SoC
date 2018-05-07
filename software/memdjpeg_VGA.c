@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <jpeglib.h>
+#include "arm_a9_hps_0.h"
 
 #define VGA
 #define ENC
@@ -19,8 +20,6 @@
     #include <sys/ipc.h>
     #include <sys/shm.h>
     #include <sys/mman.h>
-
-    #include "hps_0.h"
 
     #define soc_cv_av
     #include "socal/socal.h"
@@ -78,6 +77,42 @@ struct bmp_out_struct {
     int height;
     int pixel_size;
 };
+
+void *virtual_base_A;
+void *virtual_base_B;
+void *virtual_base_C;
+void *virtual_base_D;
+void *virtual_base_E;
+
+void sendToFPGAA(u32 data) {
+    void *h2p_fpga_bridge_addr = virtual_base_A + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_0_BASE) & (unsigned long)(HW_REGS_MASK));
+    const int fpga_bridge_mask = (1 << (PIO_0_DATA_WIDTH)) - 1;
+    *(uint32_t *)h2p_fpga_bridge_addr = data & fpga_bridge_mask;
+}
+
+void sendToFPGAB(u32 data) {
+    void *h2p_fpga_bridge_addr = virtual_base_B + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_1_BASE) & (unsigned long)(HW_REGS_MASK));
+    const int fpga_bridge_mask = (1 << (PIO_1_DATA_WIDTH)) - 1;
+    *(uint32_t *)h2p_fpga_bridge_addr = data & fpga_bridge_mask;
+}
+
+void sendToFPGAC(u32 data) {
+    void *h2p_fpga_bridge_addr = virtual_base_C + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_2_BASE) & (unsigned long)(HW_REGS_MASK));
+    const int fpga_bridge_mask = (1 << (PIO_2_DATA_WIDTH)) - 1;
+    *(uint32_t *)h2p_fpga_bridge_addr = data & fpga_bridge_mask;
+}
+
+void sendToFPGAD(u32 data) {
+    void *h2p_fpga_bridge_addr = virtual_base_D + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_3_BASE) & (unsigned long)(HW_REGS_MASK));
+    const int fpga_bridge_mask = (1 << (PIO_3_DATA_WIDTH)) - 1;
+    *(uint32_t *)h2p_fpga_bridge_addr = data & fpga_bridge_mask;
+}
+
+u32 recieveFromFPGA(void) {
+    const int fpga_bridge_mask = (1 << (PIO_4_DATA_WIDTH)) - 1;
+    void *h2p_fpga_bridge_addr = virtual_base_E + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_4_BASE) & (unsigned long)(HW_REGS_MASK));
+    return (u32)(*(uint32_t *)h2p_fpga_bridge_addr & fpga_bridge_mask);
+}
 
 int windowFilter(struct bmp_out_struct *bmp_out);
 int decodeMjpeg(unsigned char *mjpeg_buffer, unsigned long mjpeg_size);
@@ -149,51 +184,62 @@ int sobelFilter(unsigned char values[9]) {
 }
 
 int FPGAFilter(struct bmp_out_struct *bmp_out) {
-    // Take a few local copies to make the code a bit easier to read
-    unsigned char *bmp_buffer = bmp_out->bmp_buffer;
-    // Filter
-    unsigned char *bmp_processed = (unsigned char*) malloc(bmp_out->bmp_size);
-    // temp variables for sending from
-    u32 tempa = 0, tempb = 0, tempc = 0, tempd = 0;
-    u16 id_flag = 0;
-    #define val(row, col) bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size + chan]
-    // Iterate over full image
-    for (int row=0; row<bmp_out->height; ++row) {
-        for (int col=0; col<bmp_out->width; ++col) {
-            // Work on each channel independently
-            for (int chan=0; chan<bmp_out->pixel_size; ++chan) {
-                // Black border
-                unsigned char middle = 0;
-                if ((row>0 && row<bmp_out->height-1) && (col>0 && col<bmp_out->width-1)) {
-                    tempa = ((val(row-1, col-1) << 16 ) | (val(row-1, col) << 8) | val(row-1, col+1));
-                    tempb = ((val(row-0, col-1) << 16 ) | (val(row-0, col) << 8) | val(row-0, col+1));
-                    tempc = ((val(row+1, col-1) << 16 ) | (val(row+1, col) << 8) | val(row+1, col+1));
+    #ifdef PIO_0_COMPONENT_TYPE
+    #ifdef PIO_1_COMPONENT_TYPE
+    #ifdef PIO_2_COMPONENT_TYPE
+    #ifdef PIO_3_COMPONENT_TYPE
+    #ifdef PIO_4_COMPONENT_TYPE
+        // Take a few local copies to make the code a bit easier to read
+        unsigned char *bmp_buffer = bmp_out->bmp_buffer;
+        // Filter
+        unsigned char *bmp_processed = (unsigned char*) malloc(bmp_out->bmp_size);
+        // temp variables for sending from
+        u32 tempa = 0, tempb = 0, tempc = 0, tempd = 0;
+        u16 id_flag = 0;
+        #define val(row, col) bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size + chan]
+        // Iterate over full image
+        for (int row=0; row<bmp_out->height; ++row) {
+            for (int col=0; col<bmp_out->width; ++col) {
+                // Work on each channel independently
+                for (int chan=0; chan<bmp_out->pixel_size; ++chan) {
+                    // Black border
+                    unsigned char middle = 0;
+                    if ((row>0 && row<bmp_out->height-1) && (col>0 && col<bmp_out->width-1)) {
+                        tempa = ((val(row-1, col-1) << 16 ) | (val(row-1, col) << 8) | val(row-1, col+1));
+                        tempb = ((val(row-0, col-1) << 16 ) | (val(row-0, col) << 8) | val(row-0, col+1));
+                        tempc = ((val(row+1, col-1) << 16 ) | (val(row+1, col) << 8) | val(row+1, col+1));
 
-                    id_flag++;
-                    if (id_flag > 30000) { id_flag = 0; }
+                        id_flag++;
+                        if (id_flag > 30000) { id_flag = 0; }
 
-                    sendToFPGA(tempa);
-                    sendToFPGA(tempb);
-                    sendToFPGA(tempc);
-                    sendToFPGA(id_flag);
+                        sendToFPGAA(tempa);
+                        sendToFPGAB(tempb);
+                        sendToFPGAC(tempc);
+                        sendToFPGAD(id_flag);
 
-                    while ((u16)(tempd >> 8) != id_flag)
-                    {
-                        tempd = recieveFromFPGA();
-                    } 
-                    
-                    middle = (char)tempd;
+                        while ((u16)(tempd >> 8) != id_flag)
+                        {
+                            tempd = recieveFromFPGA();
+                        } 
+                        
+                        middle = (char)tempd;
+                    }
+                    // Set output
+                    bmp_processed[(row*bmp_out->row_stride) + col*bmp_out->pixel_size + chan] = middle;
                 }
-                // Set output
-                bmp_processed[(row*bmp_out->row_stride) + col*bmp_out->pixel_size + chan] = middle;
             }
+            #undef val
         }
-        #undef val
-    }
 
-    // Replace input with output
-    memcpy(bmp_buffer, bmp_processed, bmp_out->bmp_size);
-    return 1;
+        // Replace input with output
+        memcpy(bmp_buffer, bmp_processed, bmp_out->bmp_size);
+        return 1;
+    #endif
+    #endif
+    #endif
+    #endif
+    #endif
+        return 0;
 }
 
 #define WINDOW_FUNC sobelFilter
