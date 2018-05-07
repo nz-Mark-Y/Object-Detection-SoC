@@ -1,11 +1,10 @@
-#
+TARGET = memdjpeg_VGA
 PLATFORM = ARM
 
-#
 ifeq ($(PLATFORM),ARM)
 	CROSS_COMPILE = arm-linux-gnueabihf-
-	CFLAGS = -g -I ${SOCEDS_DEST_ROOT}/ip/altera/hps/altera_hps/hwlib/include -I \
-		${SOCEDS_DEST_ROOT}/ip/altera/hps/altera_hps/hwlib/include/soc_cv_av
+	CFLAGS = -g -Wall  -I ${SOCEDS_DEST_ROOT}/ip/altera/hps/altera_hps/hwlib/include \
+		-I ${SOCEDS_DEST_ROOT}/ip/altera/hps/altera_hps/hwlib/include/soc_cv_av
 	LDFLAGS =  -g -Wall
 	CC = $(CROSS_COMPILE)gcc -std=c99 -DARM -D_XOPEN_SOURCE=500
 	ARCH= arm
@@ -14,25 +13,31 @@ else
 	CFLAGS=-Wall -O3 -pedantic -DECRYPT_API="ecrypt-sync.h"
 endif
 
-TARGET=trivium-test
-LOAD_DIRECTORY=F:
+LDFLAGS += -ljpeg -lm
 
-default: $(TARGET)
+#profile
+CFLAGS += -pg
+LDFLAGS += -pg
 
-ecrypt-test: ecrypt-test.o ecrypt-sync.o my_trivium.o
+$(TARGET): $(TARGET).o
 
-trivium-test: trivium-test.o ecrypt-sync.o my_trivium.o my_trivium.h
+build: $(TARGET)
 
-ecrypt-test.o: ecrypt-sync.h
-ecrypt-sync.o: ecrypt-sync.h
-trivium.o: ecrypt-sync.h
-my_trivium.o: ecrypt-sync.h my_trivium.h trivium.c
+#$(TARGET): main.o
+#	$(CC) $(LDFLAGS)   $^ -o $@
+
+#%.o : %.c
+#	$(CC) $(CFLAGS) -c $< -o $@
+
+OUTPUTS = memdjpeg memdjpeg_VGA
+.PHONY: clean
+clean:
+	rm -f $(OUTPUTS) *.a *.o *~
 
 .PHONEY: load
 load: $(TARGET)
-	cp -f $< $(LOAD_DIRECTORY)/$(TARGET)
+	cp -f $< $(DIRECTORY)/$(TARGET)
 
-CLEAN_TARGETS = ecrypt-test trivium-test
-.PHONY: clean
-clean:
-	rm -f *.o *.exe *~ $(CLEAN_TARGETS)
+.PHONY: output_clean
+output_clean:
+	rm output*.ppm
