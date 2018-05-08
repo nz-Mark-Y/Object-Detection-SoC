@@ -20,9 +20,9 @@ begin
       
       for i in 1 to 8 loop
         for j in 1 to 8 loop
-          if (v_pixels((j*8)-1 downto (j-1)*8) > v_pixels(((j+1)*8)-1 downto i*8)) then
-            temp := v_pixels(((j+1)*8)-1 downto i*8);
-            v_pixels(((j+1)*8)-1 downto i*8) := v_pixels((j*8)-1 downto (j-1)*8);
+          if (v_pixels((j*8)-1 downto (j-1)*8) > v_pixels(((j+1)*8)-1 downto j*8)) then
+            temp := v_pixels(((j+1)*8)-1 downto j*8);
+            v_pixels(((j+1)*8)-1 downto j*8) := v_pixels((j*8)-1 downto (j-1)*8);
             v_pixels((j*8)-1 downto (j-1)*8) := temp;
           end if;
         end loop;

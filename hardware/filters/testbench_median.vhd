@@ -7,7 +7,7 @@ end testbench_median;
 
 architecture beh of testbench_median is
   signal t_clk : std_logic;
-  signal t_input_pixels : unsigned(71 downto 0) := x"090807060504030201";
+  signal t_input_pixels : unsigned(71 downto 0) := x"030609020508010407";
   signal t_output_pixel : unsigned(7 downto 0);
   
   component median_filter is
