@@ -9,7 +9,7 @@ entity sobel_filter is
 end entity sobel_filter;
 
 architecture bhv of sobel_filter is
-  signal s_output : unsigned(7 downto 0) := "00000000";
+  signal s_output : unsigned(17 downto 0) := "000000000000000000";
   
   function sqrt (Arg: unsigned) return unsigned is -- http://computer-programming-forum.com/42-vhdl/6d9bdb4a76dd7da8.htm
     constant AMSB: integer:= Arg'length-1; 
@@ -37,6 +37,8 @@ begin
     variable v_pixels: unsigned(71 downto 0);
     variable sum_x : signed(17 downto 0) := "000000000000000000";
     variable sum_y : signed(17 downto 0) := "000000000000000000";
+    variable sum_x_squared : signed(35 downto 0) := x"000000000";
+    variable sum_y_squared : signed(35 downto 0) := x"000000000";
   begin
     if (rising_edge(clk)) then
       v_pixels := input_pixels;
@@ -60,10 +62,12 @@ begin
       sum_x := sum_x - to_signed(1, 3) * signed(v_pixels(71 downto 64));
       sum_y := sum_y - to_signed(1, 3) * signed(v_pixels(71 downto 64));
        
-      s_output <= sqrt(unsigned(sum_x*sum_x + sum_y*sum_y));
+      sum_x_squared := sum_x * sum_x;
+      sum_y_squared := sum_y * sum_y;
+      s_output <= sqrt(unsigned(sum_x_squared) + unsigned(sum_y_squared));
     end if;
   end process;
-  output_pixel <= s_output;
+  output_pixel <= s_output(7 downto 0);
 end architecture bhv;
 
 
