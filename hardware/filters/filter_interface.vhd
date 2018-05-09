@@ -27,15 +27,15 @@ ARCHITECTURE BEH OF filter_interface IS
 
 BEGIN
 
-    convo_filter_1 : convolution_filter PORT MAP ( clk, divi, in_pixels, kernal, out_pixels);
+    convo_filter_1 : convolution_filter PORT MAP ( clk, divi, in_pixels, kernal, out_pixels); -- Just using convolution filter for now
 
     PROCESS(clk)
     BEGIN
         IF (rising_edge(clk)) THEN 
-            in_pixels <= UNSIGNED(inputA & inputB & inputC);
+            in_pixels <= UNSIGNED(inputA & inputB & inputC); -- Input comes in three 24-bit sections. AND them together for 72 bit vector
             ida <= inputD;
             idb <= ida;
-            outpet <= idb & STD_LOGIC_VECTOR(out_pixels);
+            outpet <= idb & STD_LOGIC_VECTOR(out_pixels); -- Ensure id is returned with output so the C code recognises it
         END IF;
     END PROCESS;
     outp <= outpet;
