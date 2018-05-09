@@ -17,6 +17,7 @@ begin
     variable sum : signed (17 downto 0) := "000000000000000000";
   begin
     if (rising_edge(clk)) then
+      sum := "000000000000000000";
       v_pixels := input_pixels;
 
       for i in 0 to 8 loop

@@ -8,8 +8,8 @@ end testbench_convolution;
 architecture beh of testbench_convolution is
   signal t_clk : std_logic;
   signal t_div_flag : std_logic := '0';
-  signal t_input_pixels : unsigned(71 downto 0) := x"000000010101010101";
-  signal t_kernel : unsigned(35 downto 0) := x"111111111";
+  signal t_input_pixels : unsigned(71 downto 0) := x"010101010101010101";
+  signal t_kernel : unsigned(35 downto 0) := x"211111111";
   signal t_output_pixel : unsigned(7 downto 0);
   
   component convolution_filter is
