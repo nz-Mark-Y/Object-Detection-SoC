@@ -9,7 +9,6 @@
 #include <string.h>
 
 #include <jpeglib.h>
-#include "arm_a9_hps_0.h"
 
 #define VGA
 #define ENC
@@ -20,6 +19,8 @@
     #include <sys/ipc.h>
     #include <sys/shm.h>
     #include <sys/mman.h>
+
+    #include "arm_a9_hps_0.h"
 
     #define soc_cv_av
     #include "socal/socal.h"
@@ -64,7 +65,7 @@
 
 #ifdef ENC
     #include "ecrypt-sync.h"
-    #include "my_trivium.c"
+    #include "my_trivium-sw_only.c"
 #endif /* ENC */
 
 #include <time.h>
@@ -122,7 +123,7 @@ int outputBmp(struct bmp_out_struct *bmp_out);
 int outputVGA(struct bmp_out_struct *bmp_out);
 
 #define IM_DECODE decodeJpeg
-#define IM_PROCESS FPGAFilter
+#define IM_PROCESS windowFilter
 #define IM_OUTPUT outputVGA
 
 int medianFilter(unsigned char values[9]) {
@@ -323,7 +324,7 @@ int main (int argc, char *argv[]) {
 
         // === get VGA pixel addr ====================
         // get virtual addr that maps to physical
-        vga_pixel_virtual_base = mmap( NULL, ONCHIP_SRAM_SPAN, ( PROT_READ | PROT_WRITE ), MAP_SHARED, fd, ONCHIP_SRAM_BASE);
+        vga_pixel_virtual_base = mmap( NULL, FPGA_ONCHIP_SPAN, ( PROT_READ | PROT_WRITE ), MAP_SHARED, fd, FPGA_ONCHIP_BASE);
         if( vga_pixel_virtual_base == MAP_FAILED ) {
             printf( "ERROR: mmap3() failed...\n" );
             close( fd );
@@ -357,9 +358,7 @@ int main (int argc, char *argv[]) {
 
     #ifdef ENC
         // Unencrypt file
-        const u8 key[MAXKEYSIZEB] = "Test key01";
-        const u8 iv[MAXIVSIZEB] = "So Random\0";
-        trivium_file(encfile, infile, key, iv);
+        trivium_decrypt_file(encfile, infile);
     #endif
 
 	// Load the jpeg data from a file into a memory buffer for

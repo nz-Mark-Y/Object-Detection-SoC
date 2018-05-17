@@ -1,19 +1,25 @@
+#
 TARGET = memdjpeg_VGA
+
+#
+DIRECTORY = F:
+
+#
 PLATFORM = ARM
 
+#
 ifeq ($(PLATFORM),ARM)
 	CROSS_COMPILE = arm-linux-gnueabihf-
-	CFLAGS = -g -Wall  -I ${SOCEDS_DEST_ROOT}/ip/altera/hps/altera_hps/hwlib/include \
+	CFLAGS = -g -Wall -I ${SOCEDS_DEST_ROOT}/ip/altera/hps/altera_hps/hwlib/include \
 		-I ${SOCEDS_DEST_ROOT}/ip/altera/hps/altera_hps/hwlib/include/soc_cv_av
 	LDFLAGS =  -g -Wall
-	CC = $(CROSS_COMPILE)gcc -std=c99 -DARM -D_XOPEN_SOURCE=500
+	CC = $(CROSS_COMPILE)gcc -std=c99
 	ARCH= arm
 else
-	CC = gcc -std=c99
-	CFLAGS=-Wall -O3 -pedantic -DECRYPT_API="ecrypt-sync.h"
+	CC = gcc
 endif
 
-LDFLAGS += -ljpeg -lm
+LDFLAGS += -ljpeg -lm 
 
 #profile
 CFLAGS += -pg
