@@ -853,7 +853,7 @@
 														</entry>
 													</placeholder-map>
 												</leaf>
-												<leaf id="1" nodeId="1375985011087">
+												<leaf id="3" nodeId="1375985011087">
 													<placeholders>
 														<placeholder>dock.single.Hierarchy</placeholder>
 													</placeholders>
@@ -940,7 +940,7 @@
 																	</entry>
 																</placeholder-map>
 															</leaf>
-															<leaf id="3" nodeId="1525686737438">
+															<leaf id="0" nodeId="1525686737438">
 																<placeholders>
 																	<placeholder>dock.single.System\ Contents</placeholder>
 																</placeholders>
@@ -992,7 +992,7 @@
 														</leaf>
 													</node>
 												</node>
-												<leaf id="0" nodeId="1372710005745">
+												<leaf id="1" nodeId="1372710005745">
 													<placeholders>
 														<placeholder>dock.single.Messages</placeholder>
 														<placeholder>dock.single.Generation\ Messages</placeholder>
@@ -1024,10 +1024,30 @@
 							</adjacent>
 							<children ignore="false">
 								<child>
+									<layout factory="predefined" placeholder="dock.single.System\ Contents">
+										<replacement id="dockablesingle System Contents"/>
+										<delegate id="delegate_ccontrol backup factory id">
+											<id>System Contents</id>
+											<area/>
+										</delegate>
+									</layout>
+									<children ignore="false"/>
+								</child>
+								<child>
 									<layout factory="predefined" placeholder="dock.single.Messages">
 										<replacement id="dockablesingle Messages"/>
 										<delegate id="delegate_ccontrol backup factory id">
 											<id>Messages</id>
+											<area/>
+										</delegate>
+									</layout>
+									<children ignore="false"/>
+								</child>
+								<child>
+									<layout factory="predefined" placeholder="dock.single.IP\ Catalog">
+										<replacement id="dockablesingle IP Catalog"/>
+										<delegate id="delegate_ccontrol backup factory id">
+											<id>IP Catalog</id>
 											<area/>
 										</delegate>
 									</layout>
@@ -1091,26 +1111,6 @@
 											<children ignore="false"/>
 										</child>
 									</children>
-								</child>
-								<child>
-									<layout factory="predefined" placeholder="dock.single.IP\ Catalog">
-										<replacement id="dockablesingle IP Catalog"/>
-										<delegate id="delegate_ccontrol backup factory id">
-											<id>IP Catalog</id>
-											<area/>
-										</delegate>
-									</layout>
-									<children ignore="false"/>
-								</child>
-								<child>
-									<layout factory="predefined" placeholder="dock.single.System\ Contents">
-										<replacement id="dockablesingle System Contents"/>
-										<delegate id="delegate_ccontrol backup factory id">
-											<id>System Contents</id>
-											<area/>
-										</delegate>
-									</layout>
-									<children ignore="false"/>
 								</child>
 							</children>
 						</root>
@@ -1838,9 +1838,17 @@
 						</entry>
 						<entry id="single System Contents" current="dock.mode.normal">
 							<history>
+								<mode>dock.mode.maximized</mode>
 								<mode>dock.mode.normal</mode>
 							</history>
 							<properties>
+								<property id="dock.mode.maximized">
+									<mode>dock.mode.maximized</mode>
+									<root>ccontrol center</root>
+									<location>
+										<property factory="SplitDockFullScreenPropertyFactory"/>
+									</location>
+								</property>
 								<property id="dock.mode.normal">
 									<mode>dock.mode.normal</mode>
 									<root>ccontrol center</root>
@@ -1852,12 +1860,9 @@
 												<node location="TOP" size="0.75" id="1372710005725"/>
 												<node location="LEFT" size="0.6183193900785428" id="1372710005727"/>
 												<node location="TOP" size="0.75" id="1372710005733"/>
-												<leaf id="1372710005735"/>
+												<node location="BOTTOM" size="0.75" id="1525686737440"/>
+												<leaf id="1525686737438"/>
 											</backup-path>
-										</property>
-										<property factory="StackDockPropertyFactory">
-											<index>0</index>
-											<placeholder>dock.single.System\ Contents</placeholder>
 										</property>
 									</location>
 								</property>

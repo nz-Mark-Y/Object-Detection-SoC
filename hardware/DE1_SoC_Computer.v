@@ -372,6 +372,9 @@ HexDigit Digit1(HEX1, hex3_hex0[7:4]);
 HexDigit Digit2(HEX2, hex3_hex0[11:8]);
 HexDigit Digit3(HEX3, hex3_hex0[15:12]);
 
+wire [31: 0] pio0_wire;
+wire [15: 0] pio1_wire;
+
 //=======================================================
 //  Structural coding
 //=======================================================
@@ -451,7 +454,6 @@ Computer_System The_System (
 	
 	// SDRAM
 	.sdram_clk_clk								(DRAM_CLK),
-   .sdram_addr									(DRAM_ADDR),
 	.sdram_ba									(DRAM_BA),
 	.sdram_cas_n								(DRAM_CAS_N),
 	.sdram_cke									(DRAM_CKE),
@@ -563,7 +565,11 @@ Computer_System The_System (
 	.hps_io_hps_io_usb1_inst_CLK		(HPS_USB_CLKOUT),
 	.hps_io_hps_io_usb1_inst_STP		(HPS_USB_STP),
 	.hps_io_hps_io_usb1_inst_DIR		(HPS_USB_DIR),
-	.hps_io_hps_io_usb1_inst_NXT		(HPS_USB_NXT)
+	.hps_io_hps_io_usb1_inst_NXT		(HPS_USB_NXT),
+	
+	// PIO
+	.pio_0_external_connection_export (pio0_wire),
+   .pio_1_external_connection_export (pio1_wire)
 );
 
 

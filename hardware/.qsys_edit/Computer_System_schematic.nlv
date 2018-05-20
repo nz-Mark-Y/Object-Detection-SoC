@@ -28,7 +28,7 @@ preplace inst Computer_System.ARM_A9_HPS.i2c3 -pg 1
 preplace inst Computer_System.ARM_A9_HPS.uart1 -pg 1
 preplace inst Computer_System.VGA_Subsystem.Sys_Clk -pg 1
 preplace inst Computer_System.Audio_Subsystem.Audio -pg 1
-preplace inst Computer_System.ARM_A9_HPS -pg 1 -lvl 5 -y 360
+preplace inst Computer_System.ARM_A9_HPS -pg 1 -lvl 5 -y 310
 preplace inst Computer_System.HEX3_HEX0 -pg 1 -lvl 6 -y 30
 preplace inst Computer_System.ARM_A9_HPS.L2 -pg 1
 preplace inst Computer_System.VGA_Subsystem.VGA_PLL.reset_from_locked -pg 1
@@ -86,29 +86,29 @@ preplace inst Computer_System.Audio_Subsystem.Audio_PLL.audio_pll -pg 1
 preplace inst Computer_System.LEDs -pg 1 -lvl 6 -y 130
 preplace inst Computer_System.ARM_A9_HPS.dma -pg 1
 preplace netloc EXPORT<net_container>Computer_System</net_container>(MASTER)Computer_System.sdram_clk,(MASTER)System_PLL.sdram_clk) 1 1 6 NJ 2300 NJ 2300 NJ 2300 NJ 2300 NJ 2300 NJ
-preplace netloc FAN_OUT<net_container>Computer_System</net_container>(SLAVE)HEX3_HEX0.clk,(MASTER)System_PLL.sys_clk,(SLAVE)ARM_A9_HPS.f2h_axi_clock,(SLAVE)SDRAM.clk,(SLAVE)VGA_Subsystem.sys_clk,(SLAVE)Pushbuttons.clk,(SLAVE)AV_Config.clk,(SLAVE)SysID.clk,(SLAVE)F2H_Mem_Window_FF600000.clock,(SLAVE)F2H_Mem_Window_FF800000.clock,(SLAVE)LEDs.clk,(SLAVE)Onchip_SRAM.clk1,(SLAVE)Audio_Subsystem.sys_clk,(SLAVE)F2H_Mem_Window_00000000.clock,(SLAVE)Slider_Switches.clk,(SLAVE)Pixel_DMA_Addr_Translation.clock,(SLAVE)ARM_A9_HPS.h2f_lw_axi_clock,(SLAVE)ARM_A9_HPS.h2f_axi_clock) 1 1 5 390 1840 NJ 1840 1100 430 1690 260 2160
-preplace netloc POINT_TO_POINT<net_container>Computer_System</net_container>(MASTER)Pixel_DMA_Addr_Translation.master,(SLAVE)VGA_Subsystem.pixel_dma_control_slave) 1 1 2 450 2580 850
-preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)VGA_Subsystem.vga_pll_ref_reset,(SLAVE)Computer_System.vga_pll_ref_reset) 1 0 2 NJ 2530 NJ
-preplace netloc INTERCONNECT<net_container>Computer_System</net_container>(SLAVE)F2H_Mem_Window_FF600000.reset,(SLAVE)Onchip_SRAM.reset1,(SLAVE)LEDs.reset,(SLAVE)Audio_Subsystem.sys_reset,(MASTER)System_PLL.reset_source,(SLAVE)SysID.reset,(SLAVE)Pixel_DMA_Addr_Translation.reset,(SLAVE)F2H_Mem_Window_00000000.reset,(SLAVE)AV_Config.reset,(SLAVE)Slider_Switches.reset,(SLAVE)Pushbuttons.reset,(SLAVE)VGA_Subsystem.sys_reset,(SLAVE)SDRAM.reset,(MASTER)ARM_A9_HPS.h2f_reset,(SLAVE)F2H_Mem_Window_FF800000.reset,(SLAVE)HEX3_HEX0.reset) 1 1 5 410 1860 NJ 1860 1120 280 NJ 280 2180
+preplace netloc FAN_IN<net_container>Computer_System</net_container>(MASTER)F2H_Mem_Window_FF800000.expanded_master,(SLAVE)ARM_A9_HPS.f2h_axi_slave,(MASTER)F2H_Mem_Window_00000000.expanded_master,(MASTER)F2H_Mem_Window_FF600000.expanded_master) 1 4 3 1670 270 NJ 320 2550
+preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Pushbuttons.external_connection,(SLAVE)Computer_System.pushbuttons) 1 0 6 NJ 510 NJ 510 NJ 510 NJ 510 NJ 510 NJ
 preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Computer_System.av_config,(SLAVE)AV_Config.external_interface) 1 0 4 NJ 1080 NJ 1080 NJ 1080 NJ
-preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Audio_Subsystem.audio_pll_ref_clk,(SLAVE)Computer_System.audio_pll_ref_clk) 1 0 6 NJ 660 NJ 660 NJ 660 NJ 660 NJ 660 NJ
-preplace netloc FAN_OUT<net_container>Computer_System</net_container>(SLAVE)Pushbuttons.irq,(MASTER)ARM_A9_HPS.f2h_irq0,(SLAVE)Audio_Subsystem.audio_irq) 1 5 1 2140
-preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Computer_System.leds,(SLAVE)LEDs.external_connection) 1 0 6 NJ 160 NJ 160 NJ 160 NJ 160 NJ 160 NJ
-preplace netloc FAN_OUT<net_container>Computer_System</net_container>(SLAVE)VGA_Subsystem.char_buffer_control_slave,(SLAVE)SysID.control_slave,(MASTER)ARM_A9_HPS.h2f_lw_axi_master,(SLAVE)Audio_Subsystem.audio_slave,(SLAVE)HEX3_HEX0.s1,(SLAVE)LEDs.s1,(SLAVE)Slider_Switches.s1,(SLAVE)Pushbuttons.s1,(SLAVE)Pixel_DMA_Addr_Translation.slave,(SLAVE)AV_Config.avalon_av_config_slave) 1 1 5 430 1740 NJ 1740 1080 860 NJ 860 2200
-preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Computer_System.audio_pll_ref_reset,(SLAVE)Audio_Subsystem.audio_pll_ref_reset) 1 0 6 NJ 680 NJ 680 NJ 680 NJ 680 NJ 680 NJ
-preplace netloc INTERCONNECT<net_container>Computer_System</net_container>(SLAVE)VGA_Subsystem.char_buffer_slave,(MASTER)ARM_A9_HPS.h2f_axi_master,(SLAVE)Onchip_SRAM.s2,(SLAVE)Onchip_SRAM.s1,(SLAVE)SDRAM.s1,(MASTER)VGA_Subsystem.pixel_dma_master) 1 1 5 450 2340 870 2340 1140 1580 NJ 1580 2100
-preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Computer_System.hex3_hex0,(SLAVE)HEX3_HEX0.external_connection) 1 0 6 NJ 60 NJ 60 NJ 60 NJ 60 NJ 60 NJ
-preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Computer_System.memory,(SLAVE)ARM_A9_HPS.memory) 1 0 5 NJ 470 NJ 470 NJ 470 NJ 470 NJ
+preplace netloc INTERCONNECT<net_container>Computer_System</net_container>(SLAVE)Audio_Subsystem.sys_reset,(SLAVE)Pushbuttons.reset,(SLAVE)SysID.reset,(SLAVE)LEDs.reset,(SLAVE)HEX3_HEX0.reset,(SLAVE)AV_Config.reset,(SLAVE)F2H_Mem_Window_FF600000.reset,(SLAVE)Pixel_DMA_Addr_Translation.reset,(MASTER)ARM_A9_HPS.h2f_reset,(SLAVE)Onchip_SRAM.reset1,(SLAVE)Slider_Switches.reset,(SLAVE)F2H_Mem_Window_FF800000.reset,(SLAVE)SDRAM.reset,(SLAVE)VGA_Subsystem.sys_reset,(MASTER)System_PLL.reset_source,(SLAVE)F2H_Mem_Window_00000000.reset) 1 1 5 410 1740 NJ 1740 1080 490 NJ 490 2180
+preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Computer_System.vga_pll_ref_reset,(SLAVE)VGA_Subsystem.vga_pll_ref_reset) 1 0 2 NJ 2530 NJ
+preplace netloc EXPORT<net_container>Computer_System</net_container>(MASTER)Computer_System.audio_clk,(MASTER)Audio_Subsystem.audio_clk) 1 6 1 NJ
+preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Computer_System.audio_pll_ref_clk,(SLAVE)Audio_Subsystem.audio_pll_ref_clk) 1 0 6 NJ 660 NJ 660 NJ 660 NJ 660 NJ 660 NJ
+preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Computer_System.memory,(SLAVE)ARM_A9_HPS.memory) 1 0 5 NJ 420 NJ 420 NJ 420 NJ 420 NJ
 preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)VGA_Subsystem.vga_pll_ref_clk,(SLAVE)Computer_System.vga_pll_ref_clk) 1 0 2 NJ 2510 NJ
 preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Computer_System.system_pll_ref_reset,(SLAVE)System_PLL.ref_reset) 1 0 1 NJ
-preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)ARM_A9_HPS.hps_io,(SLAVE)Computer_System.hps_io) 1 0 5 NJ 410 NJ 410 NJ 410 NJ 410 NJ
+preplace netloc FAN_OUT<net_container>Computer_System</net_container>(MASTER)ARM_A9_HPS.f2h_irq0,(SLAVE)Audio_Subsystem.audio_irq,(SLAVE)Pushbuttons.irq) 1 5 1 2120
+preplace netloc INTERCONNECT<net_container>Computer_System</net_container>(SLAVE)VGA_Subsystem.char_buffer_slave,(SLAVE)Onchip_SRAM.s2,(SLAVE)SDRAM.s1,(MASTER)VGA_Subsystem.pixel_dma_master,(MASTER)ARM_A9_HPS.h2f_axi_master,(SLAVE)Onchip_SRAM.s1) 1 1 5 450 2340 870 2340 1120 1580 NJ 1580 2100
+preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)LEDs.external_connection,(SLAVE)Computer_System.leds) 1 0 6 NJ 160 NJ 160 NJ 160 NJ 160 NJ 160 NJ
+preplace netloc POINT_TO_POINT<net_container>Computer_System</net_container>(SLAVE)VGA_Subsystem.pixel_dma_control_slave,(MASTER)Pixel_DMA_Addr_Translation.master) 1 1 2 450 2580 850
 preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Audio_Subsystem.audio,(SLAVE)Computer_System.audio) 1 0 6 NJ 620 NJ 620 NJ 620 NJ 620 NJ 620 NJ
-preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Computer_System.pushbuttons,(SLAVE)Pushbuttons.external_connection) 1 0 6 NJ 520 NJ 520 NJ 520 NJ 520 NJ 520 NJ
+preplace netloc FAN_OUT<net_container>Computer_System</net_container>(SLAVE)F2H_Mem_Window_FF600000.clock,(SLAVE)F2H_Mem_Window_00000000.clock,(SLAVE)Onchip_SRAM.clk1,(SLAVE)Audio_Subsystem.sys_clk,(SLAVE)AV_Config.clk,(SLAVE)ARM_A9_HPS.h2f_axi_clock,(SLAVE)ARM_A9_HPS.h2f_lw_axi_clock,(SLAVE)SysID.clk,(SLAVE)Slider_Switches.clk,(SLAVE)ARM_A9_HPS.f2h_axi_clock,(SLAVE)HEX3_HEX0.clk,(SLAVE)LEDs.clk,(SLAVE)SDRAM.clk,(SLAVE)VGA_Subsystem.sys_clk,(MASTER)System_PLL.sys_clk,(SLAVE)F2H_Mem_Window_FF800000.clock,(SLAVE)Pushbuttons.clk,(SLAVE)Pixel_DMA_Addr_Translation.clock) 1 1 5 390 1700 NJ 1700 1100 380 1690 470 2140
+preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Computer_System.hps_io,(SLAVE)ARM_A9_HPS.hps_io) 1 0 5 NJ 360 NJ 360 NJ 360 NJ 360 NJ
+preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Audio_Subsystem.audio_pll_ref_reset,(SLAVE)Computer_System.audio_pll_ref_reset) 1 0 6 NJ 680 NJ 680 NJ 680 NJ 680 NJ 680 NJ
 preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)Computer_System.slider_switches,(SLAVE)Slider_Switches.external_connection) 1 0 6 NJ 820 NJ 820 NJ 820 NJ 820 NJ 820 NJ
-preplace netloc FAN_IN<net_container>Computer_System</net_container>(MASTER)F2H_Mem_Window_FF600000.expanded_master,(SLAVE)ARM_A9_HPS.f2h_axi_slave,(MASTER)F2H_Mem_Window_FF800000.expanded_master,(MASTER)F2H_Mem_Window_00000000.expanded_master) 1 4 3 1670 320 NJ 320 2550
+preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)HEX3_HEX0.external_connection,(SLAVE)Computer_System.hex3_hex0) 1 0 6 NJ 60 NJ 60 NJ 60 NJ 60 NJ 60 NJ
+preplace netloc FAN_OUT<net_container>Computer_System</net_container>(SLAVE)LEDs.s1,(SLAVE)Pixel_DMA_Addr_Translation.slave,(MASTER)ARM_A9_HPS.h2f_lw_axi_master,(SLAVE)Audio_Subsystem.audio_slave,(SLAVE)AV_Config.avalon_av_config_slave,(SLAVE)HEX3_HEX0.s1,(SLAVE)VGA_Subsystem.char_buffer_control_slave,(SLAVE)SysID.control_slave,(SLAVE)Slider_Switches.s1,(SLAVE)Pushbuttons.s1) 1 1 5 430 1720 NJ 1720 1140 860 NJ 860 2200
 preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)VGA_Subsystem.vga,(SLAVE)Computer_System.vga) 1 0 2 NJ 2490 NJ
 preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)System_PLL.ref_clk,(SLAVE)Computer_System.system_pll_ref_clk) 1 0 1 NJ
 preplace netloc EXPORT<net_container>Computer_System</net_container>(SLAVE)SDRAM.wire,(SLAVE)Computer_System.sdram) 1 0 4 NJ 2010 NJ 2010 NJ 2010 NJ
-preplace netloc EXPORT<net_container>Computer_System</net_container>(MASTER)Audio_Subsystem.audio_clk,(MASTER)Computer_System.audio_clk) 1 6 1 NJ
 levelinfo -pg 1 0 140 2660
 levelinfo -hier Computer_System 150 230 670 1060 1500 1910 2380 2570
