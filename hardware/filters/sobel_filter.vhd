@@ -18,7 +18,7 @@ architecture bhv of sobel_filter is
     variable Root: unsigned(RMSB downto 0); 
     variable Test: unsigned(RMSB+1 downto 0); 
     variable Rest: unsigned(AMSB+1 downto 0); 
-  begin 
+  begin
     Root := (others => '0'); 
     Rest := '0' & unsigned(Arg); 
     for i in RMSB downto 0 loop 

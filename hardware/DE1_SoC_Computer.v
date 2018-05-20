@@ -572,5 +572,11 @@ Computer_System The_System (
    .pio_1_external_connection_export (pio1_wire)
 );
 
+filter_interface filter_interface_1 (
+	.clk 										(CLOCK_50),
+	.inp										(pio0_wire),
+	.outp										(pio1_wire)
+);
+
 
 endmodule
