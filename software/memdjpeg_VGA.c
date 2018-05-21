@@ -1,6 +1,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
 #include <unistd.h>
 #include <syslog.h>
 #include <sys/stat.h>
@@ -84,36 +85,7 @@ void *virtual_base_B;
 void *virtual_base_C;
 void *virtual_base_D;
 void *virtual_base_E;
-
-void sendToFPGAA(u32 data) { // Send first section of 3x3 window of frame to filter FPGA interface
-    void *h2p_fpga_bridge_addr = virtual_base_A + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_0_BASE) & (unsigned long)(HW_REGS_MASK));
-    const int fpga_bridge_mask = (1 << (PIO_0_DATA_WIDTH)) - 1;
-    *(uint32_t *)h2p_fpga_bridge_addr = data & fpga_bridge_mask;
-}
-
-void sendToFPGAB(u32 data) { // Send second section of 3x3 window of frame to filter FPGA interface
-    void *h2p_fpga_bridge_addr = virtual_base_B + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_1_BASE) & (unsigned long)(HW_REGS_MASK));
-    const int fpga_bridge_mask = (1 << (PIO_1_DATA_WIDTH)) - 1;
-    *(uint32_t *)h2p_fpga_bridge_addr = data & fpga_bridge_mask;
-}
-
-void sendToFPGAC(u32 data) { // Send third section of 3x3 window of frame to filter FPGA interface
-    void *h2p_fpga_bridge_addr = virtual_base_C + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_2_BASE) & (unsigned long)(HW_REGS_MASK));
-    const int fpga_bridge_mask = (1 << (PIO_2_DATA_WIDTH)) - 1;
-    *(uint32_t *)h2p_fpga_bridge_addr = data & fpga_bridge_mask;
-}
-
-void sendToFPGAD(u32 data) { // Send 3x3 window ID to FPGA interface
-    void *h2p_fpga_bridge_addr = virtual_base_D + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_3_BASE) & (unsigned long)(HW_REGS_MASK));
-    const int fpga_bridge_mask = (1 << (PIO_3_DATA_WIDTH)) - 1;
-    *(uint32_t *)h2p_fpga_bridge_addr = data & fpga_bridge_mask;
-}
-
-u32 recieveFromFPGA(void) { // Receive pixel from FPGA interface
-    const int fpga_bridge_mask = (1 << (PIO_4_DATA_WIDTH)) - 1;
-    void *h2p_fpga_bridge_addr = virtual_base_E + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_4_BASE) & (unsigned long)(HW_REGS_MASK));
-    return (u32)(*(uint32_t *)h2p_fpga_bridge_addr & fpga_bridge_mask);
-}
+unsigned char *bmp_buffer;
 
 int FPGAFilter(struct bmp_out_struct *bmp_out);
 int windowFilter(struct bmp_out_struct *bmp_out);
@@ -185,60 +157,78 @@ int sobelFilter(unsigned char values[9]) {
     return (int)sqrt(sumx*sumx + sumy*sumy);
 }
 
+void *threadSendToFPGA(void *arg)
+{
+    u32 temp;
+    unsigned int id_flag = 0;
+    u32 filter_type = 0x00000007; // set sobel filter
+    #define val(row, col) bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size + chan]
+	for (int chan=0; chan<bmp_out->pixel_size; ++chan) {
+        for (int row=0; row<bmp_out->height; ++row) {
+            for (int col=0; col<bmp_out->width; ++col) {            
+                if ((row>0 && row<bmp_out->height-1)) {
+                    temp = ((val(row-1, col) << 24 ) | (val(row-0, col) << 16) | (val(row+1, col) << 8) | (filter_type << 5) | id_flag);
+
+                    id_flag++;  // Set an ID for the 3x3 window
+                    if (id_flag > 29) { id_flag = 0; }
+
+                    void *h2p_fpga_bridge_addr = virtual_base_A + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_0_BASE) & (unsigned long)(HW_REGS_MASK));
+                    const int fpga_bridge_mask = (1 << (PIO_0_DATA_WIDTH)) - 1;
+                    *(uint32_t *)h2p_fpga_bridge_addr = data & fpga_bridge_mask;
+                }
+            }
+        }
+    }
+    #undef val
+
+	return NULL;
+}
+
 int FPGAFilter(struct bmp_out_struct *bmp_out) {
     #ifdef PIO_0_COMPONENT_TYPE
     #ifdef PIO_1_COMPONENT_TYPE
-    #ifdef PIO_2_COMPONENT_TYPE
-    #ifdef PIO_3_COMPONENT_TYPE
-    #ifdef PIO_4_COMPONENT_TYPE
-        // Take a few local copies to make the code a bit easier to read
-        unsigned char *bmp_buffer = bmp_out->bmp_buffer;
-        // Filter
+        bmp_buffer = bmp_out->bmp_buffer;
+
+        // Create new POSIX thread for sending the frames to FPGA
+        pthread_t pth;
+        pthread_create(&pth,NULL,threadSendToFPGA,NULL);
+
+        u32 incoming_packet;
+        unsigned char middle;
+        unsigned int id = 0;
+        unsigned int expected_id = 0;
+
         unsigned char *bmp_processed = (unsigned char*) malloc(bmp_out->bmp_size);
-        // temp variables for sending from
-        u32 tempa = 0, tempb = 0, tempc = 0, tempd = 0;
-        u16 id_flag = 0;
-        #define val(row, col) bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size + chan]
-        // Iterate over full image
-        for (int row=0; row<bmp_out->height; ++row) {
-            for (int col=0; col<bmp_out->width; ++col) {
-                // Work on each channel independently
-                for (int chan=0; chan<bmp_out->pixel_size; ++chan) {
-                    // Black border
-                    unsigned char middle = 0;
+        for (int chan=0; chan<bmp_out->pixel_size; ++chan) {
+            for (int row=0; row<bmp_out->height; ++row) {
+                for (int col=0; col<bmp_out->width; ++col) {
                     if ((row>0 && row<bmp_out->height-1) && (col>0 && col<bmp_out->width-1)) {
-                        tempa = ((val(row-1, col-1) << 16 ) | (val(row-1, col) << 8) | val(row-1, col+1));
-                        tempb = ((val(row-0, col-1) << 16 ) | (val(row-0, col) << 8) | val(row-0, col+1));
-                        tempc = ((val(row+1, col-1) << 16 ) | (val(row+1, col) << 8) | val(row+1, col+1));
-
-                        id_flag++;  // Set an ID for the 3x3 window
-                        if (id_flag > 30000) { id_flag = 0; }
-
-                        sendToFPGAA(tempa); // Send 3x3 window to FPGA interface
-                        sendToFPGAB(tempb);
-                        sendToFPGAC(tempc);
-                        sendToFPGAD(id_flag);
-
-                        while ((u16)(tempd >> 8) != id_flag) // Recieve filtered pixel
+                        while (expected_id != id) // Recieve filtered pixel
                         {
-                            tempd = recieveFromFPGA();
-                        } 
-                        
-                        middle = (char)tempd; // Cast to char
+                            u32 recieveFromFPGA(void) { // Receive pixel from FPGA interface
+                            const int fpga_bridge_mask = (1 << (PIO_4_DATA_WIDTH)) - 1;
+                            void *h2p_fpga_bridge_addr = virtual_base_E + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_4_BASE) & (unsigned long)(HW_REGS_MASK));
+                            incoming_packet = (u32)(*(uint32_t *)h2p_fpga_bridge_addr & fpga_bridge_mask);
+                            id = (int)(incoming_packet & 0x0000001F);
+                        }
+                        expected_id++;
+                        if (expected_id > 29) { expected_id = 0; }
+                        middle = (char)(incoming_packet >> 8); // Cast to char
+                    }
+                    else
+                    {
+                        // Black border
+                        middle = 0;
                     }
                     // Set output
                     bmp_processed[(row*bmp_out->row_stride) + col*bmp_out->pixel_size + chan] = middle;
                 }
             }
-            #undef val
         }
 
         // Replace input with output
         memcpy(bmp_buffer, bmp_processed, bmp_out->bmp_size);
         return 1;
-    #endif
-    #endif
-    #endif
     #endif
     #endif
         return 0;
