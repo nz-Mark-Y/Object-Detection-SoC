@@ -12,14 +12,14 @@ ifeq ($(PLATFORM),ARM)
 	CROSS_COMPILE = arm-linux-gnueabihf-
 	CFLAGS = -g -Wall -I ${SOCEDS_DEST_ROOT}/ip/altera/hps/altera_hps/hwlib/include \
 		-I ${SOCEDS_DEST_ROOT}/ip/altera/hps/altera_hps/hwlib/include/soc_cv_av
-	LDFLAGS =  -g -Wall
+	LDFLAGS =  -g -Wall 
 	CC = $(CROSS_COMPILE)gcc -std=c99
 	ARCH= arm
 else
 	CC = gcc
 endif
 
-LDFLAGS += -ljpeg -lm 
+LDFLAGS += -ljpeg -lm
 
 #profile
 CFLAGS += -pg

@@ -5,11 +5,11 @@
   <columns>
    <connections preferredWidth="271" />
    <irq preferredWidth="79" />
+   <inputclock preferredWidth="77" />
   </columns>
  </systemtable>
- <library
-   expandedCategories="Library/Processors and Peripherals/Peripherals,Library/Interface Protocols/PCI Express/QSYS Example Designs,Library,Library/Processors and Peripherals,Library/Interface Protocols/PCI Express,Project,Library/Interface Protocols" />
- <window width="1382" height="744" x="-8" y="-8" />
+ <library expandedCategories="Project,Library" />
+ <window width="1936" height="1176" x="-8" y="-8" />
  <hdlexample language="VHDL" />
  <generation synthesis="VERILOG" block_symbol_file="0" />
 </preferences>

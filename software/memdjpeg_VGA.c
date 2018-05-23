@@ -6,13 +6,15 @@
 #include <syslog.h>
 #include <sys/stat.h>
 #include <math.h>
-
+#include <time.h>
 #include <string.h>
+#include <stdbool.h>
 
-#include <jpeglib.h>
+#include "jpeg-9c/jpeglib.h"
+#include "ecrypt-sync.h"
+#include "my_trivium-sw_only.c"
 
 #define VGA
-#define ENC
 #define WRITE_ALL 0
 
 #ifdef VGA
@@ -32,13 +34,9 @@
     #define HW_REGS_SPAN ( 0x04000000 )
     #define HW_REGS_MASK ( HW_REGS_SPAN - 1 )
 
-    //?
-    #define FPGA_AXI_BASE   0xC0000000
-    #define FPGA_ONCHIP_BASE      (FPGA_AXI_BASE + ONCHIP_MEMORY2_0_BASE)
-    // modified for 640x480
-    //  probably through black magic
-    // #define FPGA_ONCHIP_SPAN      0x00040000
-    #define FPGA_ONCHIP_SPAN      0x00080000
+    #define FPGA_AXI_BASE 0xC0000000
+    #define FPGA_ONCHIP_BASE (FPGA_AXI_BASE + ONCHIP_MEMORY2_0_BASE)
+    #define FPGA_ONCHIP_SPAN 0x00080000
 
     #define FPGA_CHAR_BASE (FPGA_AXI_BASE + VGA_SUBSYSTEM_VGA_CHAR_BUFFER_AVALON_CHAR_BUFFER_SLAVE_BASE)
     #define FPGA_CHAR_SPAN VGA_SUBSYSTEM_VGA_CHAR_BUFFER_AVALON_CHAR_BUFFER_SLAVE_SPAN
@@ -63,13 +61,6 @@
         *(char *)pixel_ptr = (color);\
     } while(0)
 #endif /* VGA */
-
-#ifdef ENC
-    #include "ecrypt-sync.h"
-    #include "my_trivium-sw_only.c"
-#endif /* ENC */
-
-#include <time.h>
 
 struct bmp_out_struct {
     unsigned char *bmp_buffer;
@@ -97,7 +88,7 @@ int outputVGA(struct bmp_out_struct *bmp_out);
 #define IM_DECODE decodeJpeg
 #define IM_PROCESS windowFilter
 #define IM_OUTPUT outputVGA
-
+/*
 int medianFilter(unsigned char values[9]) {
     // Sort values like a horrible person
     int sorted = 0;
@@ -157,83 +148,6 @@ int sobelFilter(unsigned char values[9]) {
     return (int)sqrt(sumx*sumx + sumy*sumy);
 }
 
-void *threadSendToFPGA(void *arg)
-{
-    u32 temp;
-    unsigned int id_flag = 0;
-    u32 filter_type = 0x00000007; // set sobel filter
-    #define val(row, col) bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size + chan]
-	for (int chan=0; chan<bmp_out->pixel_size; ++chan) {
-        for (int row=0; row<bmp_out->height; ++row) {
-            for (int col=0; col<bmp_out->width; ++col) {            
-                if ((row>0 && row<bmp_out->height-1)) {
-                    temp = ((val(row-1, col) << 24 ) | (val(row-0, col) << 16) | (val(row+1, col) << 8) | (filter_type << 5) | id_flag);
-
-                    id_flag++;  // Set an ID for the 3x3 window
-                    if (id_flag > 29) { id_flag = 0; }
-
-                    void *h2p_fpga_bridge_addr = virtual_base_A + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_0_BASE) & (unsigned long)(HW_REGS_MASK));
-                    const int fpga_bridge_mask = (1 << (PIO_0_DATA_WIDTH)) - 1;
-                    *(uint32_t *)h2p_fpga_bridge_addr = data & fpga_bridge_mask;
-                }
-            }
-        }
-    }
-    #undef val
-
-	return NULL;
-}
-
-int FPGAFilter(struct bmp_out_struct *bmp_out) {
-    #ifdef PIO_0_COMPONENT_TYPE
-    #ifdef PIO_1_COMPONENT_TYPE
-        bmp_buffer = bmp_out->bmp_buffer;
-
-        // Create new POSIX thread for sending the frames to FPGA
-        pthread_t pth;
-        pthread_create(&pth,NULL,threadSendToFPGA,NULL);
-
-        u32 incoming_packet;
-        unsigned char middle;
-        unsigned int id = 0;
-        unsigned int expected_id = 0;
-
-        unsigned char *bmp_processed = (unsigned char*) malloc(bmp_out->bmp_size);
-        for (int chan=0; chan<bmp_out->pixel_size; ++chan) {
-            for (int row=0; row<bmp_out->height; ++row) {
-                for (int col=0; col<bmp_out->width; ++col) {
-                    if ((row>0 && row<bmp_out->height-1) && (col>0 && col<bmp_out->width-1)) {
-                        while (expected_id != id) // Recieve filtered pixel
-                        {
-                            u32 recieveFromFPGA(void) { // Receive pixel from FPGA interface
-                            const int fpga_bridge_mask = (1 << (PIO_4_DATA_WIDTH)) - 1;
-                            void *h2p_fpga_bridge_addr = virtual_base_E + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_4_BASE) & (unsigned long)(HW_REGS_MASK));
-                            incoming_packet = (u32)(*(uint32_t *)h2p_fpga_bridge_addr & fpga_bridge_mask);
-                            id = (int)(incoming_packet & 0x0000001F);
-                        }
-                        expected_id++;
-                        if (expected_id > 29) { expected_id = 0; }
-                        middle = (char)(incoming_packet >> 8); // Cast to char
-                    }
-                    else
-                    {
-                        // Black border
-                        middle = 0;
-                    }
-                    // Set output
-                    bmp_processed[(row*bmp_out->row_stride) + col*bmp_out->pixel_size + chan] = middle;
-                }
-            }
-        }
-
-        // Replace input with output
-        memcpy(bmp_buffer, bmp_processed, bmp_out->bmp_size);
-        return 1;
-    #endif
-    #endif
-        return 0;
-}
-
 #define WINDOW_FUNC sobelFilter
 int windowFilter(struct bmp_out_struct *bmp_out) {
     // Take a few local copies to make the code a bit easier to read
@@ -268,6 +182,78 @@ int windowFilter(struct bmp_out_struct *bmp_out) {
     memcpy(bmp_buffer, bmp_processed, bmp_out->bmp_size);
     return 1;
 }
+*/
+
+void *threadSendToFPGA(struct bmp_out_struct *bmp_out) {
+	
+    u32 temp;
+    unsigned int id_flag = 0;
+    u32 filter_type = 0x00000007; // set sobel filter
+    #define val(row, col) bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size + chan]
+	for (int chan=0; chan<bmp_out->pixel_size; ++chan) {
+        for (int row=0; row<bmp_out->height; ++row) {
+            for (int col=0; col<bmp_out->width; ++col) {            
+                if ((row>0 && row<bmp_out->height-1)) {
+                    temp = ((val(row-1, col) << 24 ) | (val(row-0, col) << 16) | (val(row+1, col) << 8) | (filter_type << 5) | id_flag);
+
+                    id_flag++;  // Set an ID for the 3x3 window
+                    if (id_flag > 29) { id_flag = 0; }
+
+                    void *h2p_fpga_bridge_addr = virtual_base_A + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_0_BASE) & (unsigned long)(HW_REGS_MASK));
+                    const int fpga_bridge_mask = (1 << (PIO_0_DATA_WIDTH)) - 1;
+                    *(uint32_t *)h2p_fpga_bridge_addr = temp & fpga_bridge_mask;
+                }
+            }
+        }
+    }
+    #undef val
+	return NULL;
+}
+
+int FPGAFilter(struct bmp_out_struct *bmp_out) {
+    #ifdef PIO_0_COMPONENT_TYPE
+    #ifdef PIO_1_COMPONENT_TYPE
+        bmp_buffer = bmp_out->bmp_buffer;
+
+        // Create new POSIX thread for sending the frames to FPGA
+        pthread_t pth;
+        pthread_create(&pth,NULL,threadSendToFPGA, bmp_out);
+
+        u32 incoming_packet;
+        unsigned char middle;
+        unsigned int id = 0;
+        unsigned int expected_id = 0;
+
+        unsigned char *bmp_processed = (unsigned char*) malloc(bmp_out->bmp_size);
+        for (int chan=0; chan<bmp_out->pixel_size; ++chan) {
+            for (int row=0; row<bmp_out->height; ++row) {
+                for (int col=0; col<bmp_out->width; ++col) {
+                    if ((row>0 && row<bmp_out->height-1) && (col>0 && col<bmp_out->width-1)) {
+                        while (expected_id != id) { // Recieve filtered pixel
+                            u32 recieveFromFPGA(void) { // Receive pixel from FPGA interface
+                            const int fpga_bridge_mask = (1 << (PIO_4_DATA_WIDTH)) - 1;
+                            void *h2p_fpga_bridge_addr = virtual_base_E + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_4_BASE) & (unsigned long)(HW_REGS_MASK));
+                            incoming_packet = (u32)(*(uint32_t *)h2p_fpga_bridge_addr & fpga_bridge_mask);
+                            id = (int)(incoming_packet & 0x0000001F);
+                        }
+                        expected_id++;
+                        if (expected_id > 29) { expected_id = 0; }
+                        middle = (char)(incoming_packet >> 8); // Cast to char
+                    } else {                       
+                        middle = 0; // Black border
+                    }                   
+                    bmp_processed[(row*bmp_out->row_stride) + col*bmp_out->pixel_size + chan] = middle; // Set output
+                }
+            }
+        }
+
+        // Replace input with output
+        memcpy(bmp_buffer, bmp_processed, bmp_out->bmp_size);
+        return 1;
+    #endif
+    #endif
+    return 0;
+}
 
 int main (int argc, char *argv[]) {
 	int rc, i;
@@ -277,25 +263,17 @@ int main (int argc, char *argv[]) {
 	sprintf(syslog_prefix, "%s", argv[0]);
 	openlog(syslog_prefix, LOG_PERROR | LOG_PID, LOG_USER);
 
-    #ifdef ENC
-        if (argc != 3) {
-            fprintf(stderr, "USAGE: %s encrypted_file unencrypted_file\n", argv[0]);
-            exit(EXIT_FAILURE);
-        }
-        char *encfile = argv[1];
-        char *infile = argv[2];
-    #else
-        if (argc != 2) {
-            fprintf(stderr, "USAGE: %s input_file\n", argv[0]);
-            exit(EXIT_FAILURE);
-        }
-        char *infile = argv[1];
-    #endif
+	if (argc != 3) {
+		fprintf(stderr, "USAGE: %s encrypted_file unencrypted_file\n", argv[0]);
+		exit(EXIT_FAILURE);
+	}
+	char *encfile = argv[1];
+	char *infile = argv[2];
 
     #ifdef VGA
         // === get FPGA addresses ==================
         // Open /dev/mem
-        if( ( fd = open( "/dev/mem", ( O_RDWR | O_SYNC ) ) ) == -1 ) 	{
+        if((fd = open( "/dev/mem", ( O_RDWR | O_SYNC ) ) ) == -1) {
             printf( "ERROR: could not open \"/dev/mem\"...\n" );
             return( 1 );
         }
@@ -307,10 +285,8 @@ int main (int argc, char *argv[]) {
             printf( "ERROR: mmap2() failed...\n" );
             close( fd );
             return(1);
-        }
-
-        // Get the address that maps to the FPGA LED control
-        vga_char_ptr =(unsigned int *)(vga_char_virtual_base);
+        }  
+        vga_char_ptr =(unsigned int *)(vga_char_virtual_base); // Get the address that maps to the FPGA LED control
 
         // === get VGA pixel addr ====================
         // get virtual addr that maps to physical
@@ -320,42 +296,21 @@ int main (int argc, char *argv[]) {
             close( fd );
             return(1);
         }
+        vga_pixel_ptr =(unsigned int *)(vga_pixel_virtual_base); // Get the address that maps to the FPGA pixel buffer
 
-        // Get the address that maps to the FPGA pixel buffer
-        vga_pixel_ptr =(unsigned int *)(vga_pixel_virtual_base);
-
-        // ===========================================
-        // clear the screen
-        VGA_box (0, 0, 639, 479, 0x00);
-        // clear the text
-        VGA_text_clear();
+        // ===========================================        
+        VGA_box (0, 0, 639, 479, 0x00); // clear the screen       
+        VGA_text_clear(); // clear the text
     #endif
-
-//   SSS    EEEEEEE  TTTTTTT  U     U  PPPP
-// SS   SS  E           T     U     U  P   PP
-// S        E           T     U     U  P    PP
-// SS       E           T     U     U  P   PP
-//   SSS    EEEE        T     U     U  PPPP
-//      SS  E           T     U     U  P
-//       S  E           T     U     U  P
-// SS   SS  E           T      U   U   P
-//   SSS    EEEEEEE     T       UUU    P
 
 	// Variables for the source jpg
 	struct stat file_info;
 	unsigned long mjpg_size;
 	unsigned char *mjpg_buffer;
-
-    #ifdef ENC
-        // Unencrypt file
-        trivium_decrypt_file(encfile, infile);
-    #endif
-
-	// Load the jpeg data from a file into a memory buffer for
-	// the purpose of this demonstration.
-	// Normally, if it's a file, you'd use jpeg_stdio_src, but just
-	// imagine that this was instead being downloaded from the Internet
-	// or otherwise not coming from disk
+    
+    trivium_decrypt_file(encfile, infile); // Unencrypt file
+	
+	// Load the jpeg data from a file into a memory buffer for the purpose of this demonstration.
 	rc = stat(infile, &file_info);
 	if (rc) {
 		syslog(LOG_ERR, "FAILED to stat source jpg");
@@ -373,50 +328,29 @@ int main (int argc, char *argv[]) {
 	}
 	close(fd);
 
-    // Decode MJPEG
-    rc = decodeMjpeg(mjpg_buffer, mjpg_size);
-
-	// And free the input buffer
-	free(mjpg_buffer);
+    rc = decodeMjpeg(mjpg_buffer, mjpg_size); // Decode MJPEG
+	free(mjpg_buffer); // And free the input buffer
 
     return rc;
 }
 
 int decodeMjpeg(unsigned char *mjpeg_buffer, unsigned long mjpeg_size) {
-    //   SSS    TTTTTTT     A     RRRR     TTTTTTT
-    // SS   SS     T       A A    R   RR      T
-    // S           T      A   A   R    RR     T
-    // SS          T     A     A  R   RR      T
-    //   SSS       T     AAAAAAA  RRRR        T
-    //      SS     T     A     A  R RR        T
-    //       S     T     A     A  R   R       T
-    // SS   SS     T     A     A  R    R      T
-    //   SSS       T     A     A  R     R     T
-
-
 	syslog(LOG_INFO, "Proc: Create Decompress struct");
 	// Allocate a new decompress struct, with the default error handler.
 	// The default error handler will exit() on pretty much any issue,
 	// so it's likely you'll want to replace it or supplement it with
 	// your own.
 	struct jpeg_decompress_struct cinfo;
-	struct jpeg_error_mgr jerr;
+	struct jpeg_error_mgr jerr; 
 	cinfo.err = jpeg_std_error(&jerr);
 	jpeg_create_decompress(&cinfo);
-
 
 	syslog(LOG_INFO, "Proc: Set memory buffer as source");
 	// Configure this decompressor to read its data from a memory
 	// buffer starting at unsigned char *jpg_buffer, which is jpg_size
 	// long, and which must contain a complete jpg already.
-	//
-	// If you need something fancier than this, you must write your
-	// own data source manager, which shouldn't be too hard if you know
-	// what it is you need it to do. See jpeg-8d/jdatasrc.c for the
-	// implementation of the standard jpeg_mem_src and jpeg_stdio_src
-	// managers as examples to work from.
-	jpeg_mem_src(&cinfo, mjpeg_buffer, mjpeg_size);
 
+	jpeg_mem_src(&cinfo, mjpeg_buffer, mjpeg_size);
 
     /* Injecting MJPEG support (from raw video format)
      *
@@ -425,15 +359,12 @@ int decodeMjpeg(unsigned char *mjpeg_buffer, unsigned long mjpeg_size) {
      *  can fail (i.e. we need to detect the final frame).
      *
      * * * * * * * * Begin * * * * * * * */
-
     clock_t begin = clock();
     unsigned int jpg_count = 0;
     while (*(cinfo.src->next_input_byte)) {
-        // Prepare
-        struct bmp_out_struct bmp_out;
+        struct bmp_out_struct bmp_out; // Prepare
 
-        // Decode
-        IM_DECODE(&cinfo, &bmp_out);
+        IM_DECODE(&cinfo, &bmp_out); // Decode
 
         // Process
         #ifdef IM_PROCESS
@@ -453,18 +384,8 @@ int decodeMjpeg(unsigned char *mjpeg_buffer, unsigned long mjpeg_size) {
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
     syslog(LOG_INFO, "Successfully loaded %u JPEGs in %fs", jpg_count, time_spent);
 
-	// Once you're really really done, destroy the object to free everything
+	// Destroy the object to free everything
 	jpeg_destroy_decompress(&cinfo);
-
-// DDDD       OOO    N     N  EEEEEEE
-// D  DDD    O   O   NN    N  E
-// D    DD  O     O  N N   N  E
-// D     D  O     O  N N   N  E
-// D     D  O     O  N  N  N  EEEE
-// D     D  O     O  N   N N  E
-// D    DD  O     O  N   N N  E
-// D  DDD    O   O   N    NN  E
-// DDDD       OOO    N     N  EEEEEEE
 
 	syslog(LOG_INFO, "End of decompression");
 	return EXIT_SUCCESS;
@@ -472,22 +393,20 @@ int decodeMjpeg(unsigned char *mjpeg_buffer, unsigned long mjpeg_size) {
 
 
 /** Function to decode individual frame
- * Take pointer to encoded JPEG (in memory), return a pointer to the decoded BMP
+ *  Take pointer to encoded JPEG (in memory), return a pointer to the decoded BMP
  *  Don't forget to free memory
  **/
 int decodeJpeg(struct jpeg_decompress_struct *cinfo, struct bmp_out_struct *bmp_out) {
-    //syslog(LOG_INFO, "Proc: Read the JPEG header");
     // Have the decompressor scan the jpeg header. This won't populate
     // the cinfo struct output fields, but will indicate if the
     // jpeg is valid.
-    int rc = jpeg_read_header(cinfo, TRUE);
+    int rc = jpeg_read_header(cinfo, true);
 
     if (rc != 1) {
         syslog(LOG_ERR, "File does not seem to be a normal JPEG");
         exit(EXIT_FAILURE);
     }
 
-    //syslog(LOG_INFO, "Proc: Initiate JPEG decompression");
     // By calling jpeg_start_decompress, you populate cinfo
     // and can then allocate your output bitmap buffers for
     // each scanline.
@@ -497,9 +416,6 @@ int decodeJpeg(struct jpeg_decompress_struct *cinfo, struct bmp_out_struct *bmp_
     bmp_out->height = cinfo->output_height;
     bmp_out->pixel_size = cinfo->output_components;
 
-    //syslog(LOG_INFO, "Proc: Image is %d by %d with %d components",
-    //        width, height, pixel_size);
-
     bmp_out->bmp_size = bmp_out->width * bmp_out->height * bmp_out->pixel_size;
     bmp_out->bmp_buffer = (unsigned char*) malloc(bmp_out->bmp_size);
 
@@ -507,8 +423,6 @@ int decodeJpeg(struct jpeg_decompress_struct *cinfo, struct bmp_out_struct *bmp_
     // entire scanline (row).
     bmp_out->row_stride = bmp_out->width * bmp_out->pixel_size;
 
-    //syslog(LOG_INFO, "Proc: Start reading scanlines");
-    //
     // Now that you have the decompressor entirely configured, it's time
     // to read out all of the scanlines of the jpeg.
     //
@@ -529,8 +443,6 @@ int decodeJpeg(struct jpeg_decompress_struct *cinfo, struct bmp_out_struct *bmp_
         jpeg_read_scanlines(cinfo, buffer_array, 1);
 
     }
-    //syslog(LOG_INFO, "Proc: Done reading scanlines");
-
     // Once done reading *all* scanlines, release all internal buffers,
     // etc by calling jpeg_finish_decompress. This lets you go back and
     // reuse the same cinfo object with the same settings, if you
@@ -539,11 +451,6 @@ int decodeJpeg(struct jpeg_decompress_struct *cinfo, struct bmp_out_struct *bmp_
     // If you didn't read all the scanlines, but want to stop early,
     // you instead need to call jpeg_abort_decompress(cinfo)
     jpeg_finish_decompress(cinfo);
-
-    // At this point, optionally go back and either load a new jpg into
-    // the jpg_buffer, or define a new jpeg_mem_src, and then start
-    // another decompress operation.
-
     return 1;
 }
 
@@ -577,7 +484,6 @@ int outputVGA(struct bmp_out_struct *bmp_out) {
         for (int i=1; i<bmp_out->width; ++i) {
             if (i >= 640) break;
             for (int j=1; j<bmp_out->height; ++j) {
-                //printf("\t, %d\n", j);
                 if (j >= 480) break;
                 char pixel_colour;
                 #define val(row, col, chan) bmp_out->bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size + chan]
@@ -595,14 +501,12 @@ int outputVGA(struct bmp_out_struct *bmp_out) {
     /****************************************************************************************
      * Subroutine to send a string of text to the VGA monitor
     ****************************************************************************************/
-    void VGA_text(int x, int y, char * text_ptr)
-    {
+    void VGA_text(int x, int y, char * text_ptr) {
         volatile char * character_buffer = (char *) vga_char_ptr ;	// VGA character buffer
         int offset;
         /* assume that the text string fits on one line */
         offset = (y << 7) + x;
-        while ( *(text_ptr) )
-        {
+        while ( *(text_ptr) ) {
             // write to the character buffer
             *(character_buffer + offset) = *(text_ptr);
             ++text_ptr;
@@ -613,8 +517,7 @@ int outputVGA(struct bmp_out_struct *bmp_out) {
     /****************************************************************************************
      * Subroutine to clear text to the VGA monitor
     ****************************************************************************************/
-    void VGA_text_clear()
-    {
+    void VGA_text_clear() {
         volatile char * character_buffer = (char *) vga_char_ptr ;	// VGA character buffer
         int offset, x, y;
         for (x=0; x<70; x++){
@@ -632,8 +535,7 @@ int outputVGA(struct bmp_out_struct *bmp_out) {
     ****************************************************************************************/
     #define SWAP(X,Y) do{int temp=X; X=Y; Y=temp;}while(0)
 
-    void VGA_box(int x1, int y1, int x2, int y2, short pixel_color)
-    {
+    void VGA_box(int x1, int y1, int x2, int y2, short pixel_color) {
         char  *pixel_ptr ;
         int row, col;
 
@@ -648,13 +550,14 @@ int outputVGA(struct bmp_out_struct *bmp_out) {
         if (y2<0) y2 = 0;
         if (x1>x2) SWAP(x1,x2);
         if (y1>y2) SWAP(y1,y2);
-        for (row = y1; row <= y2; row++)
-            for (col = x1; col <= x2; ++col)
-            {
+        for (row = y1; row <= y2; row++) {
+            for (col = x1; col <= x2; ++col) {
                 //640x480
-                pixel_ptr = (char *)vga_pixel_ptr + (row<<10)    + col ;
+                pixel_ptr = (char *)vga_pixel_ptr + (row<<10) + col ;
                 // set pixel color
                 *(char *)pixel_ptr = pixel_color;
             }
+		}
     }
+	
 #endif
