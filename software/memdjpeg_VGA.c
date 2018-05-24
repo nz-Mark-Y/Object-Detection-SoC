@@ -10,7 +10,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include "jpeg-9c/jpeglib.h"
+#include <jpeglib.h>
 #include "ecrypt-sync.h"
 #include "my_trivium-sw_only.c"
 
