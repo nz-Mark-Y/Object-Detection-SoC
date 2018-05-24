@@ -257,7 +257,7 @@ int FPGAFilter(struct bmp_out_struct *bmp_out) {
 int main (int argc, char *argv[]) {
 	int rc, i;
     int fd;
-
+    printf("1");
 	char *syslog_prefix = (char*) malloc(1024);
 	sprintf(syslog_prefix, "%s", argv[0]);
 	openlog(syslog_prefix, LOG_PERROR | LOG_PID, LOG_USER);
@@ -268,7 +268,7 @@ int main (int argc, char *argv[]) {
 	}
 	char *encfile = argv[1];
 	char *infile = argv[2];
-
+    printf("2");
     #ifdef VGA
         // === get FPGA addresses ==================
         // Open /dev/mem
@@ -286,7 +286,7 @@ int main (int argc, char *argv[]) {
             return(1);
         }  
         vga_char_ptr =(unsigned int *)(vga_char_virtual_base); // Get the address that maps to the FPGA LED control
-
+        printf("3");
         // === get VGA pixel addr ====================
         // get virtual addr that maps to physical
         vga_pixel_virtual_base = mmap( NULL, FPGA_ONCHIP_SPAN, ( PROT_READ | PROT_WRITE ), MAP_SHARED, fd, FPGA_ONCHIP_BASE);
@@ -308,7 +308,7 @@ int main (int argc, char *argv[]) {
 	unsigned char *mjpg_buffer;
     
     trivium_decrypt_file(encfile, infile); // Unencrypt file
-	
+	printf("4");
 	// Load the jpeg data from a file into a memory buffer for the purpose of this demonstration.
 	rc = stat(infile, &file_info);
 	if (rc) {
@@ -326,10 +326,10 @@ int main (int argc, char *argv[]) {
 		i += rc;
 	}
 	close(fd);
-
+    printf("5");
     rc = decodeMjpeg(mjpg_buffer, mjpg_size); // Decode MJPEG
 	free(mjpg_buffer); // And free the input buffer
-
+    printf("6");
     return rc;
 }
 
