@@ -5,7 +5,7 @@ use IEEE.NUMERIC_STD.ALL;
 entity testbench_interface is
 end testbench_interface;
 
-architecture beh of testbench_interface is
+architecture beh of testbench_interface is 
   signal t_clk : std_logic;
   signal t_inp : std_logic_vector(31 downto 0) := x"00000000";
   signal t_outp : std_logic_vector(15 downto 0) := x"0000";
@@ -20,25 +20,19 @@ begin
   test_filter : filter_interface port map(t_clk, t_inp, t_outp);
     
   test : process
+    type input_values is array (0 to 8) of std_logic_vector(31 downto 0);
+    variable input_vectors : input_values := (x"01010153", x"02020253", x"03030353", x"01020363", x"04050663", x"07080963", x"01010173", x"01010173", x"01010173");
+    variable count : integer := 0;
   begin
     wait for 1 ns;
     t_clk <= '1';
-    t_inp <= x"01010153";
+    t_inp <= input_vectors(count);
     wait for 1 ns;
     t_clk <= '0';
-    t_inp <= x"01010153";
-    wait for 1 ns;
-    t_clk <= '1';
-    t_inp <= x"01010153";
-    wait for 1 ns;
-    t_clk <= '0'; 
-    t_inp <= x"01010153";
-    wait for 1 ns;
-    t_clk <= '1';
-    t_inp <= x"01010153";
-    wait for 1 ns;
-    t_clk <= '0';
-    t_inp <= x"01010153";      
+    count := count + 1;
+    if count = 9 then
+      count := 0;
+    end if;      
   end process;
 end beh;
 
