@@ -38,6 +38,10 @@
     #define FPGA_ONCHIP_BASE (FPGA_AXI_BASE + ONCHIP_SRAM_BASE)
     #define FPGA_ONCHIP_SPAN 0x00080000
 
+	#define ALT_AXI_FPGASLVS_OFST (0xC0000000) // axi_master
+	#define HW_FPGA_AXI_SPAN (0x40000000) // Bridge span 1GB
+	#define HW_FPGA_AXI_MASK ( HW_FPGA_AXI_SPAN - 1 )
+
     #define FPGA_CHAR_BASE (FPGA_AXI_BASE + VGA_SUBSYSTEM_VGA_CHAR_BUFFER_AVALON_CHAR_BUFFER_SLAVE_BASE)
     #define FPGA_CHAR_SPAN VGA_SUBSYSTEM_VGA_CHAR_BUFFER_AVALON_CHAR_BUFFER_SLAVE_SPAN
 
@@ -71,11 +75,10 @@ struct bmp_out_struct {
     int pixel_size;
 };
 
-void *virtual_base_A;
-void *virtual_base_B;
-void *virtual_base_C;
-void *virtual_base_D;
-void *virtual_base_E;
+void *virtual_base;
+void *h2p_pio_bridge0_addr;
+void *h2p_pio_bridge1_addr;
+
 unsigned char *bmp_buffer;
 
 int FPGAFilter(struct bmp_out_struct *bmp_out);
@@ -189,7 +192,7 @@ void *threadSendToFPGA(void *bmp_in) {
     u32 temp;
     struct bmp_out_struct *bmp_out = (struct bmp_out_struct*)bmp_in;
     unsigned int id_flag = 0;
-    u32 filter_type = 0x00000007; // set sobel filter
+    u32 filter_type = 0x00000003; // set median filter
     #define val(row, col) bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size + chan]
 	for (int chan=0; chan<bmp_out->pixel_size; ++chan) {
         for (int row=0; row<bmp_out->height; ++row) {
@@ -200,8 +203,7 @@ void *threadSendToFPGA(void *bmp_in) {
                     id_flag++;  // Set an ID for the 3x3 window
                     if (id_flag > 29) { id_flag = 0; }
 
-                    void *h2p_fpga_bridge_addr = virtual_base_A + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_0_BASE) & (unsigned long)(HW_REGS_MASK));
-                    *(uint32_t *)h2p_fpga_bridge_addr = temp;
+                    *(uint32_t *)h2p_pio_bridge0_addr = temp;
                 }
             }
         }
@@ -223,7 +225,7 @@ int FPGAFilter(struct bmp_out_struct *bmp_out) {
         unsigned char middle;
         unsigned int id = 0;
         unsigned int expected_id = 0;
-
+        
         unsigned char *bmp_processed = (unsigned char*) malloc(bmp_out->bmp_size);
         for (int chan=0; chan<bmp_out->pixel_size; ++chan) {
             for (int row=0; row<bmp_out->height; ++row) {
@@ -231,8 +233,7 @@ int FPGAFilter(struct bmp_out_struct *bmp_out) {
                     if ((row>0 && row<bmp_out->height-1) && (col>0 && col<bmp_out->width-1)) {
                         while (expected_id != id) { // Recieve filtered pixel
                             const int fpga_bridge_mask = (1 << (PIO_1_DATA_WIDTH)) - 1;
-                            void *h2p_fpga_bridge_addr = virtual_base_E + ((unsigned long)(ALT_LWFPGASLVS_OFST + PIO_0_BASE) & (unsigned long)(HW_REGS_MASK));
-                            incoming_packet = (u32)(*(uint32_t *)h2p_fpga_bridge_addr & fpga_bridge_mask);
+                            incoming_packet = (u32)(*(uint32_t *)h2p_pio_bridge1_addr & fpga_bridge_mask);
                             id = (int)(incoming_packet & 0x0000001F);
                         }
                         expected_id++;
@@ -284,7 +285,18 @@ int main (int argc, char *argv[]) {
             printf( "ERROR: mmap2() failed...\n" );
             close( fd );
             return(1);
-        }  
+        }
+
+        virtual_base = mmap( NULL, HW_FPGA_AXI_SPAN, ( PROT_READ | PROT_WRITE ), MAP_SHARED, fd, ALT_AXI_FPGASLVS_OFST );
+        if(virtual_base == MAP_FAILED) {
+            printf("ERROR: mmap() failed...\n");
+            close(fd);
+            return(1);
+        }
+
+        h2p_pio_bridge0_addr = virtual_base + ((unsigned long)(0x0 + PIO_0_BASE) & (unsigned long)(HW_FPGA_AXI_MASK));
+        h2p_pio_bridge1_addr = virtual_base + ((unsigned long)(0x0 + PIO_1_BASE) & (unsigned long)(HW_FPGA_AXI_MASK));
+
         vga_char_ptr =(unsigned int *)(vga_char_virtual_base); // Get the address that maps to the FPGA LED control
         printf("3");
         // === get VGA pixel addr ====================
@@ -560,3 +572,4 @@ int outputVGA(struct bmp_out_struct *bmp_out) {
     }
 	
 #endif
+
