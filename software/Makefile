@@ -13,13 +13,13 @@ ifeq ($(PLATFORM),ARM)
 	CFLAGS = -g -Wall -I ${SOCEDS_DEST_ROOT}/ip/altera/hps/altera_hps/hwlib/include \
 		-I ${SOCEDS_DEST_ROOT}/ip/altera/hps/altera_hps/hwlib/include/soc_cv_av
 	LDFLAGS =  -g -Wall 
-	CC = $(CROSS_COMPILE)gcc -std=c99
+	CC = $(CROSS_COMPILE)g++ -std=c++0x
 	ARCH= arm
 else
-	CC = gcc
+	CC = g++
 endif
 
-LDFLAGS += -ljpeg -lm
+LDFLAGS += -ljpeg -lm -I opencv\include -L opencv\lib
 
 #profile
 CFLAGS += -pg
