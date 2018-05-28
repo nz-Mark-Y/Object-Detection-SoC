@@ -1,7 +1,11 @@
+#define _GNU_SOURCE
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <errno.h>
+#include <sched.h>
 #include <unistd.h>
 #include <syslog.h>
 #include <sys/stat.h>
@@ -187,65 +191,51 @@ int windowFilter(struct bmp_out_struct *bmp_out) {
 }
 */
 
-void *threadSendToFPGA(void *bmp_in) {
-	
-    u32 temp;
-    struct bmp_out_struct *bmp_out = (struct bmp_out_struct*)bmp_in;
-    unsigned int id_flag = 0;
-    u32 filter_type = 0x00000003; // set median filter
-    #define val(row, col) bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size + chan]
-	for (int chan=0; chan<bmp_out->pixel_size; ++chan) {
-        for (int row=0; row<bmp_out->height; ++row) {
-            for (int col=0; col<bmp_out->width; ++col) {            
-                if ((row>0 && row<bmp_out->height-1)) {
-                    temp = ((val(row-1, col) << 24 ) | (val(row-0, col) << 16) | (val(row+1, col) << 8) | (filter_type << 5) | id_flag);
-
-                    id_flag++;  // Set an ID for the 3x3 window
-                    if (id_flag > 29) { id_flag = 0; }
-
-                    *(uint32_t *)h2p_pio_bridge0_addr = temp;
-                }
-            }
-        }
-    }
-    #undef val
-	return NULL;
-}
-
 int FPGAFilter(struct bmp_out_struct *bmp_out) {
     #ifdef PIO_0_COMPONENT_TYPE
     #ifdef PIO_1_COMPONENT_TYPE
         bmp_buffer = bmp_out->bmp_buffer;
 
-        // Create new POSIX thread for sending the frames to FPGA
-        pthread_t pth;
-        pthread_create(&pth,NULL,threadSendToFPGA, (void*)bmp_out);
-
         u32 incoming_packet;
-        unsigned char middle;
+        u32 temp;        
         unsigned int id = 0;
         unsigned int expected_id = 0;
+        unsigned int id_flag = 0;
+        u32 filter_type = 0x00000003; // set median filter
+        #define val(row, col) bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size + chan]
         
         unsigned char *bmp_processed = (unsigned char*) malloc(bmp_out->bmp_size);
         for (int chan=0; chan<bmp_out->pixel_size; ++chan) {
             for (int row=0; row<bmp_out->height; ++row) {
                 for (int col=0; col<bmp_out->width; ++col) {
-                    if ((row>0 && row<bmp_out->height-1) && (col>0 && col<bmp_out->width-1)) {
-                        while (expected_id != id) { // Recieve filtered pixel
-                            const int fpga_bridge_mask = (1 << (PIO_1_DATA_WIDTH)) - 1;
-                            incoming_packet = (u32)(*(uint32_t *)h2p_pio_bridge1_addr & fpga_bridge_mask);
-                            id = (int)(incoming_packet & 0x0000001F);
+                    if ((row>0 && row<bmp_out->height-1) && (col>=0 && col<bmp_out->width-1)) {
+                        temp = ((val(row-1, col) << 24 ) | (val(row-0, col) << 16) | (val(row+1, col) << 8) | (filter_type << 5) | id_flag);
+                        *(uint32_t *)h2p_pio_bridge0_addr = temp;
+                        id_flag++;  // Set an ID for the 3x3 window
+                        if (id_flag > 29) { id_flag = 0; }
+
+                        if (col == 0) { 
+                            expected_id = expected_id + 2;
                         }
-                        expected_id++;
-                        if (expected_id > 29) { expected_id = 0; }
-                        middle = (char)(incoming_packet >> 8); // Cast to char
+                        if (col > 1) {
+                            while (expected_id != id) { // Recieve filtered pixel
+                                const int fpga_bridge_mask = (1 << (PIO_1_DATA_WIDTH)) - 1;
+                                incoming_packet = (u32)(*(uint32_t *)h2p_pio_bridge1_addr & fpga_bridge_mask);
+                                id = (int)((incoming_packet & 0x1F00) >> 8);
+                            }
+                            
+                            expected_id++;
+                            if (expected_id > 29) { expected_id = 0; }
+                            bmp_processed[(row*bmp_out->row_stride) + (col-1)*bmp_out->pixel_size + chan] = (char)(incoming_packet >> 8); // Cast to char
+                        }
                     } else {                       
-                        middle = 0; // Black border
+                        bmp_processed[(row*bmp_out->row_stride) + col*bmp_out->pixel_size + chan] = 0; // Black border
                     }                   
-                    bmp_processed[(row*bmp_out->row_stride) + col*bmp_out->pixel_size + chan] = middle; // Set output
+                    
                 }
             }
         }
+        #undef val
 
         // Replace input with output
         memcpy(bmp_buffer, bmp_processed, bmp_out->bmp_size);
