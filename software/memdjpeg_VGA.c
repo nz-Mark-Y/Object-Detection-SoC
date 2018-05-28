@@ -223,10 +223,9 @@ int FPGAFilter(struct bmp_out_struct *bmp_out) {
                                 incoming_packet = (u32)(*(uint32_t *)h2p_pio_bridge1_addr & fpga_bridge_mask);
                                 id = (int)((incoming_packet & 0x1F00) >> 8);
                             }
-                            
                             expected_id++;
                             if (expected_id > 29) { expected_id = 0; }
-                            bmp_processed[(row*bmp_out->row_stride) + (col-1)*bmp_out->pixel_size + chan] = (char)(incoming_packet >> 8); // Cast to char
+                            bmp_processed[(row*bmp_out->row_stride) + (col-1)*bmp_out->pixel_size + chan] = (char)(incoming_packet & 0x00FF); // Cast to char
                         }
                     } else {                       
                         bmp_processed[(row*bmp_out->row_stride) + col*bmp_out->pixel_size + chan] = 0; // Black border
