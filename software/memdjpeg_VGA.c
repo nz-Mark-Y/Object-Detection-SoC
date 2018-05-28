@@ -213,34 +213,32 @@ int FPGAFilter(struct bmp_out_struct *bmp_out) {
         unsigned int expected_id = 0;
         unsigned int id_flag = 0;
         u32 filter_type = 0x00000003; // set median filter
-        #define val(row, col) bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size + chan]
+        #define val(row, col) bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size]
         
         unsigned char *bmp_processed = (unsigned char*) malloc(bmp_out->bmp_size); // Create buffer to hold processed pixels
-        for (int chan = 0; chan < bmp_out->pixel_size; ++chan) {
-            for (int row = 0; row < bmp_out->height; ++row) {
-                for (int col = 0; col < bmp_out->width; ++col) {
-                    if ((row > 0 && row < bmp_out->height - 1) && (col >= 0 && col < bmp_out->width - 1)) { // Don't process border pixels
-                        temp = ((val(row-1, col) << 24 ) | (val(row-0, col) << 16) | (val(row+1, col) << 8) | (filter_type << 5) | id_flag);
-                        *(uint32_t *)h2p_pio_bridge0_addr = temp;
-                        id_flag++;  // Set an ID for the 3x3 window
-                        if (id_flag > 29) { id_flag = 0; }
+        for (int row = 0; row < bmp_out->height; ++row) {
+            for (int col = 0; col < bmp_out->width; ++col) {
+                if ((row > 0 && row < bmp_out->height - 1) && (col >= 0 && col < bmp_out->width - 1)) { // Don't process border pixels
+                    temp = ((val(row-1, col) << 24 ) | (val(row-0, col) << 16) | (val(row+1, col) << 8) | (filter_type << 5) | id_flag);
+                    *(uint32_t *)h2p_pio_bridge0_addr = temp;
+                    id_flag++;  // Set an ID for the 3x3 window
+                    if (id_flag > 29) { id_flag = 0; }
 
-                        if (col == 0) { expected_id = expected_id + 2; }
-                        if (col > 1) {
-                            while (expected_id != id) { // Recieve filtered pixel
-                                const int fpga_bridge_mask = (1 << (PIO_1_DATA_WIDTH)) - 1;
-                                incoming_packet = (u32)(*(uint32_t *)h2p_pio_bridge1_addr & fpga_bridge_mask);
-                                id = (int)((incoming_packet & 0x1F00) >> 8);
-                            }
-                            expected_id++;
-                            if (expected_id > 29) { expected_id = 0; }
-                            bmp_processed[(row*bmp_out->row_stride) + (col-1)*bmp_out->pixel_size + chan] = (char)(incoming_packet & 0x00FF); // Cast to char
+                    if (col == 0) { expected_id = expected_id + 2; }
+                    if (col > 1) {
+                        while (expected_id != id) { // Recieve filtered pixel
+                            const int fpga_bridge_mask = (1 << (PIO_1_DATA_WIDTH)) - 1;
+                            incoming_packet = (u32)(*(uint32_t *)h2p_pio_bridge1_addr & fpga_bridge_mask);
+                            id = (int)((incoming_packet & 0x1F00) >> 8);
                         }
-                    } else {                       
-                        bmp_processed[(row*bmp_out->row_stride) + col*bmp_out->pixel_size + chan] = 0; // Black border
-                    }                   
-                    
-                }
+                        expected_id++;
+                        if (expected_id > 29) { expected_id = 0; }
+                        bmp_processed[(row*bmp_out->row_stride) + (col-1)*bmp_out->pixel_size] = (char)(incoming_packet & 0x00FF); // Cast to char
+                    }
+                } else {                       
+                    bmp_processed[(row*bmp_out->row_stride) + col*bmp_out->pixel_size] = 0; // Black border
+                }                   
+                
             }
         }
         #undef val
@@ -442,6 +440,8 @@ int decodeJpeg(struct jpeg_decompress_struct *cinfo, struct bmp_out_struct *bmp_
     // entire scanline (row).
     bmp_out->row_stride = bmp_out->width * bmp_out->pixel_size;
 
+    cinfo->out_color_space = JCS_GRAYSCALE;
+
     // Now that you have the decompressor entirely configured, it's time
     // to read out all of the scanlines of the jpeg.
     //
@@ -511,8 +511,8 @@ int outputVGA(struct bmp_out_struct *bmp_out) {
                 if (j >= 480) break;
                 char pixel_colour;
                 #define val(row, col, chan) bmp_out->bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size + chan]
-                pixel_colour = (val(j, i, 0) & 0xe0) >> 0 | (val(j, i, 1) & 0xe0) >> 3 | (val(j, i, 2) & 0xc0) >> 6;
-                VGA_PIXEL(i, j, pixel_colour);
+                //pixel_colour = (val(j, i, 0) & 0xe0) >> 0 | (val(j, i, 1) & 0xe0) >> 3 | (val(j, i, 2) & 0xc0) >> 6;
+                VGA_PIXEL(i, j, (val(j, i, 0) & 0xe0) >> 3);
             }
         }
         return 1;
