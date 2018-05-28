@@ -11,7 +11,6 @@ END ENTITY filter_interface;
 ARCHITECTURE BEH OF filter_interface IS
 
     SIGNAL outpet : STD_LOGIC_VECTOR(15 DOWNTO 0) := x"0000";
-    SIGNAL ida, idb : STD_LOGIC_VECTOR(7 DOWNTO 0) := x"00";
     SIGNAL bufferA, bufferB, bufferC, bufferD : STD_LOGIC_VECTOR(23 DOWNTO 0) := x"000000";
     SIGNAL in_pixels : UNSIGNED(71 DOWNTO 0);
     SIGNAL kernale : UNSIGNED(35 DOWNTO 0) := x"0101C1010";
@@ -65,11 +64,9 @@ BEGIN
 
             -- send register data to the filter blocks
             in_pixels <= UNSIGNED(bufferA & bufferB & bufferC);
-            ida <= bufferD(7 DOWNTO 0);
-            idb <= ida;
             
             -- choose filter output based on control signal
-            mux_sel := idb(2 DOWNTO 0);
+            mux_sel := bufferD(7 DOWNTO 5);
             CASE mux_sel IS
                 WHEN "000" => mux_out := out_pixels_edge;
                 WHEN "001" => mux_out := out_pixels_gaussian;
@@ -77,7 +74,7 @@ BEGIN
                 WHEN "011" => mux_out := out_pixels_median;
                 WHEN others => mux_out := out_pixels_sobel;
             END CASE;
-            outpet <= idb & STD_LOGIC_VECTOR(mux_out);
+            outpet <= bufferD(7 DOWNTO 0) & STD_LOGIC_VECTOR(mux_out);
         END IF;
     END PROCESS;
     outp <= outpet;

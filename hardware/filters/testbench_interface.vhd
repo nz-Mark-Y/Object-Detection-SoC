@@ -8,7 +8,7 @@ end testbench_interface;
 architecture beh of testbench_interface is 
   signal t_clk : std_logic;
   signal t_inp : std_logic_vector(31 downto 0) := x"00000000";
-  signal t_outp : std_logic_vector(15 downto 0) := x"0000";
+  signal t_outp : std_logic_vector(15 downto 0) := x"0000";  
   
   component filter_interface is
     port(clk : in std_logic;
@@ -21,7 +21,7 @@ begin
     
   test : process
     type input_values is array (0 to 8) of std_logic_vector(31 downto 0);
-    variable input_vectors : input_values := (x"01010153", x"02020253", x"03030353", x"01020363", x"04050663", x"07080963", x"01010173", x"01010173", x"01010173");
+    variable input_vectors : input_values := (x"01010160", x"02020261", x"03030362", x"01020363", x"04050664", x"07080965", x"01010166", x"01010167", x"01010168");
     variable count : integer := 0;
   begin
     wait for 1 ns;
