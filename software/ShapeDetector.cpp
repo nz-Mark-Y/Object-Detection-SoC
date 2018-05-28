@@ -11,14 +11,11 @@
  *
  */
 
-
-
 #include <iostream>
 #include <stdlib.h>
 #include <opencv2\imgproc\types_c.h>
 #include <opencv2\highgui\highgui.hpp>
 #include <opencv2\imgproc\imgproc.hpp>
-
 
 using namespace cv;
 using namespace std;
@@ -37,7 +34,6 @@ int ddepth = CV_16S;
 std::vector<cv::Point> approx;
 int vtc;
 
-
 /** Helper function to display text in the center of a contour **/
 void setLabel(cv::Mat& im, const std::string label, std::vector<cv::Point>& contour)
 {
@@ -54,27 +50,10 @@ void setLabel(cv::Mat& im, const std::string label, std::vector<cv::Point>& cont
 	cv::putText(im, label, pt, fontface, scale, CV_RGB(0,0,0), thickness, 8);
 }
 
-/** @function main */
-int main( int argc, char* argv[] )
-{
+int objectDetect(char *buffer, int bufferLength) {
+	src = imdecode(Mat(1, bufferLength, CV_8UC1, buffer), CV_LOAD_IMAGE_UNCHANGED);
 
-	if(argc<3)
-	{
-		printf( "Usage: main <image-file-name> <option>\n" );
-		printf( "option:\n"
-				"\t t -Threshold\n"
-				"\t s -Sobel\n"
-				"\t c -Canny\n" );
-		exit(0);
-	}
-
-	string option = argv[2];
-
-	/** Load source image **/
-    printf( "Reading image\n" );
-    src = imread( argv[1], 1 );
-    if (src.empty())
-    {
+    if (src.empty()) {
     	printf( "Could not load image file: %s\n",argv[1] );
     	exit(0);
     }
@@ -84,10 +63,8 @@ int main( int argc, char* argv[] )
     GaussianBlur( src_gray, src_gaussian, Size(3,3), 0, 0, BORDER_DEFAULT );
     blur( src_gray, src_blur, Size(3,3) );
 
-
     /** Generate threshold result for findcontours where option argument is t **/
     threshold(src_gaussian, src_thresh, thresh, max_thresh, 1);
-
 
     /** Generate Sobel result for findcontours where option argument is s **/
     /** Gradient X **/
@@ -112,9 +89,6 @@ int main( int argc, char* argv[] )
         cv::findContours(src_canny.clone(), contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 
     printf("%d contours detected in the image!\n", contours.size());
-
-
-
 
 	dst = src.clone();
 
@@ -148,23 +122,7 @@ int main( int argc, char* argv[] )
 				setLabel(dst, "CIR", contours[i]);
 		}
 	}
-
-
-	printf( "Threshold results saved in thresh.bmp\n" );
-	imwrite( "sobel.bmp", src_thresh );
-
-	printf( "Sobel edge detection results saved in sobel.bmp\n" );
-	imwrite( "sobel.bmp", src_sobel );
-
-	printf( "Thresholded Sobel edge detection results saved in sobelthresh.bmp\n" );
-	imwrite( "sobelthresh.bmp", sobel_thresh );
-
-	printf( "Canny edge detection results saved in canny.bmp\n" );
-	imwrite( "canny.bmp", src_canny );
-
-	printf( "Shape detection results saved in result.bmp\n" );
-	imwrite( "result.bmp", dst );
-
+	imencode(".bmp", dst, *buffer); 
 	return(0);
 }
 
