@@ -79,6 +79,7 @@ struct bmp_out_struct {
     int pixel_size;
 };
 
+// Memory maps for filter interface
 void *virtual_base;
 void *h2p_pio_bridge0_addr;
 void *h2p_pio_bridge1_addr;
@@ -95,7 +96,14 @@ int outputVGA(struct bmp_out_struct *bmp_out);
 #define IM_DECODE decodeJpeg
 #define IM_PROCESS FPGAFilter
 #define IM_OUTPUT outputVGA
-/*
+
+/****************************************************************************************
+ * Function to filter an individual frame
+ * Utilises software system
+****************************************************************************************/
+
+#define WINDOW_FUNC sobelFilter
+
 int medianFilter(unsigned char values[9]) {
     // Sort values like a horrible person
     int sorted = 0;
@@ -155,7 +163,6 @@ int sobelFilter(unsigned char values[9]) {
     return (int)sqrt(sumx*sumx + sumy*sumy);
 }
 
-#define WINDOW_FUNC sobelFilter
 int windowFilter(struct bmp_out_struct *bmp_out) {
     // Take a few local copies to make the code a bit easier to read
     unsigned char *bmp_buffer = bmp_out->bmp_buffer;
@@ -189,7 +196,11 @@ int windowFilter(struct bmp_out_struct *bmp_out) {
     memcpy(bmp_buffer, bmp_processed, bmp_out->bmp_size);
     return 1;
 }
-*/
+
+/****************************************************************************************
+ * Function to filter an individual frame
+ * Utilises hardware system
+****************************************************************************************/
 
 int FPGAFilter(struct bmp_out_struct *bmp_out) {
     #ifdef PIO_0_COMPONENT_TYPE
@@ -204,19 +215,17 @@ int FPGAFilter(struct bmp_out_struct *bmp_out) {
         u32 filter_type = 0x00000003; // set median filter
         #define val(row, col) bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size + chan]
         
-        unsigned char *bmp_processed = (unsigned char*) malloc(bmp_out->bmp_size);
-        for (int chan=0; chan<bmp_out->pixel_size; ++chan) {
-            for (int row=0; row<bmp_out->height; ++row) {
-                for (int col=0; col<bmp_out->width; ++col) {
-                    if ((row>0 && row<bmp_out->height-1) && (col>=0 && col<bmp_out->width-1)) {
+        unsigned char *bmp_processed = (unsigned char*) malloc(bmp_out->bmp_size); // Create buffer to hold processed pixels
+        for (int chan = 0; chan < bmp_out->pixel_size; ++chan) {
+            for (int row = 0; row < bmp_out->height; ++row) {
+                for (int col = 0; col < bmp_out->width; ++col) {
+                    if ((row > 0 && row < bmp_out->height - 1) && (col >= 0 && col < bmp_out->width - 1)) { // Don't process border pixels
                         temp = ((val(row-1, col) << 24 ) | (val(row-0, col) << 16) | (val(row+1, col) << 8) | (filter_type << 5) | id_flag);
                         *(uint32_t *)h2p_pio_bridge0_addr = temp;
                         id_flag++;  // Set an ID for the 3x3 window
                         if (id_flag > 29) { id_flag = 0; }
 
-                        if (col == 0) { 
-                            expected_id = expected_id + 2;
-                        }
+                        if (col == 0) { expected_id = expected_id + 2; }
                         if (col > 1) {
                             while (expected_id != id) { // Recieve filtered pixel
                                 const int fpga_bridge_mask = (1 << (PIO_1_DATA_WIDTH)) - 1;
@@ -244,10 +253,15 @@ int FPGAFilter(struct bmp_out_struct *bmp_out) {
     return 0;
 }
 
+/****************************************************************************************
+ * Main
+ * Sets up system, decrypts, then calls decodeMjpeg
+****************************************************************************************/
+
 int main (int argc, char *argv[]) {
 	int rc, i;
     int fd;
-    printf("1");
+
 	char *syslog_prefix = (char*) malloc(1024);
 	sprintf(syslog_prefix, "%s", argv[0]);
 	openlog(syslog_prefix, LOG_PERROR | LOG_PID, LOG_USER);
@@ -258,7 +272,7 @@ int main (int argc, char *argv[]) {
 	}
 	char *encfile = argv[1];
 	char *infile = argv[2];
-    printf("2");
+
     #ifdef VGA
         // === get FPGA addresses ==================
         // Open /dev/mem
@@ -287,7 +301,7 @@ int main (int argc, char *argv[]) {
         h2p_pio_bridge1_addr = virtual_base + ((unsigned long)(0x0 + PIO_1_BASE) & (unsigned long)(HW_FPGA_AXI_MASK));
 
         vga_char_ptr =(unsigned int *)(vga_char_virtual_base); // Get the address that maps to the FPGA LED control
-        printf("3");
+
         // === get VGA pixel addr ====================
         // get virtual addr that maps to physical
         vga_pixel_virtual_base = mmap( NULL, FPGA_ONCHIP_SPAN, ( PROT_READ | PROT_WRITE ), MAP_SHARED, fd, FPGA_ONCHIP_BASE);
@@ -308,9 +322,9 @@ int main (int argc, char *argv[]) {
 	unsigned long mjpg_size;
 	unsigned char *mjpg_buffer;
     
-    trivium_decrypt_file(encfile, infile); // Unencrypt file
-	printf("4");
-	// Load the jpeg data from a file into a memory buffer for the purpose of this demonstration.
+    trivium_decrypt_file(encfile, infile); // Unencrypt file	
+
+    // Load the jpeg data from a file into a memory buffer for the purpose of this demonstration.
 	rc = stat(infile, &file_info);
 	if (rc) {
 		syslog(LOG_ERR, "FAILED to stat source jpg");
@@ -327,12 +341,17 @@ int main (int argc, char *argv[]) {
 		i += rc;
 	}
 	close(fd);
-    printf("5");
+
     rc = decodeMjpeg(mjpg_buffer, mjpg_size); // Decode MJPEG
 	free(mjpg_buffer); // And free the input buffer
-    printf("6");
+
     return rc;
 }
+
+/****************************************************************************************
+ * Function to decompress, filter, and output mjpeg
+ * Takes pointer to encoded MJPEG (in memory), and size
+****************************************************************************************/
 
 int decodeMjpeg(unsigned char *mjpeg_buffer, unsigned long mjpeg_size) {
 	syslog(LOG_INFO, "Proc: Create Decompress struct");
@@ -392,10 +411,10 @@ int decodeMjpeg(unsigned char *mjpeg_buffer, unsigned long mjpeg_size) {
 }
 
 
-/** Function to decode individual frame
- *  Take pointer to encoded JPEG (in memory), return a pointer to the decoded BMP
- *  Don't forget to free memory
- **/
+/****************************************************************************************
+ * Function to decode individual frame
+ * Takes pointer to encoded JPEG (in memory), return a pointer to the decoded BMP
+****************************************************************************************/
 int decodeJpeg(struct jpeg_decompress_struct *cinfo, struct bmp_out_struct *bmp_out) {
     // Have the decompressor scan the jpeg header. This won't populate
     // the cinfo struct output fields, but will indicate if the
@@ -453,7 +472,9 @@ int decodeJpeg(struct jpeg_decompress_struct *cinfo, struct bmp_out_struct *bmp_
     jpeg_finish_decompress(cinfo);
     return 1;
 }
-
+/****************************************************************************************
+ * Subroutine to write to a bmp file
+****************************************************************************************/
 int outputBmp(struct bmp_out_struct *bmp_out) {
     static unsigned int jpg_count = 0;
     int ret = 0;
@@ -479,6 +500,9 @@ int outputBmp(struct bmp_out_struct *bmp_out) {
     return ret;
 }
 
+/****************************************************************************************
+ * Subroutine to write frame to VGA monitor
+****************************************************************************************/
 int outputVGA(struct bmp_out_struct *bmp_out) {
     #ifdef VGA
         for (int i=1; i<bmp_out->width; ++i) {

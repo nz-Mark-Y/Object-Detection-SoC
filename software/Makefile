@@ -19,7 +19,7 @@ else
 	CC = gcc
 endif
 
-LDFLAGS += -ljpeg -pthread -lm
+LDFLAGS += -ljpeg -lm
 
 #profile
 CFLAGS += -pg
