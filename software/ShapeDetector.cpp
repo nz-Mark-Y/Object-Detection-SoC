@@ -13,6 +13,7 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <vector>
 #include <opencv2\imgproc\types_c.h>
 #include <opencv2\highgui\highgui.hpp>
 #include <opencv2\imgproc\imgproc.hpp>
@@ -50,11 +51,11 @@ void setLabel(cv::Mat& im, const std::string label, std::vector<cv::Point>& cont
 	cv::putText(im, label, pt, fontface, scale, CV_RGB(0,0,0), thickness, 8);
 }
 
-int objectDetect(char *buffer, int bufferLength) {
-	src = imdecode(Mat(1, bufferLength, CV_8UC1, buffer), CV_LOAD_IMAGE_UNCHANGED);
+int objectDetect(unsigned char *buffer, unsigned long bufferLength, int rows, int cols) {
+	cv::Mat src(rows, cols, CV_8UC3, buffer);
 
     if (src.empty()) {
-    	printf( "Could not load image file: %s\n",argv[1] );
+    	printf( "Could not load image file");
     	exit(0);
     }
 
@@ -81,15 +82,7 @@ int objectDetect(char *buffer, int bufferLength) {
     Canny(src_gaussian, src_canny, 80, 240, 3);
 
     std::vector<std::vector<cv::Point> > contours;
-    if (option == "t")
-    	cv::findContours(src_thresh.clone(), contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
-    else if (option == "s")
-        cv::findContours(sobel_thresh.clone(), contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
-    else
-        cv::findContours(src_canny.clone(), contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
-
-    printf("%d contours detected in the image!\n", contours.size());
-
+    cv::findContours(sobel_thresh.clone(), contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 	dst = src.clone();
 
 	for (unsigned int i = 0; i < contours.size(); i++)
@@ -122,7 +115,7 @@ int objectDetect(char *buffer, int bufferLength) {
 				setLabel(dst, "CIR", contours[i]);
 		}
 	}
-	imencode(".bmp", dst, *buffer); 
+	memcpy(buffer, dst.data, bufferLength); 
 	return(0);
 }
 

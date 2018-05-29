@@ -1,11 +1,6 @@
-#define _GNU_SOURCE
-
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <pthread.h>
-#include <errno.h>
-#include <sched.h>
 #include <unistd.h>
 #include <syslog.h>
 #include <sys/stat.h>
@@ -17,6 +12,7 @@
 #include <jpeglib.h>
 #include "ecrypt-sync.h"
 #include "my_trivium-sw_only.c"
+#include "ShapeDetector.cpp"
 
 #define VGA
 #define WRITE_ALL 0
@@ -87,7 +83,6 @@ void *h2p_pio_bridge1_addr;
 unsigned char *bmp_buffer;
 
 int FPGAFilter(struct bmp_out_struct *bmp_out);
-//int windowFilter(struct bmp_out_struct *bmp_out);
 int decodeMjpeg(unsigned char *mjpeg_buffer, unsigned long mjpeg_size);
 int decodeJpeg(struct jpeg_decompress_struct *cinfo, struct bmp_out_struct *bmp_out);
 int outputBmp(struct bmp_out_struct *bmp_out);
@@ -206,13 +201,12 @@ int FPGAFilter(struct bmp_out_struct *bmp_out) {
     #ifdef PIO_0_COMPONENT_TYPE
     #ifdef PIO_1_COMPONENT_TYPE
         bmp_buffer = bmp_out->bmp_buffer;
-
         u32 incoming_packet;
         u32 temp;        
         unsigned int id = 0;
         unsigned int expected_id = 0;
         unsigned int id_flag = 0;
-        u32 filter_type = 0x00000003; // set median filter
+        u32 filter_type = 0x00000007; // set sobel filter
         #define val(row, col) bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size]
         
         unsigned char *bmp_processed = (unsigned char*) malloc(bmp_out->bmp_size); // Create buffer to hold processed pixels
@@ -387,6 +381,8 @@ int decodeMjpeg(unsigned char *mjpeg_buffer, unsigned long mjpeg_size) {
         #ifdef IM_PROCESS
             IM_PROCESS(&bmp_out);
         #endif
+
+        objectDetect(bmp_out.bmp_buffer, bmp_out.bmp_size, bmp_out.height, bmp_out.width);
 
         // Output
         #ifdef IM_OUTPUT

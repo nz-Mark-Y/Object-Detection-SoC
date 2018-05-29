@@ -25,11 +25,11 @@
 int test_trivium(void) {
     #define LEN 32
     ECRYPT_ctx ctx;
-    const u8 key[MAXKEYSIZEB] = "Test key01";
-    const u8 iv[MAXIVSIZEB] = "So Random\0";
-    //const u8 input[LEN] = "Test input 12345";
-    const u8 input[LEN] = "#include \"ecrypt-sync.h\"\r\n#inclu";
-    //const u8 input[LEN] = "";
+    const u8 key[] = "Test key01";
+    const u8 iv[] = "So Random\0";
+    //const u8 input[] = "Test input 12345";
+    const u8 input[] = "#include \"ecrypt-sync.h\"\r\n#inclu";
+    //const u8 input[] = "";
     u8 output[LEN];
     u8 second[LEN];
     int passed = 1;
@@ -134,8 +134,8 @@ int trivium_decrypt_file(char* infile, char* outfile) {
 
     // Keys
     //TODO make these read as input
-    const u8 key[MAXKEYSIZEB] = "Test key01";
-    const u8 iv[MAXIVSIZEB] = "So Random\0";
+    const u8 key[] = "Test key01";
+    const u8 iv[] = "So Random\0";
 
     // Execute code
     int ret = trivium_file(infile, outfile, key, iv);

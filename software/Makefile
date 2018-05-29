@@ -11,7 +11,7 @@ PLATFORM = ARM
 ifeq ($(PLATFORM),ARM)
 	CROSS_COMPILE = arm-linux-gnueabihf-
 	CFLAGS = -g -Wall -I ${SOCEDS_DEST_ROOT}/ip/altera/hps/altera_hps/hwlib/include \
-		-I ${SOCEDS_DEST_ROOT}/ip/altera/hps/altera_hps/hwlib/include/soc_cv_av
+		-I ${SOCEDS_DEST_ROOT}/ip/altera/hps/altera_hps/hwlib/include/soc_cv_av -I opencv/include
 	LDFLAGS =  -g -Wall 
 	CC = $(CROSS_COMPILE)g++ -std=c++0x
 	ARCH= arm
@@ -19,7 +19,7 @@ else
 	CC = g++
 endif
 
-LDFLAGS += -ljpeg -lm -I opencv\include -L opencv\lib
+LDFLAGS += -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_imgcodecs -ljpeg -lm -L opencv/lib 
 
 #profile
 CFLAGS += -pg
