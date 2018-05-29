@@ -1,3 +1,28 @@
+
+/****************************************************************************************
+ * The following defines are used to configure the required operation modes
+ * 
+ * IM_DECODE: This only has one mode at the moment
+ * 
+ * IM_PROCESS: This sets the desired filter stage processor
+ *     Valid Options:
+ *     - 'windowFilter' - The standard supplied software based filter
+ *     - 'FPGAFilter' - Uses FPGA components to accelerate processing speed
+ *     - 'improvedSoftwareFilter' (PREFERRED) - Improved & optimised software filter
+ * 
+ * IM_OUTPUT:  This only has one mode at the moment
+ * 
+ * WINDOW_FUNC: This sets the desired filter process to use
+ *  Valid Options:
+ *     - 'medianFilter'
+ *     - 'convolutionFilter'
+ *     - 'sobelFilter' (PREFERRED) 
+****************************************************************************************/
+#define IM_DECODE decodeJpeg
+#define IM_PROCESS improvedSoftwareFilter
+#define IM_OUTPUT outputVGA
+#define WINDOW_FUNC sobelFilter
+
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -88,16 +113,10 @@ int decodeJpeg(struct jpeg_decompress_struct *cinfo, struct bmp_out_struct *bmp_
 int outputBmp(struct bmp_out_struct *bmp_out);
 int outputVGA(struct bmp_out_struct *bmp_out);
 
-#define IM_DECODE decodeJpeg
-#define IM_PROCESS FPGAFilter
-#define IM_OUTPUT outputVGA
-
 /****************************************************************************************
  * Function to filter an individual frame
  * Utilises software system
 ****************************************************************************************/
-
-#define WINDOW_FUNC sobelFilter
 
 int medianFilter(unsigned char values[9]) {
     // Sort values like a horrible person
@@ -191,6 +210,8 @@ int windowFilter(struct bmp_out_struct *bmp_out) {
     memcpy(bmp_buffer, bmp_processed, bmp_out->bmp_size);
     return 1;
 }
+
+int improvedSoftwareFilter(struct bmp_out_struct *bmp_out) { return 1; }
 
 /****************************************************************************************
  * Function to filter an individual frame
