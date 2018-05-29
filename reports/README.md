@@ -15,3 +15,11 @@
 ## Report 4
 
 * Add the object detection code to the system
+
+## Report 5
+
+* Switch out hardware based filter for software based one
+
+## Report 6
+
+* Test out full colour filtering and rendering
