@@ -16,13 +16,20 @@ Hardware/software co-designed system to compute MJPEG frame processing and objec
 1. Open the project file in Quartus Prime from the hardware folder.
 2. Start Qsys and generate VHDL for the Computer System component.
 3. Compile project into .sof file
+
 ### Software Setup ###
-2. Open SoC EDS Command Shell and browse to the software folder.
-3. Build the solution using "make".
-4. Copy the solution binary file to a USB 2.0 device.
+1. Open SoC EDS Command Shell and browse to the software folder.
+2. Build the solution using "make".
+3. Copy the solution binary file ('memdjpeg_VGA') to a USB 2.0 device.
+
 ### DE1-SoC Setup ###
 1. Use Quartus Prime Programmer to program the DE1-SoC with the compiled .sof file.
 2. Login to the Linux system on the ARM core with user root
-3. Copy the solution binary file from the USB 2.0 device to the root directory of the Linux system on the DE1-SoC board. 
+3. Copy the solution binary file from the USB 2.0 device to a local directory of the Linux system on the DE1-SoC board. 
 
 ## Usage ##
+
+1. Run the executable passing two parameters: the source video file and a destination for a decrypted copy. E.g.
+```
+memdjpeg_VGA DW.mjpeg.cipher DW.mjpeg
+``` 
