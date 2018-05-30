@@ -5,11 +5,10 @@
   <columns>
    <connections preferredWidth="271" />
    <irq preferredWidth="79" />
-   <inputclock preferredWidth="77" />
   </columns>
  </systemtable>
- <library expandedCategories="Project,Library" />
- <window width="1366" height="728" x="0" y="0" />
+ <library expandedCategories="Library,Project" />
+ <window width="2559" height="1407" x="0" y="0" />
  <hdlexample language="VHDL" />
- <generation synthesis="VERILOG" block_symbol_file="0" />
+ <generation synthesis="VERILOG" />
 </preferences>

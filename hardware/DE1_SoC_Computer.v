@@ -360,16 +360,17 @@ output					HPS_USB_STP;
 wire			[15: 0]	hex3_hex0;
 //wire			[15: 0]	hex5_hex4;
 
+//assign HEX0 = ~hex3_hex0[ 6: 0]; // hex3_hex0[ 6: 0]; 
+//assign HEX1 = ~hex3_hex0[14: 8];
+//assign HEX2 = ~hex3_hex0[22:16];
+//assign HEX3 = ~hex3_hex0[30:24];
+assign HEX4 = 7'b1111111;
+assign HEX5 = 7'b1111111;
 
-wire [31: 0] pio0_wire;
-wire [15: 0] pio1_wire;
-
-HexDigit Digit0(HEX0, pio0_wire[3:0]);
-HexDigit Digit1(HEX1, pio0_wire[7:4]);
-HexDigit Digit2(HEX2, pio0_wire[11:8]);
-HexDigit Digit3(HEX3, pio0_wire[15:12]);
-HexDigit Digit4(HEX4, pio0_wire[19:16]);
-HexDigit Digit5(HEX5, pio0_wire[23:20]);
+HexDigit Digit0(HEX0, hex3_hex0[3:0]);
+HexDigit Digit1(HEX1, hex3_hex0[7:4]);
+HexDigit Digit2(HEX2, hex3_hex0[11:8]);
+HexDigit Digit3(HEX3, hex3_hex0[15:12]);
 
 //=======================================================
 //  Structural coding
@@ -450,6 +451,7 @@ Computer_System The_System (
 	
 	// SDRAM
 	.sdram_clk_clk								(DRAM_CLK),
+   .sdram_addr									(DRAM_ADDR),
 	.sdram_ba									(DRAM_BA),
 	.sdram_cas_n								(DRAM_CAS_N),
 	.sdram_cke									(DRAM_CKE),
@@ -561,17 +563,7 @@ Computer_System The_System (
 	.hps_io_hps_io_usb1_inst_CLK		(HPS_USB_CLKOUT),
 	.hps_io_hps_io_usb1_inst_STP		(HPS_USB_STP),
 	.hps_io_hps_io_usb1_inst_DIR		(HPS_USB_DIR),
-	.hps_io_hps_io_usb1_inst_NXT		(HPS_USB_NXT),
-	
-	// PIO
-	.pio_0_external_connection_export (pio0_wire),
-   .pio_1_external_connection_export (pio1_wire)
-);
-
-filter_interface filter_interface_1 (
-	.clk 										(CLOCK_50),
-	.inp										(pio0_wire),
-	.outp										(pio1_wire)
+	.hps_io_hps_io_usb1_inst_NXT		(HPS_USB_NXT)
 );
 
 
