@@ -1,0 +1,731 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 96.04     87.18    87.18      921     0.09     0.09  outputVGA(bmp_out_struct*)
+  2.62     89.56     2.38    24401     0.00     0.00  ECRYPT_process_bytes(int, ECRYPT_ctx*, unsigned char const*, unsigned char*, unsigned int)
+  0.18     89.72     0.16   416774     0.00     0.00  cv::Mat::Mat<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&, bool)
+  0.12     89.83     0.11      921     0.00     0.00  objectDetect(unsigned char*, unsigned long, int, int)
+  0.10     89.92     0.09   880958     0.00     0.00  cv::Size_<int>::Size_()
+  0.10     90.01     0.09   416774     0.00     0.00  std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::empty() const
+  0.08     90.08     0.07  1263216     0.00     0.00  cv::MatStep::operator[](int)
+  0.08     90.15     0.07   416774     0.00     0.00  bool __gnu_cxx::operator==<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(__gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > const&, __gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > const&)
+  0.07     90.21     0.06   880959     0.00     0.00  cv::_InputArray::~_InputArray()
+  0.07     90.27     0.06   545893     0.00     0.00  cv::Mat::release()
+  0.06     90.32     0.05        1     0.05     0.05  VGA_box(int, int, int, int, short)
+  0.04     90.36     0.04   427826     0.00     0.00  cv::_InputArray::_InputArray(cv::Mat const&)
+  0.03     90.39     0.03   416774     0.00     0.00  std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::begin() const
+  0.03     90.42     0.03   208388     0.00     0.00  __gnu_cxx::new_allocator<cv::Point_<int> >::~new_allocator()
+  0.03     90.45     0.03   208387     0.00     0.00  cv::_OutputArray::_OutputArray<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&)
+  0.02     90.47     0.02  1111521     0.00     0.00  cv::_InputArray::init(int, void const*)
+  0.02     90.49     0.02   628085     0.00     0.00  std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::operator[](unsigned int)
+  0.02     90.51     0.02   419537     0.00     0.00  cv::Mat::~Mat()
+  0.02     90.53     0.02   418629     0.00     0.00  cv::MatStep::MatStep(unsigned int)
+  0.02     90.55     0.02   416774     0.00     0.00  std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::operator[](unsigned int) const
+  0.02     90.57     0.02   225922     0.00     0.00  cv::_InputArray::_InputArray()
+  0.02     90.59     0.02   208388     0.00     0.00  std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_M_deallocate(cv::Point_<int>*, unsigned int)
+  0.02     90.61     0.02      921     0.00     0.00  decodeJpeg(jpeg_decompress_struct*, bmp_out_struct*)
+  0.01     90.62     0.01   833548     0.00     0.00  __gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::base() const
+  0.01     90.63     0.01   419550     0.00     0.00  cv::MatSize::MatSize(int*)
+  0.01     90.64     0.01   419083     0.00     0.00  std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::size() const
+  0.01     90.65     0.01   416774     0.00     0.00  std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::end() const
+  0.01     90.66     0.01   208388     0.00     0.00  std::allocator<cv::Point_<int> >::~allocator()
+  0.01     90.67     0.01   208388     0.00     0.00  std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_Vector_impl::~_Vector_impl()
+  0.01     90.68     0.01   208388     0.00     0.00  std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_M_get_Tp_allocator()
+  0.01     90.69     0.01   208388     0.00     0.00  std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::~_Vector_base()
+  0.01     90.70     0.01   208387     0.00     0.00  std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::~vector()
+  0.01     90.71     0.01   208387     0.00     0.00  std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >* std::__addressof<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&)
+  0.01     90.72     0.01   208387     0.00     0.00  void std::_Destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*)
+  0.01     90.73     0.01     4641     0.00     0.00  cv::_InputOutputArray::~_InputOutputArray()
+  0.01     90.74     0.01     3720     0.00     0.00  cv::Vec<double, 4>::Vec()
+  0.01     90.75     0.01     1860     0.00     0.00  setLabel(cv::Mat&, std::string, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&)
+  0.01     90.76     0.01      921     0.00     0.00  void std::_Destroy_aux<false>::__destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*>(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*)
+  0.01     90.77     0.01        1     0.01     0.01  VGA_text_clear()
+  0.00     90.77     0.00   833548     0.00     0.00  __gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::__normal_iterator(cv::Point_<int> const* const&)
+  0.00     90.77     0.00   227210     0.00     0.00  cv::_InputArray::_InputArray<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&)
+  0.00     90.77     0.00   225923     0.00     0.00  cv::_OutputArray::~_OutputArray()
+  0.00     90.77     0.00   209308     0.00     0.00  std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::size() const
+  0.00     90.77     0.00   208388     0.00     0.00  __gnu_cxx::new_allocator<cv::Point_<int> >::deallocate(cv::Point_<int>*, unsigned int)
+  0.00     90.77     0.00   208388     0.00     0.00  void std::_Destroy_aux<true>::__destroy<cv::Point_<int>*>(cv::Point_<int>*, cv::Point_<int>*)
+  0.00     90.77     0.00   208388     0.00     0.00  void std::_Destroy<cv::Point_<int>*>(cv::Point_<int>*, cv::Point_<int>*)
+  0.00     90.77     0.00   208388     0.00     0.00  void std::_Destroy<cv::Point_<int>*, cv::Point_<int> >(cv::Point_<int>*, cv::Point_<int>*, std::allocator<cv::Point_<int> >&)
+  0.00     90.77     0.00    11973     0.00     0.00  cv::_OutputArray::_OutputArray(cv::Mat&)
+  0.00     90.77     0.00    10221     0.00     0.00  cv::Point_<int>::Point_(int, int)
+  0.00     90.77     0.00     7440     0.00     0.00  int cv::saturate_cast<int>(int)
+  0.00     90.77     0.00     4641     0.00     0.00  cv::_OutputArray::_OutputArray()
+  0.00     90.77     0.00     3720     0.00     0.00  cv::_InputOutputArray::_InputOutputArray(cv::Mat&)
+  0.00     90.77     0.00     3720     0.00     0.00  cv::Matx<double, 4, 1>::Matx()
+  0.00     90.77     0.00     3720     0.00     0.00  cv::String::String(std::string const&)
+  0.00     90.77     0.00     3720     0.00     0.00  cv::String::~String()
+  0.00     90.77     0.00     3720     0.00     0.00  cv::Scalar_<double>::Scalar_(double, double, double, double)
+  0.00     90.77     0.00     3720     0.00     0.00  cv::Point_<int> cv::operator+<int>(cv::Point_<int> const&, cv::Point_<int> const&)
+  0.00     90.77     0.00     1860     0.00     0.00  cv::Point_<int>::Point_(cv::Point_<int> const&)
+  0.00     90.77     0.00     1855     0.00     0.00  cv::Mat::Mat()
+  0.00     90.77     0.00     1842     0.00     0.00  cv::Size_<int>::Size_(int, int)
+  0.00     90.77     0.00     1842     0.00     0.00  cv::Mat::clone() const
+  0.00     90.77     0.00     1842     0.00     0.00  cv::Mat::total() const
+  0.00     90.77     0.00      921     0.00     0.00  improvedSoftwareFilter(bmp_out_struct*)
+  0.00     90.77     0.00      921     0.00     0.00  cv::_OutputArray::_OutputArray<cv::Point_<int> >(std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >&)
+  0.00     90.77     0.00      921     0.00     0.00  cv::_InputOutputArray::_InputOutputArray(cv::Mat const&)
+  0.00     90.77     0.00      921     0.00     0.00  cv::Mat::Mat(int, int, int, void*, unsigned int)
+  0.00     90.77     0.00      921     0.00     0.00  cv::Mat::operator=(cv::Mat&&)
+  0.00     90.77     0.00      921     0.00     0.00  cv::Point_<int>::Point_()
+  0.00     90.77     0.00      921     0.00     0.00  cv::MatStep::MatStep()
+  0.00     90.77     0.00      921     0.00     0.00  __gnu_cxx::new_allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::new_allocator()
+  0.00     90.77     0.00      921     0.00     0.00  __gnu_cxx::new_allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::~new_allocator()
+  0.00     90.77     0.00      921     0.00     0.00  cv::Mat::empty() const
+  0.00     90.77     0.00      921     0.00     0.00  std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::allocator()
+  0.00     90.77     0.00      921     0.00     0.00  std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::~allocator()
+  0.00     90.77     0.00      921     0.00     0.00  std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_Vector_impl::_Vector_impl()
+  0.00     90.77     0.00      921     0.00     0.00  std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_Vector_impl::~_Vector_impl()
+  0.00     90.77     0.00      921     0.00     0.00  std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_M_deallocate(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, unsigned int)
+  0.00     90.77     0.00      921     0.00     0.00  std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_M_get_Tp_allocator()
+  0.00     90.77     0.00      921     0.00     0.00  std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_Vector_base()
+  0.00     90.77     0.00      921     0.00     0.00  std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::~_Vector_base()
+  0.00     90.77     0.00      921     0.00     0.00  std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::vector()
+  0.00     90.77     0.00      921     0.00     0.00  std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::~vector()
+  0.00     90.77     0.00      921     0.00     0.00  void std::_Destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*>(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*)
+  0.00     90.77     0.00      921     0.00     0.00  void std::_Destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >&)
+  0.00     90.77     0.00      920     0.00     0.00  __gnu_cxx::new_allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::deallocate(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, unsigned int)
+  0.00     90.77     0.00      726     0.00     0.00  std::abs(double)
+  0.00     90.77     0.00      194     0.00     0.00  __gnu_cxx::__promote_2<int, int, __gnu_cxx::__promote<int, std::__is_integer<int>::__value>::__type, __gnu_cxx::__promote<int, std::__is_integer<int>::__value>::__type>::__type std::pow<int, int>(int, int)
+  0.00     90.77     0.00        1     0.00     0.00  _GLOBAL__sub_I__Z11ECRYPT_initv
+  0.00     90.77     0.00        1     0.00     0.00  ECRYPT_init()
+  0.00     90.77     0.00        1     0.00    88.33  decodeMjpeg(unsigned char*, unsigned long)
+  0.00     90.77     0.00        1     0.00     2.38  trivium_file(char*, char*, unsigned char const*, unsigned char const*)
+  0.00     90.77     0.00        1     0.00     0.00  ECRYPT_ivsetup(ECRYPT_ctx*, unsigned char const*)
+  0.00     90.77     0.00        1     0.00     0.00  ECRYPT_keysetup(ECRYPT_ctx*, unsigned char const*, unsigned int, unsigned int)
+  0.00     90.77     0.00        1     0.00     2.38  trivium_decrypt_file(char*, char*)
+  0.00     90.77     0.00        1     0.00     0.00  __static_initialization_and_destruction_0(int, int)
+  0.00     90.77     0.00        1     0.00     0.00  __gnu_cxx::new_allocator<cv::Point_<int> >::new_allocator()
+  0.00     90.77     0.00        1     0.00     0.00  std::allocator<cv::Point_<int> >::allocator()
+  0.00     90.77     0.00        1     0.00     0.00  std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_Vector_impl::_Vector_impl()
+  0.00     90.77     0.00        1     0.00     0.00  std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_Vector_base()
+  0.00     90.77     0.00        1     0.00     0.00  std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::vector()
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 4 byte(s) for 0.01% of 90.77 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]    100.0    0.00   90.77                 main [1]
+                0.00   88.33       1/1           decodeMjpeg(unsigned char*, unsigned long) [2]
+                0.00    2.38       1/1           trivium_decrypt_file(char*, char*) [6]
+                0.05    0.00       1/1           VGA_box(int, int, int, int, short) [26]
+                0.01    0.00       1/1           VGA_text_clear() [49]
+-----------------------------------------------
+                0.00   88.33       1/1           main [1]
+[2]     97.3    0.00   88.33       1         decodeMjpeg(unsigned char*, unsigned long) [2]
+               87.18    0.00     921/921         outputVGA(bmp_out_struct*) [3]
+                0.11    1.02     921/921         objectDetect(unsigned char*, unsigned long, int, int) [7]
+                0.02    0.00     921/921         decodeJpeg(jpeg_decompress_struct*, bmp_out_struct*) [38]
+                0.00    0.00     921/921         improvedSoftwareFilter(bmp_out_struct*) [85]
+-----------------------------------------------
+               87.18    0.00     921/921         decodeMjpeg(unsigned char*, unsigned long) [2]
+[3]     96.0   87.18    0.00     921         outputVGA(bmp_out_struct*) [3]
+-----------------------------------------------
+                2.38    0.00   24401/24401       trivium_file(char*, char*, unsigned char const*, unsigned char const*) [5]
+[4]      2.6    2.38    0.00   24401         ECRYPT_process_bytes(int, ECRYPT_ctx*, unsigned char const*, unsigned char*, unsigned int) [4]
+-----------------------------------------------
+                0.00    2.38       1/1           trivium_decrypt_file(char*, char*) [6]
+[5]      2.6    0.00    2.38       1         trivium_file(char*, char*, unsigned char const*, unsigned char const*) [5]
+                2.38    0.00   24401/24401       ECRYPT_process_bytes(int, ECRYPT_ctx*, unsigned char const*, unsigned char*, unsigned int) [4]
+                0.00    0.00       1/1           ECRYPT_init() [103]
+                0.00    0.00       1/1           ECRYPT_keysetup(ECRYPT_ctx*, unsigned char const*, unsigned int, unsigned int) [105]
+                0.00    0.00       1/1           ECRYPT_ivsetup(ECRYPT_ctx*, unsigned char const*) [104]
+-----------------------------------------------
+                0.00    2.38       1/1           main [1]
+[6]      2.6    0.00    2.38       1         trivium_decrypt_file(char*, char*) [6]
+                0.00    2.38       1/1           trivium_file(char*, char*, unsigned char const*, unsigned char const*) [5]
+-----------------------------------------------
+                0.11    1.02     921/921         decodeMjpeg(unsigned char*, unsigned long) [2]
+[7]      1.2    0.11    1.02     921         objectDetect(unsigned char*, unsigned long, int, int) [7]
+                0.16    0.34  416774/416774      cv::Mat::Mat<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&, bool) [8]
+                0.00    0.13     921/921         std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::~vector() [11]
+                0.04    0.05  427826/427826      cv::_InputArray::_InputArray(cv::Mat const&) [16]
+                0.02    0.06  419537/419537      cv::Mat::~Mat() [20]
+                0.03    0.05  208387/208387      cv::_OutputArray::_OutputArray<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [21]
+                0.04    0.00  653176/880959      cv::_InputArray::~_InputArray() [23]
+                0.01    0.02    1860/1860        setLabel(cv::Mat&, std::string, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [31]
+                0.00    0.03  225350/227210      cv::_InputArray::_InputArray<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&) [32]
+                0.02    0.00  628085/628085      std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::operator[](unsigned int) [34]
+                0.00    0.01  219439/225923      cv::_OutputArray::~_OutputArray() [39]
+                0.00    0.00   10131/11973       cv::_OutputArray::_OutputArray(cv::Mat&) [50]
+                0.00    0.00     921/4641        cv::_InputOutputArray::~_InputOutputArray() [40]
+                0.00    0.00     921/921         cv::Mat::operator=(cv::Mat&&) [52]
+                0.00    0.00    1842/1842        cv::Mat::clone() const [54]
+                0.00    0.00     921/921         cv::_InputOutputArray::_InputOutputArray(cv::Mat const&) [55]
+                0.00    0.00     921/921         cv::_OutputArray::_OutputArray<cv::Point_<int> >(std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >&) [56]
+                0.00    0.00     921/921         cv::Mat::Mat(int, int, int, void*, unsigned int) [58]
+                0.00    0.00    2309/419083      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::size() const [43]
+                0.00    0.00  209308/209308      std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::size() const [71]
+                0.00    0.00    1842/1842        cv::Size_<int>::Size_(int, int) [83]
+                0.00    0.00     921/921         cv::Mat::empty() const [90]
+                0.00    0.00     921/10221       cv::Point_<int>::Point_(int, int) [76]
+                0.00    0.00     921/921         std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::vector() [99]
+                0.00    0.00     921/921         cv::Point_<int>::Point_() [86]
+                0.00    0.00     726/726         std::abs(double) [101]
+                0.00    0.00     194/194         __gnu_cxx::__promote_2<int, int, __gnu_cxx::__promote<int, std::__is_integer<int>::__value>::__type, __gnu_cxx::__promote<int, std::__is_integer<int>::__value>::__type>::__type std::pow<int, int>(int, int) [102]
+-----------------------------------------------
+                0.16    0.34  416774/416774      objectDetect(unsigned char*, unsigned long, int, int) [7]
+[8]      0.5    0.16    0.34  416774         cv::Mat::Mat<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&, bool) [8]
+                0.09    0.12  416774/416774      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::empty() const [9]
+                0.07    0.00 1250322/1263216     cv::MatStep::operator[](int) [22]
+                0.02    0.00  416774/416774      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::operator[](unsigned int) const [36]
+                0.02    0.00  416774/418629      cv::MatStep::MatStep(unsigned int) [35]
+                0.01    0.00  416774/419083      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::size() const [43]
+                0.01    0.00  416774/419550      cv::MatSize::MatSize(int*) [42]
+-----------------------------------------------
+                0.09    0.12  416774/416774      cv::Mat::Mat<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&, bool) [8]
+[9]      0.2    0.09    0.12  416774         std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::empty() const [9]
+                0.07    0.01  416774/416774      bool __gnu_cxx::operator==<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(__gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > const&, __gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > const&) [18]
+                0.03    0.00  416774/416774      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::begin() const [29]
+                0.01    0.00  416774/416774      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::end() const [44]
+-----------------------------------------------
+                0.01    0.12     921/921         void std::_Destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*>(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*) [12]
+[10]     0.1    0.01    0.12     921         void std::_Destroy_aux<false>::__destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*>(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*) [10]
+                0.01    0.10  208387/208387      void std::_Destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*) [14]
+                0.01    0.00  208387/208387      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >* std::__addressof<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [46]
+-----------------------------------------------
+                0.00    0.13     921/921         objectDetect(unsigned char*, unsigned long, int, int) [7]
+[11]     0.1    0.00    0.13     921         std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::~vector() [11]
+                0.00    0.13     921/921         void std::_Destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >&) [13]
+                0.00    0.00     921/921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_M_get_Tp_allocator() [96]
+                0.00    0.00     921/921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::~_Vector_base() [98]
+-----------------------------------------------
+                0.00    0.13     921/921         void std::_Destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >&) [13]
+[12]     0.1    0.00    0.13     921         void std::_Destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*>(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*) [12]
+                0.01    0.12     921/921         void std::_Destroy_aux<false>::__destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*>(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*) [10]
+-----------------------------------------------
+                0.00    0.13     921/921         std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::~vector() [11]
+[13]     0.1    0.00    0.13     921         void std::_Destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >&) [13]
+                0.00    0.13     921/921         void std::_Destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*>(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*) [12]
+-----------------------------------------------
+                0.01    0.10  208387/208387      void std::_Destroy_aux<false>::__destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*>(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*) [10]
+[14]     0.1    0.01    0.10  208387         void std::_Destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*) [14]
+                0.01    0.09  208387/208387      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::~vector() [15]
+-----------------------------------------------
+                0.01    0.09  208387/208387      void std::_Destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*) [14]
+[15]     0.1    0.01    0.09  208387         std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::~vector() [15]
+                0.01    0.07  208388/208388      std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::~_Vector_base() [19]
+                0.01    0.00  208388/208388      std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_M_get_Tp_allocator() [45]
+                0.00    0.00  208388/208388      void std::_Destroy<cv::Point_<int>*, cv::Point_<int> >(cv::Point_<int>*, cv::Point_<int>*, std::allocator<cv::Point_<int> >&) [75]
+-----------------------------------------------
+                0.04    0.05  427826/427826      objectDetect(unsigned char*, unsigned long, int, int) [7]
+[16]     0.1    0.04    0.05  427826         cv::_InputArray::_InputArray(cv::Mat const&) [16]
+                0.04    0.00  427826/880958      cv::Size_<int>::Size_() [17]
+                0.01    0.00  427826/1111521     cv::_InputArray::init(int, void const*) [33]
+-----------------------------------------------
+                0.02    0.00  225922/880958      cv::_InputArray::_InputArray() [27]
+                0.02    0.00  227210/880958      cv::_InputArray::_InputArray<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&) [32]
+                0.04    0.00  427826/880958      cv::_InputArray::_InputArray(cv::Mat const&) [16]
+[17]     0.1    0.09    0.00  880958         cv::Size_<int>::Size_() [17]
+-----------------------------------------------
+                0.07    0.01  416774/416774      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::empty() const [9]
+[18]     0.1    0.07    0.01  416774         bool __gnu_cxx::operator==<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(__gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > const&, __gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > const&) [18]
+                0.01    0.00  833548/833548      __gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::base() const [41]
+-----------------------------------------------
+                0.01    0.07  208388/208388      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::~vector() [15]
+[19]     0.1    0.01    0.07  208388         std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::~_Vector_base() [19]
+                0.01    0.04  208388/208388      std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_Vector_impl::~_Vector_impl() [25]
+                0.02    0.00  208388/208388      std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_M_deallocate(cv::Point_<int>*, unsigned int) [37]
+-----------------------------------------------
+                0.02    0.06  419537/419537      objectDetect(unsigned char*, unsigned long, int, int) [7]
+[20]     0.1    0.02    0.06  419537         cv::Mat::~Mat() [20]
+                0.06    0.00  543130/545893      cv::Mat::release() [24]
+-----------------------------------------------
+                0.03    0.05  208387/208387      objectDetect(unsigned char*, unsigned long, int, int) [7]
+[21]     0.1    0.03    0.05  208387         cv::_OutputArray::_OutputArray<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [21]
+                0.02    0.03  208387/225922      cv::_InputArray::_InputArray() [27]
+                0.00    0.00  208387/1111521     cv::_InputArray::init(int, void const*) [33]
+-----------------------------------------------
+                0.00    0.00    1842/1263216     cv::Mat::Mat(int, int, int, void*, unsigned int) [58]
+                0.00    0.00   11052/1263216     cv::Mat::operator=(cv::Mat&&) [52]
+                0.07    0.00 1250322/1263216     cv::Mat::Mat<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&, bool) [8]
+[22]     0.1    0.07    0.00 1263216         cv::MatStep::operator[](int) [22]
+-----------------------------------------------
+                0.00    0.00    1860/880959      setLabel(cv::Mat&, std::string, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [31]
+                0.02    0.00  225923/880959      cv::_OutputArray::~_OutputArray() [39]
+                0.04    0.00  653176/880959      objectDetect(unsigned char*, unsigned long, int, int) [7]
+[23]     0.1    0.06    0.00  880959         cv::_InputArray::~_InputArray() [23]
+-----------------------------------------------
+                0.00    0.00    2763/545893      cv::Mat::operator=(cv::Mat&&) [52]
+                0.06    0.00  543130/545893      cv::Mat::~Mat() [20]
+[24]     0.1    0.06    0.00  545893         cv::Mat::release() [24]
+-----------------------------------------------
+                0.01    0.04  208388/208388      std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::~_Vector_base() [19]
+[25]     0.1    0.01    0.04  208388         std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_Vector_impl::~_Vector_impl() [25]
+                0.01    0.03  208388/208388      std::allocator<cv::Point_<int> >::~allocator() [28]
+-----------------------------------------------
+                0.05    0.00       1/1           main [1]
+[26]     0.1    0.05    0.00       1         VGA_box(int, int, int, int, short) [26]
+-----------------------------------------------
+                0.00    0.00     921/225922      cv::_OutputArray::_OutputArray<cv::Point_<int> >(std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >&) [56]
+                0.00    0.00    4641/225922      cv::_OutputArray::_OutputArray() [51]
+                0.00    0.00   11973/225922      cv::_OutputArray::_OutputArray(cv::Mat&) [50]
+                0.02    0.03  208387/225922      cv::_OutputArray::_OutputArray<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [21]
+[27]     0.1    0.02    0.03  225922         cv::_InputArray::_InputArray() [27]
+                0.02    0.00  225922/880958      cv::Size_<int>::Size_() [17]
+                0.00    0.00  225922/1111521     cv::_InputArray::init(int, void const*) [33]
+-----------------------------------------------
+                0.01    0.03  208388/208388      std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_Vector_impl::~_Vector_impl() [25]
+[28]     0.0    0.01    0.03  208388         std::allocator<cv::Point_<int> >::~allocator() [28]
+                0.03    0.00  208388/208388      __gnu_cxx::new_allocator<cv::Point_<int> >::~new_allocator() [30]
+-----------------------------------------------
+                0.03    0.00  416774/416774      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::empty() const [9]
+[29]     0.0    0.03    0.00  416774         std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::begin() const [29]
+                0.00    0.00  416774/833548      __gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::__normal_iterator(cv::Point_<int> const* const&) [70]
+-----------------------------------------------
+                0.03    0.00  208388/208388      std::allocator<cv::Point_<int> >::~allocator() [28]
+[30]     0.0    0.03    0.00  208388         __gnu_cxx::new_allocator<cv::Point_<int> >::~new_allocator() [30]
+-----------------------------------------------
+                0.01    0.02    1860/1860        objectDetect(unsigned char*, unsigned long, int, int) [7]
+[31]     0.0    0.01    0.02    1860         setLabel(cv::Mat&, std::string, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [31]
+                0.00    0.01    3720/3720        cv::Scalar_<double>::Scalar_(double, double, double, double) [48]
+                0.01    0.00    3720/4641        cv::_InputOutputArray::~_InputOutputArray() [40]
+                0.00    0.00    3720/3720        cv::_InputOutputArray::_InputOutputArray(cv::Mat&) [53]
+                0.00    0.00    1860/227210      cv::_InputArray::_InputArray<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&) [32]
+                0.00    0.00    1860/880959      cv::_InputArray::~_InputArray() [23]
+                0.00    0.00    5580/10221       cv::Point_<int>::Point_(int, int) [76]
+                0.00    0.00    3720/3720        cv::String::String(std::string const&) [79]
+                0.00    0.00    3720/3720        cv::String::~String() [80]
+                0.00    0.00    3720/3720        cv::Point_<int> cv::operator+<int>(cv::Point_<int> const&, cv::Point_<int> const&) [81]
+                0.00    0.00    1860/1860        cv::Point_<int>::Point_(cv::Point_<int> const&) [82]
+-----------------------------------------------
+                0.00    0.00    1860/227210      setLabel(cv::Mat&, std::string, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [31]
+                0.00    0.03  225350/227210      objectDetect(unsigned char*, unsigned long, int, int) [7]
+[32]     0.0    0.00    0.03  227210         cv::_InputArray::_InputArray<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&) [32]
+                0.02    0.00  227210/880958      cv::Size_<int>::Size_() [17]
+                0.00    0.00  227210/1111521     cv::_InputArray::init(int, void const*) [33]
+-----------------------------------------------
+                0.00    0.00     921/1111521     cv::_InputOutputArray::_InputOutputArray(cv::Mat const&) [55]
+                0.00    0.00     921/1111521     cv::_OutputArray::_OutputArray<cv::Point_<int> >(std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >&) [56]
+                0.00    0.00    3720/1111521     cv::_InputOutputArray::_InputOutputArray(cv::Mat&) [53]
+                0.00    0.00    4641/1111521     cv::_OutputArray::_OutputArray() [51]
+                0.00    0.00   11973/1111521     cv::_OutputArray::_OutputArray(cv::Mat&) [50]
+                0.00    0.00  208387/1111521     cv::_OutputArray::_OutputArray<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [21]
+                0.00    0.00  225922/1111521     cv::_InputArray::_InputArray() [27]
+                0.00    0.00  227210/1111521     cv::_InputArray::_InputArray<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&) [32]
+                0.01    0.00  427826/1111521     cv::_InputArray::_InputArray(cv::Mat const&) [16]
+[33]     0.0    0.02    0.00 1111521         cv::_InputArray::init(int, void const*) [33]
+-----------------------------------------------
+                0.02    0.00  628085/628085      objectDetect(unsigned char*, unsigned long, int, int) [7]
+[34]     0.0    0.02    0.00  628085         std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::operator[](unsigned int) [34]
+-----------------------------------------------
+                0.00    0.00    1855/418629      cv::Mat::Mat() [57]
+                0.02    0.00  416774/418629      cv::Mat::Mat<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&, bool) [8]
+[35]     0.0    0.02    0.00  418629         cv::MatStep::MatStep(unsigned int) [35]
+-----------------------------------------------
+                0.02    0.00  416774/416774      cv::Mat::Mat<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&, bool) [8]
+[36]     0.0    0.02    0.00  416774         std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::operator[](unsigned int) const [36]
+-----------------------------------------------
+                0.02    0.00  208388/208388      std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::~_Vector_base() [19]
+[37]     0.0    0.02    0.00  208388         std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_M_deallocate(cv::Point_<int>*, unsigned int) [37]
+                0.00    0.00  208388/208388      __gnu_cxx::new_allocator<cv::Point_<int> >::deallocate(cv::Point_<int>*, unsigned int) [72]
+-----------------------------------------------
+                0.02    0.00     921/921         decodeMjpeg(unsigned char*, unsigned long) [2]
+[38]     0.0    0.02    0.00     921         decodeJpeg(jpeg_decompress_struct*, bmp_out_struct*) [38]
+-----------------------------------------------
+                0.00    0.00    1842/225923      cv::Mat::clone() const [54]
+                0.00    0.00    4642/225923      cv::_InputOutputArray::~_InputOutputArray() [40]
+                0.00    0.01  219439/225923      objectDetect(unsigned char*, unsigned long, int, int) [7]
+[39]     0.0    0.00    0.02  225923         cv::_OutputArray::~_OutputArray() [39]
+                0.02    0.00  225923/880959      cv::_InputArray::~_InputArray() [23]
+-----------------------------------------------
+                0.00    0.00     921/4641        objectDetect(unsigned char*, unsigned long, int, int) [7]
+                0.01    0.00    3720/4641        setLabel(cv::Mat&, std::string, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [31]
+[40]     0.0    0.01    0.00    4641         cv::_InputOutputArray::~_InputOutputArray() [40]
+                0.00    0.00    4642/225923      cv::_OutputArray::~_OutputArray() [39]
+-----------------------------------------------
+                0.01    0.00  833548/833548      bool __gnu_cxx::operator==<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(__gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > const&, __gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > const&) [18]
+[41]     0.0    0.01    0.00  833548         __gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::base() const [41]
+-----------------------------------------------
+                0.00    0.00     921/419550      cv::Mat::Mat(int, int, int, void*, unsigned int) [58]
+                0.00    0.00    1855/419550      cv::Mat::Mat() [57]
+                0.01    0.00  416774/419550      cv::Mat::Mat<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&, bool) [8]
+[42]     0.0    0.01    0.00  419550         cv::MatSize::MatSize(int*) [42]
+-----------------------------------------------
+                0.00    0.00    2309/419083      objectDetect(unsigned char*, unsigned long, int, int) [7]
+                0.01    0.00  416774/419083      cv::Mat::Mat<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&, bool) [8]
+[43]     0.0    0.01    0.00  419083         std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::size() const [43]
+-----------------------------------------------
+                0.01    0.00  416774/416774      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::empty() const [9]
+[44]     0.0    0.01    0.00  416774         std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::end() const [44]
+                0.00    0.00  416774/833548      __gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::__normal_iterator(cv::Point_<int> const* const&) [70]
+-----------------------------------------------
+                0.01    0.00  208388/208388      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::~vector() [15]
+[45]     0.0    0.01    0.00  208388         std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_M_get_Tp_allocator() [45]
+-----------------------------------------------
+                0.01    0.00  208387/208387      void std::_Destroy_aux<false>::__destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*>(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*) [10]
+[46]     0.0    0.01    0.00  208387         std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >* std::__addressof<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [46]
+-----------------------------------------------
+                0.01    0.00    3720/3720        cv::Scalar_<double>::Scalar_(double, double, double, double) [48]
+[47]     0.0    0.01    0.00    3720         cv::Vec<double, 4>::Vec() [47]
+                0.00    0.00    3720/3720        cv::Matx<double, 4, 1>::Matx() [78]
+-----------------------------------------------
+                0.00    0.01    3720/3720        setLabel(cv::Mat&, std::string, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [31]
+[48]     0.0    0.00    0.01    3720         cv::Scalar_<double>::Scalar_(double, double, double, double) [48]
+                0.01    0.00    3720/3720        cv::Vec<double, 4>::Vec() [47]
+-----------------------------------------------
+                0.01    0.00       1/1           main [1]
+[49]     0.0    0.01    0.00       1         VGA_text_clear() [49]
+-----------------------------------------------
+                0.00    0.00    1842/11973       cv::Mat::clone() const [54]
+                0.00    0.00   10131/11973       objectDetect(unsigned char*, unsigned long, int, int) [7]
+[50]     0.0    0.00    0.00   11973         cv::_OutputArray::_OutputArray(cv::Mat&) [50]
+                0.00    0.00   11973/225922      cv::_InputArray::_InputArray() [27]
+                0.00    0.00   11973/1111521     cv::_InputArray::init(int, void const*) [33]
+-----------------------------------------------
+                0.00    0.00     921/4641        cv::_InputOutputArray::_InputOutputArray(cv::Mat const&) [55]
+                0.00    0.00    3720/4641        cv::_InputOutputArray::_InputOutputArray(cv::Mat&) [53]
+[51]     0.0    0.00    0.00    4641         cv::_OutputArray::_OutputArray() [51]
+                0.00    0.00    4641/225922      cv::_InputArray::_InputArray() [27]
+                0.00    0.00    4641/1111521     cv::_InputArray::init(int, void const*) [33]
+-----------------------------------------------
+                0.00    0.00     921/921         objectDetect(unsigned char*, unsigned long, int, int) [7]
+[52]     0.0    0.00    0.00     921         cv::Mat::operator=(cv::Mat&&) [52]
+                0.00    0.00   11052/1263216     cv::MatStep::operator[](int) [22]
+                0.00    0.00    2763/545893      cv::Mat::release() [24]
+-----------------------------------------------
+                0.00    0.00    3720/3720        setLabel(cv::Mat&, std::string, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [31]
+[53]     0.0    0.00    0.00    3720         cv::_InputOutputArray::_InputOutputArray(cv::Mat&) [53]
+                0.00    0.00    3720/4641        cv::_OutputArray::_OutputArray() [51]
+                0.00    0.00    3720/1111521     cv::_InputArray::init(int, void const*) [33]
+-----------------------------------------------
+                0.00    0.00    1842/1842        objectDetect(unsigned char*, unsigned long, int, int) [7]
+[54]     0.0    0.00    0.00    1842         cv::Mat::clone() const [54]
+                0.00    0.00    1842/11973       cv::_OutputArray::_OutputArray(cv::Mat&) [50]
+                0.00    0.00    1842/1855        cv::Mat::Mat() [57]
+                0.00    0.00    1842/225923      cv::_OutputArray::~_OutputArray() [39]
+-----------------------------------------------
+                0.00    0.00     921/921         objectDetect(unsigned char*, unsigned long, int, int) [7]
+[55]     0.0    0.00    0.00     921         cv::_InputOutputArray::_InputOutputArray(cv::Mat const&) [55]
+                0.00    0.00     921/4641        cv::_OutputArray::_OutputArray() [51]
+                0.00    0.00     921/1111521     cv::_InputArray::init(int, void const*) [33]
+-----------------------------------------------
+                0.00    0.00     921/921         objectDetect(unsigned char*, unsigned long, int, int) [7]
+[56]     0.0    0.00    0.00     921         cv::_OutputArray::_OutputArray<cv::Point_<int> >(std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >&) [56]
+                0.00    0.00     921/225922      cv::_InputArray::_InputArray() [27]
+                0.00    0.00     921/1111521     cv::_InputArray::init(int, void const*) [33]
+-----------------------------------------------
+                0.00    0.00      13/1855        __static_initialization_and_destruction_0(int, int) [60]
+                0.00    0.00    1842/1855        cv::Mat::clone() const [54]
+[57]     0.0    0.00    0.00    1855         cv::Mat::Mat() [57]
+                0.00    0.00    1855/418629      cv::MatStep::MatStep(unsigned int) [35]
+                0.00    0.00    1855/419550      cv::MatSize::MatSize(int*) [42]
+-----------------------------------------------
+                0.00    0.00     921/921         objectDetect(unsigned char*, unsigned long, int, int) [7]
+[58]     0.0    0.00    0.00     921         cv::Mat::Mat(int, int, int, void*, unsigned int) [58]
+                0.00    0.00    1842/1263216     cv::MatStep::operator[](int) [22]
+                0.00    0.00     921/419550      cv::MatSize::MatSize(int*) [42]
+                0.00    0.00     921/921         cv::MatStep::MatStep() [87]
+                0.00    0.00     921/1842        cv::Mat::total() const [84]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [61]
+[59]     0.0    0.00    0.00       1         _GLOBAL__sub_I__Z11ECRYPT_initv [59]
+                0.00    0.00       1/1           __static_initialization_and_destruction_0(int, int) [60]
+-----------------------------------------------
+                0.00    0.00       1/1           _GLOBAL__sub_I__Z11ECRYPT_initv [59]
+[60]     0.0    0.00    0.00       1         __static_initialization_and_destruction_0(int, int) [60]
+                0.00    0.00      13/1855        cv::Mat::Mat() [57]
+                0.00    0.00       1/1           std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::vector() [110]
+-----------------------------------------------
+                                                 <spontaneous>
+[61]     0.0    0.00    0.00                 __libc_csu_init [61]
+                0.00    0.00       1/1           _GLOBAL__sub_I__Z11ECRYPT_initv [59]
+-----------------------------------------------
+                0.00    0.00  416774/833548      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::end() const [44]
+                0.00    0.00  416774/833548      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::begin() const [29]
+[70]     0.0    0.00    0.00  833548         __gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::__normal_iterator(cv::Point_<int> const* const&) [70]
+-----------------------------------------------
+                0.00    0.00  209308/209308      objectDetect(unsigned char*, unsigned long, int, int) [7]
+[71]     0.0    0.00    0.00  209308         std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::size() const [71]
+-----------------------------------------------
+                0.00    0.00  208388/208388      std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_M_deallocate(cv::Point_<int>*, unsigned int) [37]
+[72]     0.0    0.00    0.00  208388         __gnu_cxx::new_allocator<cv::Point_<int> >::deallocate(cv::Point_<int>*, unsigned int) [72]
+-----------------------------------------------
+                0.00    0.00  208388/208388      void std::_Destroy<cv::Point_<int>*>(cv::Point_<int>*, cv::Point_<int>*) [74]
+[73]     0.0    0.00    0.00  208388         void std::_Destroy_aux<true>::__destroy<cv::Point_<int>*>(cv::Point_<int>*, cv::Point_<int>*) [73]
+-----------------------------------------------
+                0.00    0.00  208388/208388      void std::_Destroy<cv::Point_<int>*, cv::Point_<int> >(cv::Point_<int>*, cv::Point_<int>*, std::allocator<cv::Point_<int> >&) [75]
+[74]     0.0    0.00    0.00  208388         void std::_Destroy<cv::Point_<int>*>(cv::Point_<int>*, cv::Point_<int>*) [74]
+                0.00    0.00  208388/208388      void std::_Destroy_aux<true>::__destroy<cv::Point_<int>*>(cv::Point_<int>*, cv::Point_<int>*) [73]
+-----------------------------------------------
+                0.00    0.00  208388/208388      std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::~vector() [15]
+[75]     0.0    0.00    0.00  208388         void std::_Destroy<cv::Point_<int>*, cv::Point_<int> >(cv::Point_<int>*, cv::Point_<int>*, std::allocator<cv::Point_<int> >&) [75]
+                0.00    0.00  208388/208388      void std::_Destroy<cv::Point_<int>*>(cv::Point_<int>*, cv::Point_<int>*) [74]
+-----------------------------------------------
+                0.00    0.00     921/10221       objectDetect(unsigned char*, unsigned long, int, int) [7]
+                0.00    0.00    3720/10221       cv::Point_<int> cv::operator+<int>(cv::Point_<int> const&, cv::Point_<int> const&) [81]
+                0.00    0.00    5580/10221       setLabel(cv::Mat&, std::string, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [31]
+[76]     0.0    0.00    0.00   10221         cv::Point_<int>::Point_(int, int) [76]
+-----------------------------------------------
+                0.00    0.00    7440/7440        cv::Point_<int> cv::operator+<int>(cv::Point_<int> const&, cv::Point_<int> const&) [81]
+[77]     0.0    0.00    0.00    7440         int cv::saturate_cast<int>(int) [77]
+-----------------------------------------------
+                0.00    0.00    3720/3720        cv::Vec<double, 4>::Vec() [47]
+[78]     0.0    0.00    0.00    3720         cv::Matx<double, 4, 1>::Matx() [78]
+-----------------------------------------------
+                0.00    0.00    3720/3720        setLabel(cv::Mat&, std::string, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [31]
+[79]     0.0    0.00    0.00    3720         cv::String::String(std::string const&) [79]
+-----------------------------------------------
+                0.00    0.00    3720/3720        setLabel(cv::Mat&, std::string, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [31]
+[80]     0.0    0.00    0.00    3720         cv::String::~String() [80]
+-----------------------------------------------
+                0.00    0.00    3720/3720        setLabel(cv::Mat&, std::string, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [31]
+[81]     0.0    0.00    0.00    3720         cv::Point_<int> cv::operator+<int>(cv::Point_<int> const&, cv::Point_<int> const&) [81]
+                0.00    0.00    7440/7440        int cv::saturate_cast<int>(int) [77]
+                0.00    0.00    3720/10221       cv::Point_<int>::Point_(int, int) [76]
+-----------------------------------------------
+                0.00    0.00    1860/1860        setLabel(cv::Mat&, std::string, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [31]
+[82]     0.0    0.00    0.00    1860         cv::Point_<int>::Point_(cv::Point_<int> const&) [82]
+-----------------------------------------------
+                0.00    0.00    1842/1842        objectDetect(unsigned char*, unsigned long, int, int) [7]
+[83]     0.0    0.00    0.00    1842         cv::Size_<int>::Size_(int, int) [83]
+-----------------------------------------------
+                0.00    0.00     921/1842        cv::Mat::Mat(int, int, int, void*, unsigned int) [58]
+                0.00    0.00     921/1842        cv::Mat::empty() const [90]
+[84]     0.0    0.00    0.00    1842         cv::Mat::total() const [84]
+-----------------------------------------------
+                0.00    0.00     921/921         decodeMjpeg(unsigned char*, unsigned long) [2]
+[85]     0.0    0.00    0.00     921         improvedSoftwareFilter(bmp_out_struct*) [85]
+-----------------------------------------------
+                0.00    0.00     921/921         objectDetect(unsigned char*, unsigned long, int, int) [7]
+[86]     0.0    0.00    0.00     921         cv::Point_<int>::Point_() [86]
+-----------------------------------------------
+                0.00    0.00     921/921         cv::Mat::Mat(int, int, int, void*, unsigned int) [58]
+[87]     0.0    0.00    0.00     921         cv::MatStep::MatStep() [87]
+-----------------------------------------------
+                0.00    0.00     921/921         std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::allocator() [91]
+[88]     0.0    0.00    0.00     921         __gnu_cxx::new_allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::new_allocator() [88]
+-----------------------------------------------
+                0.00    0.00     921/921         std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::~allocator() [92]
+[89]     0.0    0.00    0.00     921         __gnu_cxx::new_allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::~new_allocator() [89]
+-----------------------------------------------
+                0.00    0.00     921/921         objectDetect(unsigned char*, unsigned long, int, int) [7]
+[90]     0.0    0.00    0.00     921         cv::Mat::empty() const [90]
+                0.00    0.00     921/1842        cv::Mat::total() const [84]
+-----------------------------------------------
+                0.00    0.00     921/921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_Vector_impl::_Vector_impl() [93]
+[91]     0.0    0.00    0.00     921         std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::allocator() [91]
+                0.00    0.00     921/921         __gnu_cxx::new_allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::new_allocator() [88]
+-----------------------------------------------
+                0.00    0.00     921/921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_Vector_impl::~_Vector_impl() [94]
+[92]     0.0    0.00    0.00     921         std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::~allocator() [92]
+                0.00    0.00     921/921         __gnu_cxx::new_allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::~new_allocator() [89]
+-----------------------------------------------
+                0.00    0.00     921/921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_Vector_base() [97]
+[93]     0.0    0.00    0.00     921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_Vector_impl::_Vector_impl() [93]
+                0.00    0.00     921/921         std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::allocator() [91]
+-----------------------------------------------
+                0.00    0.00     921/921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::~_Vector_base() [98]
+[94]     0.0    0.00    0.00     921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_Vector_impl::~_Vector_impl() [94]
+                0.00    0.00     921/921         std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::~allocator() [92]
+-----------------------------------------------
+                0.00    0.00     921/921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::~_Vector_base() [98]
+[95]     0.0    0.00    0.00     921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_M_deallocate(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, unsigned int) [95]
+                0.00    0.00     920/920         __gnu_cxx::new_allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::deallocate(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, unsigned int) [100]
+-----------------------------------------------
+                0.00    0.00     921/921         std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::~vector() [11]
+[96]     0.0    0.00    0.00     921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_M_get_Tp_allocator() [96]
+-----------------------------------------------
+                0.00    0.00     921/921         std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::vector() [99]
+[97]     0.0    0.00    0.00     921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_Vector_base() [97]
+                0.00    0.00     921/921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_Vector_impl::_Vector_impl() [93]
+-----------------------------------------------
+                0.00    0.00     921/921         std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::~vector() [11]
+[98]     0.0    0.00    0.00     921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::~_Vector_base() [98]
+                0.00    0.00     921/921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_M_deallocate(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, unsigned int) [95]
+                0.00    0.00     921/921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_Vector_impl::~_Vector_impl() [94]
+-----------------------------------------------
+                0.00    0.00     921/921         objectDetect(unsigned char*, unsigned long, int, int) [7]
+[99]     0.0    0.00    0.00     921         std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::vector() [99]
+                0.00    0.00     921/921         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_Vector_base() [97]
+-----------------------------------------------
+                0.00    0.00     920/920         std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_M_deallocate(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, unsigned int) [95]
+[100]    0.0    0.00    0.00     920         __gnu_cxx::new_allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::deallocate(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, unsigned int) [100]
+-----------------------------------------------
+                0.00    0.00     726/726         objectDetect(unsigned char*, unsigned long, int, int) [7]
+[101]    0.0    0.00    0.00     726         std::abs(double) [101]
+-----------------------------------------------
+                0.00    0.00     194/194         objectDetect(unsigned char*, unsigned long, int, int) [7]
+[102]    0.0    0.00    0.00     194         __gnu_cxx::__promote_2<int, int, __gnu_cxx::__promote<int, std::__is_integer<int>::__value>::__type, __gnu_cxx::__promote<int, std::__is_integer<int>::__value>::__type>::__type std::pow<int, int>(int, int) [102]
+-----------------------------------------------
+                0.00    0.00       1/1           trivium_file(char*, char*, unsigned char const*, unsigned char const*) [5]
+[103]    0.0    0.00    0.00       1         ECRYPT_init() [103]
+-----------------------------------------------
+                0.00    0.00       1/1           trivium_file(char*, char*, unsigned char const*, unsigned char const*) [5]
+[104]    0.0    0.00    0.00       1         ECRYPT_ivsetup(ECRYPT_ctx*, unsigned char const*) [104]
+-----------------------------------------------
+                0.00    0.00       1/1           trivium_file(char*, char*, unsigned char const*, unsigned char const*) [5]
+[105]    0.0    0.00    0.00       1         ECRYPT_keysetup(ECRYPT_ctx*, unsigned char const*, unsigned int, unsigned int) [105]
+-----------------------------------------------
+                0.00    0.00       1/1           std::allocator<cv::Point_<int> >::allocator() [107]
+[106]    0.0    0.00    0.00       1         __gnu_cxx::new_allocator<cv::Point_<int> >::new_allocator() [106]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_Vector_impl::_Vector_impl() [108]
+[107]    0.0    0.00    0.00       1         std::allocator<cv::Point_<int> >::allocator() [107]
+                0.00    0.00       1/1           __gnu_cxx::new_allocator<cv::Point_<int> >::new_allocator() [106]
+-----------------------------------------------
+                0.00    0.00       1/1           std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_Vector_base() [109]
+[108]    0.0    0.00    0.00       1         std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_Vector_impl::_Vector_impl() [108]
+                0.00    0.00       1/1           std::allocator<cv::Point_<int> >::allocator() [107]
+-----------------------------------------------
+                0.00    0.00       1/1           std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::vector() [110]
+[109]    0.0    0.00    0.00       1         std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_Vector_base() [109]
+                0.00    0.00       1/1           std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_Vector_impl::_Vector_impl() [108]
+-----------------------------------------------
+                0.00    0.00       1/1           __static_initialization_and_destruction_0(int, int) [60]
+[110]    0.0    0.00    0.00       1         std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::vector() [110]
+                0.00    0.00       1/1           std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_Vector_base() [109]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+
+Index by function name
+
+  [59] _GLOBAL__sub_I__Z11ECRYPT_initv (memdjpeg_VGA.c) [52] cv::Mat::operator=(cv::Mat&&) [71] std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::size() const
+  [38] decodeJpeg(jpeg_decompress_struct*, bmp_out_struct*) [47] cv::Vec<double, 4>::Vec() [107] std::allocator<cv::Point_<int> >::allocator()
+ [103] ECRYPT_init()          [78] cv::Matx<double, 4, 1>::Matx() [28] std::allocator<cv::Point_<int> >::~allocator()
+   [2] decodeMjpeg(unsigned char*, unsigned long) [17] cv::Size_<int>::Size_() [91] std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::allocator()
+   [7] objectDetect(unsigned char*, unsigned long, int, int) [83] cv::Size_<int>::Size_(int, int) [92] std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::~allocator()
+   [5] trivium_file(char*, char*, unsigned char const*, unsigned char const*) [82] cv::Point_<int>::Point_(cv::Point_<int> const&) [10] void std::_Destroy_aux<false>::__destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*>(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*)
+ [104] ECRYPT_ivsetup(ECRYPT_ctx*, unsigned char const*) [76] cv::Point_<int>::Point_(int, int) [73] void std::_Destroy_aux<true>::__destroy<cv::Point_<int>*>(cv::Point_<int>*, cv::Point_<int>*)
+  [49] VGA_text_clear()       [86] cv::Point_<int>::Point_() [108] std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_Vector_impl::_Vector_impl()
+ [105] ECRYPT_keysetup(ECRYPT_ctx*, unsigned char const*, unsigned int, unsigned int) [79] cv::String::String(std::string const&) [25] std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_Vector_impl::~_Vector_impl()
+   [4] ECRYPT_process_bytes(int, ECRYPT_ctx*, unsigned char const*, unsigned char*, unsigned int) [80] cv::String::~String() [37] std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_M_deallocate(cv::Point_<int>*, unsigned int)
+   [6] trivium_decrypt_file(char*, char*) [42] cv::MatSize::MatSize(int*) [45] std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_M_get_Tp_allocator()
+  [85] improvedSoftwareFilter(bmp_out_struct*) [35] cv::MatStep::MatStep(unsigned int) [109] std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::_Vector_base()
+  [60] __static_initialization_and_destruction_0(int, int) (memdjpeg_VGA.c) [87] cv::MatStep::MatStep() [19] std::_Vector_base<cv::Point_<int>, std::allocator<cv::Point_<int> > >::~_Vector_base()
+  [26] VGA_box(int, int, int, int, short) [22] cv::MatStep::operator[](int) [93] std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_Vector_impl::_Vector_impl()
+  [31] setLabel(cv::Mat&, std::string, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [48] cv::Scalar_<double>::Scalar_(double, double, double, double) [94] std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_Vector_impl::~_Vector_impl()
+   [3] outputVGA(bmp_out_struct*) [77] int cv::saturate_cast<int>(int) (saturate.hpp) [95] std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_M_deallocate(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, unsigned int)
+  [33] cv::_InputArray::init(int, void const*) [81] cv::Point_<int> cv::operator+<int>(cv::Point_<int> const&, cv::Point_<int> const&) (types.hpp) [96] std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_M_get_Tp_allocator()
+  [27] cv::_InputArray::_InputArray() [72] __gnu_cxx::new_allocator<cv::Point_<int> >::deallocate(cv::Point_<int>*, unsigned int) [97] std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::_Vector_base()
+  [32] cv::_InputArray::_InputArray<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&) [106] __gnu_cxx::new_allocator<cv::Point_<int> >::new_allocator() [98] std::_Vector_base<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::~_Vector_base()
+  [16] cv::_InputArray::_InputArray(cv::Mat const&) [30] __gnu_cxx::new_allocator<cv::Point_<int> >::~new_allocator() [110] std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::vector()
+  [23] cv::_InputArray::~_InputArray() [100] __gnu_cxx::new_allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::deallocate(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, unsigned int) [15] std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::~vector()
+  [51] cv::_OutputArray::_OutputArray() [88] __gnu_cxx::new_allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::new_allocator() [99] std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::vector()
+  [50] cv::_OutputArray::_OutputArray(cv::Mat&) [89] __gnu_cxx::new_allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::~new_allocator() [11] std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::~vector()
+  [56] cv::_OutputArray::_OutputArray<cv::Point_<int> >(std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >&) [70] __gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::__normal_iterator(cv::Point_<int> const* const&) [34] std::vector<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > >::operator[](unsigned int)
+  [21] cv::_OutputArray::_OutputArray<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&) [18] bool __gnu_cxx::operator==<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(__gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > const&, __gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > > const&) [46] std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >* std::__addressof<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >&)
+  [39] cv::_OutputArray::~_OutputArray() [54] cv::Mat::clone() const [101] std::abs(double)
+  [53] cv::_InputOutputArray::_InputOutputArray(cv::Mat&) [90] cv::Mat::empty() const [102] __gnu_cxx::__promote_2<int, int, __gnu_cxx::__promote<int, std::__is_integer<int>::__value>::__type, __gnu_cxx::__promote<int, std::__is_integer<int>::__value>::__type>::__type std::pow<int, int>(int, int)
+  [55] cv::_InputOutputArray::_InputOutputArray(cv::Mat const&) [84] cv::Mat::total() const [74] void std::_Destroy<cv::Point_<int>*>(cv::Point_<int>*, cv::Point_<int>*)
+  [40] cv::_InputOutputArray::~_InputOutputArray() [41] __gnu_cxx::__normal_iterator<cv::Point_<int> const*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >::base() const [75] void std::_Destroy<cv::Point_<int>*, cv::Point_<int> >(cv::Point_<int>*, cv::Point_<int>*, std::allocator<cv::Point_<int> >&)
+  [24] cv::Mat::release()     [44] std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::end() const [12] void std::_Destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*>(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*)
+   [8] cv::Mat::Mat<cv::Point_<int> >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > const&, bool) [43] std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::size() const [13] void std::_Destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*, std::allocator<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >&)
+  [58] cv::Mat::Mat(int, int, int, void*, unsigned int) [29] std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::begin() const [14] void std::_Destroy<std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > > >(std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >*)
+  [57] cv::Mat::Mat()          [9] std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::empty() const
+  [20] cv::Mat::~Mat()        [36] std::vector<cv::Point_<int>, std::allocator<cv::Point_<int> > >::operator[](unsigned int) const

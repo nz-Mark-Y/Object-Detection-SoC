@@ -23,3 +23,7 @@
 ## Report 6
 
 * Test out full colour filtering and rendering
+
+## Report 7
+
+* Refactor VGA output function to reduce cache misses

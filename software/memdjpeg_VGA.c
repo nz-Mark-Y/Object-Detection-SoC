@@ -90,13 +90,6 @@
     // character buffer
     volatile unsigned int * vga_char_ptr = NULL ;
     void *vga_char_virtual_base;
-
-    // pixel macro
-    #define VGA_PIXEL(x,y,color) do{\
-        char  *pixel_ptr ;\
-        pixel_ptr = (char *)vga_pixel_ptr + ((y)<<10) + (x) ;\
-        *(char *)pixel_ptr = (color);\
-    } while(0)
 #endif /* VGA */
 
 struct bmp_out_struct {
@@ -525,7 +518,7 @@ int decodeJpeg(struct jpeg_decompress_struct *cinfo, struct bmp_out_struct *bmp_
     // entire scanline (row).
     bmp_out->row_stride = bmp_out->width * bmp_out->pixel_size;
 
-    cinfo->out_color_space = JCS_GRAYSCALE;
+    //cinfo->out_color_space = JCS_GRAYSCALE;
 
     // Now that you have the decompressor entirely configured, it's time
     // to read out all of the scanlines of the jpeg.
@@ -588,16 +581,17 @@ int outputBmp(struct bmp_out_struct *bmp_out) {
 /****************************************************************************************
  * Subroutine to write frame to VGA monitor
 ****************************************************************************************/
+
 int outputVGA(struct bmp_out_struct *bmp_out) {
     #ifdef VGA
-        for (int i=1; i<bmp_out->width; ++i) {
-            if (i >= 640) break;
-            for (int j=1; j<bmp_out->height; ++j) {
-                if (j >= 480) break;
-                char pixel_colour;
-                #define val(row, col, chan) bmp_out->bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size + chan]
-                //pixel_colour = (val(j, i, 0) & 0xe0) >> 0 | (val(j, i, 1) & 0xe0) >> 3 | (val(j, i, 2) & 0xc0) >> 6;
-                VGA_PIXEL(i, j, (val(j, i, 0) & 0xe0) >> 3);
+        char *pixel_ptr;
+        #define val(row, col, chan) bmp_out->bmp_buffer[(row)*bmp_out->row_stride + (col)*bmp_out->pixel_size + chan]
+        for (int j=1; j<bmp_out->height; ++j) {
+            if (j >= 480) break;
+            for (int i=1; i<bmp_out->width; ++i) {
+                if (i >= 640) break;
+                pixel_ptr = (char *)vga_pixel_ptr + ((j)<<10) + (i);
+                *(char *)pixel_ptr = (val(j, i, 0) & 0xe0) >> 0 | (val(j, i, 1) & 0xe0) >> 3 | (val(j, i, 2) & 0xc0) >> 6;
             }
         }
         return 1;
