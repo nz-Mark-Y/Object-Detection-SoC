@@ -609,6 +609,38 @@
          type = "boolean";
       }
    }
+   element pio_0
+   {
+      datum _sortIndex
+      {
+         value = "38";
+         type = "int";
+      }
+   }
+   element pio_0.s1
+   {
+      datum baseAddress
+      {
+         value = "100663296";
+         type = "String";
+      }
+   }
+   element pio_1
+   {
+      datum _sortIndex
+      {
+         value = "39";
+         type = "int";
+      }
+   }
+   element pio_1.s1
+   {
+      datum baseAddress
+      {
+         value = "100663312";
+         type = "String";
+      }
+   }
 }
 ]]></parameter>
  <parameter name="clockCrossingAdapter" value="HANDSHAKE" />
@@ -671,6 +703,16 @@
    type="conduit"
    dir="end" />
  <interface name="memory" internal="ARM_A9_HPS.memory" type="conduit" dir="end" />
+ <interface
+   name="pio_0_external_connection"
+   internal="pio_0.external_connection"
+   type="conduit"
+   dir="end" />
+ <interface
+   name="pio_1_external_connection"
+   internal="pio_1.external_connection"
+   type="conduit"
+   dir="end" />
  <interface name="ps2_port" internal="PS2_Port.external_interface" />
  <interface name="ps2_port_dual" internal="PS2_Port_Dual.external_interface" />
  <interface
@@ -2138,6 +2180,34 @@
      name="AUTO_VIDEO_IN_DMA_MASTER_ADDRESS_WIDTH"
      value="AddressWidth = -1" />
  </module>
+ <module name="pio_0" kind="altera_avalon_pio" version="16.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="100000000" />
+  <parameter name="direction" value="Output" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="false" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="32" />
+ </module>
+ <module name="pio_1" kind="altera_avalon_pio" version="16.1" enabled="1">
+  <parameter name="bitClearingEdgeCapReg" value="false" />
+  <parameter name="bitModifyingOutReg" value="false" />
+  <parameter name="captureEdge" value="false" />
+  <parameter name="clockRate" value="100000000" />
+  <parameter name="direction" value="Input" />
+  <parameter name="edgeType" value="RISING" />
+  <parameter name="generateIRQ" value="false" />
+  <parameter name="irqType" value="LEVEL" />
+  <parameter name="resetValue" value="0" />
+  <parameter name="simDoTestBenchWiring" value="true" />
+  <parameter name="simDrivenValue" value="0" />
+  <parameter name="width" value="16" />
+ </module>
  <connection
    kind="avalon"
    version="16.1"
@@ -2668,6 +2738,24 @@
    end="Onchip_SRAM.s1">
   <parameter name="arbitrationPriority" value="1" />
   <parameter name="baseAddress" value="0x08000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.1"
+   start="ARM_A9_HPS.h2f_axi_master"
+   end="pio_0.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x06000000" />
+  <parameter name="defaultConnection" value="false" />
+ </connection>
+ <connection
+   kind="avalon"
+   version="16.1"
+   start="ARM_A9_HPS.h2f_axi_master"
+   end="pio_1.s1">
+  <parameter name="arbitrationPriority" value="1" />
+  <parameter name="baseAddress" value="0x06000010" />
   <parameter name="defaultConnection" value="false" />
  </connection>
  <connection
@@ -3331,6 +3419,16 @@
    kind="clock"
    version="16.1"
    start="System_PLL.sys_clk"
+   end="pio_0.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="System_PLL.sys_clk"
+   end="pio_1.clk" />
+ <connection
+   kind="clock"
+   version="16.1"
+   start="System_PLL.sys_clk"
    end="Onchip_SRAM.clk1" />
  <connection
    kind="clock"
@@ -3762,6 +3860,16 @@
    kind="reset"
    version="16.1"
    start="ARM_A9_HPS.h2f_reset"
+   end="pio_0.reset" />
+ <connection
+   kind="reset"
+   version="16.1"
+   start="ARM_A9_HPS.h2f_reset"
+   end="pio_1.reset" />
+ <connection
+   kind="reset"
+   version="16.1"
+   start="ARM_A9_HPS.h2f_reset"
    end="Onchip_SRAM.reset1" />
  <connection
    kind="reset"
@@ -3928,6 +4036,16 @@
    version="16.1"
    start="System_PLL.reset_source"
    end="F2H_Mem_Window_FF800000.reset" />
+ <connection
+   kind="reset"
+   version="16.1"
+   start="System_PLL.reset_source"
+   end="pio_0.reset" />
+ <connection
+   kind="reset"
+   version="16.1"
+   start="System_PLL.reset_source"
+   end="pio_1.reset" />
  <connection
    kind="reset"
    version="16.1"
