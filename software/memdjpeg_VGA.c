@@ -34,13 +34,21 @@
 #include <string.h>
 #include <stdbool.h>
 
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/mman.h>
+#include <sys/time.h>
+
 #include <jpeglib.h>
 #include "ecrypt-sync.h"
-#include "my_trivium-sw_only.c"
+#include "trivium.c"
 #include "ShapeDetector.cpp"
 
 #define VGA
 #define WRITE_ALL 0
+#define MAXKEYSIZEB ((ECRYPT_MAXKEYSIZE + 7) / 8)
+#define MAXIVSIZEB ((ECRYPT_MAXIVSIZE + 7) / 8)
 
 #ifdef VGA
     #include <sys/types.h>
@@ -107,11 +115,71 @@ void *h2p_pio_bridge1_addr;
 
 unsigned char *bmp_buffer;
 
+int trivium_decrypt_file(char* infile, char* outfile);
+int trivium_test_cipher(void);
 int FPGAFilter(struct bmp_out_struct *bmp_out);
 int decodeMjpeg(unsigned char *mjpeg_buffer, unsigned long mjpeg_size);
 int decodeJpeg(struct jpeg_decompress_struct *cinfo, struct bmp_out_struct *bmp_out);
 int outputBmp(struct bmp_out_struct *bmp_out);
 int outputVGA(struct bmp_out_struct *bmp_out);
+
+/****************************************************************************************
+ * Functions for decoding/encoding trivium files
+****************************************************************************************/
+
+int trivium_file(char *encrypted, char *decrypted, const u8 key[], const u8 iv[]) {
+    //Note that the cipher is reversible, so passing in a decrypted file as the first argument will
+    //  result in an encrypted output
+
+    ECRYPT_ctx ctx;
+
+    // Initialise cipher
+    ECRYPT_init();
+    ECRYPT_keysetup(&ctx, key, ECRYPT_MAXKEYSIZE, ECRYPT_MAXIVSIZE);
+    ECRYPT_ivsetup(&ctx, iv);
+
+    #define CHUNK 1024
+    char buf[CHUNK];
+    char outbuf[CHUNK];
+    FILE *infile, *outfile;
+    size_t nread;
+
+    // Open file streams
+    infile = fopen(encrypted, "rb");
+    outfile = fopen(decrypted, "w+");
+    if (infile && outfile) {
+
+        while ((nread=fread(buf, 1, sizeof(buf), infile)) > 0) {
+            ECRYPT_encrypt_blocks(&ctx, (u8*)buf, (u8*)outbuf, (CHUNK/ECRYPT_BLOCKLENGTH));
+            if (nread%4) {
+                size_t start = (CHUNK/ECRYPT_BLOCKLENGTH) * ECRYPT_BLOCKLENGTH;
+                ECRYPT_encrypt_bytes(&ctx, (u8*)(buf+start), (u8*)(outbuf+start), nread%4);
+            }
+            fwrite(outbuf, 1, nread, outfile);
+        }
+        if (ferror(infile) || ferror(outfile)) {
+            /* deal with error */
+        }
+        fclose(infile);
+        fclose(outfile);
+
+        return 0;
+    }
+	return 1;
+}
+
+int trivium_decrypt_file(char* infile, char* outfile) {
+
+    // Keys
+    //TODO make these read as input
+    const u8 key[] = "Test key01";
+    const u8 iv[] = "So Random\0";
+
+    // Execute code
+    int ret = trivium_file(infile, outfile, key, iv);
+
+    return ret;
+}
 
 /****************************************************************************************
  * Function to filter an individual frame
