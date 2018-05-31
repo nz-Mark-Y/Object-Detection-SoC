@@ -7,7 +7,7 @@
  * IM_PROCESS: This sets the desired filter stage processor
  *     Valid Options:
  *     - 'windowFilter' - The standard supplied software based filter
- *     - 'FPGAFilter' - Uses FPGA components to accelerate processing speed
+ *     - 'FPGAFilter' - (Must use greyscale below) Uses FPGA components to accelerate processing speed
  *     - 'improvedSoftwareFilter' (PREFERRED) - Improved & optimised software filter
  * 
  * IM_OUTPUT:  This only has one mode at the moment
@@ -17,11 +17,16 @@
  *     - 'medianFilter'
  *     - 'convolutionFilter'
  *     - 'sobelFilter' (PREFERRED) 
+ * 
+ * GREYSCALE: 
+ *     - 0 - Full Color Image
+ *     - 1 - Greyscale Image rendered in green
 ****************************************************************************************/
 #define IM_DECODE decodeJpeg
 #define IM_PROCESS improvedSoftwareFilter
 #define IM_OUTPUT outputVGA
 #define WINDOW_FUNC sobelFilter
+#define GREYSCALE 0
 
 #include <fcntl.h>
 #include <stdio.h>
@@ -518,7 +523,7 @@ int decodeJpeg(struct jpeg_decompress_struct *cinfo, struct bmp_out_struct *bmp_
     // entire scanline (row).
     bmp_out->row_stride = bmp_out->width * bmp_out->pixel_size;
 
-    //cinfo->out_color_space = JCS_GRAYSCALE;
+    if (GREYSCALE == 1) cinfo->out_color_space = JCS_GRAYSCALE;
 
     // Now that you have the decompressor entirely configured, it's time
     // to read out all of the scanlines of the jpeg.
@@ -591,7 +596,8 @@ int outputVGA(struct bmp_out_struct *bmp_out) {
             for (int i=1; i<bmp_out->width; ++i) {
                 if (i >= 640) break;
                 pixel_ptr = (char *)vga_pixel_ptr + ((j)<<10) + (i);
-                *(char *)pixel_ptr = (val(j, i, 0) & 0xe0) >> 0 | (val(j, i, 1) & 0xe0) >> 3 | (val(j, i, 2) & 0xc0) >> 6;
+                if (GREYSCALE == 1) *(char *)pixel_ptr = (val(j, i, 0) & 0xe0) >> 3;
+                else *(char *)pixel_ptr = (val(j, i, 0) & 0xe0) >> 0 | (val(j, i, 1) & 0xe0) >> 3 | (val(j, i, 2) & 0xc0) >> 6;
             }
         }
         return 1;
