@@ -27,3 +27,7 @@
 ## Report 7
 
 * Refactor VGA output function to reduce cache misses
+
+## Report 8
+
+* Use all compiler optimization techniques
