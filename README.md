@@ -28,8 +28,12 @@ Hardware/software co-designed system to compute MJPEG frame processing and objec
 3. Copy the solution binary file from the USB 2.0 device to a local directory of the Linux system on the DE1-SoC board. 
 
 ## Usage ##
-
 1. Run the executable passing two parameters: the source video file and a destination for a decrypted copy. E.g.
 ```
 memdjpeg_VGA DW.mjpeg.cipher DW.mjpeg
 ``` 
+2. Profiling is available in the gmon.out file after each run. Read this file using gprof.
+3. Solution customisability is provided via software definitions. Instructions are provided as comments in the main file. Ensure to remake and recopy to DE1-SoC.
+
+## Testing ##
+* Test hardware components via the testbenches found in hardware/filters and hardware/trivium
